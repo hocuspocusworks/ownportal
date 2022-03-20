@@ -23,10 +23,23 @@ public class UserService {
         return this;
     }
 
+    public String getUsername() {
+        return userDetail.getUsername();
+    }
+
+    public boolean hasFeed() {
+        // find if the user already has a feed in mongo
+        return true;
+    }
+
     public boolean limitReached() {
         // verify all limits against user type
         // userDetail.isPaidUser()
         return false;
+    }
+
+    public boolean isPaidUser() {
+        return true;
     }
 
     public void reduceQouta(int amount) {

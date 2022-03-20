@@ -10,15 +10,18 @@ import net.ownportal.portal.filter.UserService;
 @RequestMapping("/feed")
 class FeedController {
     private final UserService userService;
+    private final FeedService feedService;
 
-    public FeedController(final UserService userService) {
+    public FeedController(UserService userService, FeedService feedService) {
         this.userService = userService;
+        this.feedService = feedService;
     }
 
-    @PostMapping("/addGroup")
-    public String addGroup() {
+    @PostMapping("/newGroup")
+    public String newGroup() {
         if (!userService.limitReached()) {
             System.out.println("adding new group for user: " + userService);
+            feedService.newGroup("test");
             userService.increaseGroupNumber(1);
         }
         return "";

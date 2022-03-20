@@ -11,6 +11,7 @@ import lombok.Data;
 class UserDetail {
     private String username;
     private boolean paidUser;
+    private boolean hasFeed;
     private int qouta;
     private int numberOfGroups;
     private int numberOfSources;
