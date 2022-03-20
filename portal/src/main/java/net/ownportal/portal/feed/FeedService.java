@@ -21,6 +21,14 @@ class FeedService {
         this.repo = repo;
     }
 
+    FeedDao getFeedForUsername(final String username) {
+        var feedOpt = repo.findOneByUsername(username);
+        if (feedOpt.isEmpty()) {
+            return new FeedDao();
+        }
+        return feedOpt.get();
+    }
+
     void newGroup(final GroupDao group) {
         createFeedIfNotExist();
         createGroupIfNotExist(group.getName());
