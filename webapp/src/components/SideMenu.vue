@@ -1,5 +1,4 @@
 <template>
-    <!-- @click="changeMe($event.currentTarget)" -->
     <div class="accordion" id="accordionExample" v-for="(item,i) in groups" :key="i">
         <div class="accordion-item">
             <h2 class="accordion-header" :id="'heading'+i">
@@ -183,9 +182,6 @@ export default {
         }
     },
     methods: {
-        changeMe(el) {
-            console.log(el.id);
-        },
         createGroupCallback() {
             this.createGroup();
         },
@@ -193,7 +189,6 @@ export default {
             this.createSource();
         },
         createGroup() {
-            console.log("create new group on remote: " + this.newGroupName);
             let payload = {
                 "name": this.newGroupName
             };
