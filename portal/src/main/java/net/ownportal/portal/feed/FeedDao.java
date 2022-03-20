@@ -1,5 +1,7 @@
 package net.ownportal.portal.feed;
 
+import java.util.List;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -14,4 +16,5 @@ class FeedDao {
     @Indexed(unique=true)
     private String username;
     private boolean paidUser;
+    private List<GroupDto> groups;
 }
