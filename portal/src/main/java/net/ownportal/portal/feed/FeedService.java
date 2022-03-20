@@ -19,7 +19,7 @@ class FeedService {
         this.repo = repo;
     }
 
-    void newGroup(final GroupDto group) {
+    void newGroup(final GroupDao group) {
         createFeedIfNotExist();
         createGroupIfNotExist(group.getName());
     }
@@ -48,8 +48,8 @@ class FeedService {
         repo.save(feed);
     }
 
-    private List<GroupDto> groupsForFeed(final FeedDao feed) {
-        final List<GroupDto> groups = new ArrayList<>();
+    private List<GroupDao> groupsForFeed(final FeedDao feed) {
+        final List<GroupDao> groups = new ArrayList<>();
         if (feed.getGroups() != null) {
             groups.addAll(feed.getGroups());
         }
@@ -57,7 +57,7 @@ class FeedService {
         return groups;
     }
 
-    private boolean groupExists(final String name, List<GroupDto> groups) {
+    private boolean groupExists(final String name, List<GroupDao> groups) {
         final var matchingGroup = groups
             .stream()
             .filter(g -> g.getName().equals(name));
@@ -68,8 +68,8 @@ class FeedService {
         return false;
     }
 
-    private void addNewGroup(String name, List<GroupDto> groups) {
-        final var group = new GroupDto();
+    private void addNewGroup(String name, List<GroupDao> groups) {
+        final var group = new GroupDao();
         group.setName(name);
         groups.add(group);
     }

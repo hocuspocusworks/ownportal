@@ -21,7 +21,7 @@ class FeedController {
     }
 
     @PostMapping("/newGroup")
-    String newGroup(@RequestBody GroupDto group) {
+    String newGroup(@RequestBody GroupDao group) {
         if (!userService.limitReached()) {
             log.debug("adding new group for user {}", userService);
             feedService.newGroup(group);

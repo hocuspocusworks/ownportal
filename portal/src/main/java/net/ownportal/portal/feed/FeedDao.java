@@ -20,5 +20,5 @@ class FeedDao {
     @Indexed(unique=true)
     private String username;
     private boolean paidUser;
-    private List<GroupDto> groups;
+    private List<GroupDao> groups;
 }

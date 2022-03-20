@@ -1,5 +1,7 @@
 package net.ownportal.portal.feed;
 
+import java.util.List;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-class StreamDto {
+class GroupDao {
     private String name;
-    private String url;
+    private List<StreamDao> streams;
 }

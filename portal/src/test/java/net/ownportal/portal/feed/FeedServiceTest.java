@@ -25,7 +25,7 @@ public class FeedServiceTest {
 
     @Test
     void whenNoGroupsExist_thenAddNewGroupToFeed() {
-        var groupMock = mock(GroupDto.class);
+        var groupMock = mock(GroupDao.class);
         var feedMock = mock(FeedDao.class);
         when(groupMock.getName()).thenReturn("mockGroup");
         when(userServiceMock.hasFeed()).thenReturn(true);
@@ -40,14 +40,14 @@ public class FeedServiceTest {
 
     @Test
     void whenSomeGroupsExist_thenAddNewGroupToFeed() {
-        var groupMock = mock(GroupDto.class);
+        var groupMock = mock(GroupDao.class);
         var feedMock = mock(FeedDao.class);
         when(groupMock.getName()).thenReturn("mockGroup");
         when(userServiceMock.hasFeed()).thenReturn(true);
         when(userServiceMock.getUsername()).thenReturn("user");
         when(feedRepositoryMock.findOneByUsername("user")).thenReturn(Optional.of(feedMock));
 
-        var existingGroup = mock(GroupDto.class);
+        var existingGroup = mock(GroupDao.class);
         when(existingGroup.getName()).thenReturn("mockGroup2");
         when(feedMock.getGroups()).thenReturn(List.of(existingGroup));
 
@@ -59,14 +59,14 @@ public class FeedServiceTest {
 
     @Test
     void whenGroupExists_thenDoNotOverwriteFeed() {
-        var groupMock = mock(GroupDto.class);
+        var groupMock = mock(GroupDao.class);
         var feedMock = mock(FeedDao.class);
         when(groupMock.getName()).thenReturn("mockGroup");
         when(userServiceMock.hasFeed()).thenReturn(true);
         when(userServiceMock.getUsername()).thenReturn("user");
         when(feedRepositoryMock.findOneByUsername("user")).thenReturn(Optional.of(feedMock));
 
-        var existingGroup = mock(GroupDto.class);
+        var existingGroup = mock(GroupDao.class);
         when(existingGroup.getName()).thenReturn("mockGroup");
         when(feedMock.getGroups()).thenReturn(List.of(existingGroup));
 
