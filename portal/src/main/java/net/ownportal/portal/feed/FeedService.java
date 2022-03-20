@@ -28,25 +28,37 @@ class FeedService {
 
     void newStream(final StreamDto stream) {
         final var feed = repo.findOneByUsername(userService.getUsername()).get();
-        final var groupOpt = groupForFeed(stream.getGroup(), feed);
-        if (groupOpt.isEmpty()) {
+        if (!feedContainsGroup(stream.getGroup(), feed) || groupContainsStream(stream, feed)) {
+            log.info("feed doesn't contain the right group or stream already exists");
             return;
         }
-        final var group = groupOpt.get();
+        addNewStream(stream, feed);
+        repo.save(feed);
+    }
+    
+    private boolean groupContainsStream(StreamDto stream, FeedDao feed) {
+        var group = groupForFeed(stream.getGroup(), feed).get();
+        if (group.getStreams() == null) {
+            return false;
+        }
+        long results = group.getStreams()
+            .stream()
+            .filter(s -> s.getName().equals(stream.getStream()))
+            .count();
+        return results > 0 ? true : false;
+    }
+
+    private void addNewStream(StreamDto stream, FeedDao feed) {
+        final var dao = new StreamDao();
+        dao.setName(stream.getStream());
+        dao.setUrl(stream.getUrl());
+        var group = groupForFeed(stream.getGroup(), feed).get();
         var streams = group.getStreams();
         if (streams == null) {
             streams = new ArrayList<>();
         }
-        group.setStreams(streams);
-        addNewStream(stream, streams);
-        repo.save(feed);
-    }
-    
-    private void addNewStream(StreamDto stream, List<StreamDao> streams) {
-        final var dao = new StreamDao();
-        dao.setName(stream.getStream());
-        dao.setUrl(stream.getUrl());
         streams.add(dao);
+        group.setStreams(streams);
     }
 
     private void createFeedIfNotExist() {
