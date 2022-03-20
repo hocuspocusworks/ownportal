@@ -2,6 +2,8 @@ package net.ownportal.portal.feed;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
@@ -24,6 +26,29 @@ class FeedService {
         createGroupIfNotExist(group.getName());
     }
 
+    void newStream(final StreamDto stream) {
+        final var feed = repo.findOneByUsername(userService.getUsername()).get();
+        final var groupOpt = groupForFeed(stream.getGroup(), feed);
+        if (groupOpt.isEmpty()) {
+            return;
+        }
+        final var group = groupOpt.get();
+        var streams = group.getStreams();
+        if (streams == null) {
+            streams = new ArrayList<>();
+        }
+        group.setStreams(streams);
+        addNewStream(stream, streams);
+        repo.save(feed);
+    }
+    
+    private void addNewStream(StreamDto stream, List<StreamDao> streams) {
+        final var dao = new StreamDao();
+        dao.setName(stream.getStream());
+        dao.setUrl(stream.getUrl());
+        streams.add(dao);
+    }
+
     private void createFeedIfNotExist() {
         if (!userService.hasFeed()) {
             newFeed();
@@ -39,11 +64,10 @@ class FeedService {
 
     private void createGroupIfNotExist(final String name) {
         final var feed = repo.findOneByUsername(userService.getUsername()).get();
-        final var groups = groupsForFeed(feed);
-        if (groupExists(name, groups)) {
+        if (feedContainsGroup(name, feed)) {
             return;
         }
-        addNewGroup(name, groups);
+        addNewGroup(name, feed);
         log.debug("saving new feed group for {}", userService.getUsername());
         repo.save(feed);
     }
@@ -57,7 +81,20 @@ class FeedService {
         return groups;
     }
 
-    private boolean groupExists(final String name, List<GroupDao> groups) {
+    private Optional<GroupDao> groupForFeed(final String name, final FeedDao feed) {
+        if (!feedContainsGroup(name, feed)) {
+            log.debug("group {} doesn't exist for user {} so can't create a stream", name, userService.getUsername());
+            return Optional.empty();
+        }
+        return Optional.of(feed.getGroups()
+            .stream()
+            .filter(g -> g.getName().equals(name))
+            .collect(Collectors.toList())
+            .get(0));
+    }
+
+    private boolean feedContainsGroup(final String name, final FeedDao feed) {
+        final var groups = groupsForFeed(feed);
         final var matchingGroup = groups
             .stream()
             .filter(g -> g.getName().equals(name));
@@ -68,9 +105,11 @@ class FeedService {
         return false;
     }
 
-    private void addNewGroup(String name, List<GroupDao> groups) {
+    private void addNewGroup(String name, FeedDao feed) {
         final var group = new GroupDao();
         group.setName(name);
+        var groups = groupsForFeed(feed);
         groups.add(group);
+        feed.setGroups(groups);
     }
 }

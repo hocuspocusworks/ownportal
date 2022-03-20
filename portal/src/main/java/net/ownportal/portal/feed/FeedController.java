@@ -29,4 +29,11 @@ class FeedController {
         }
         return "";
     }
+
+    @PostMapping
+    String newStream(@RequestBody StreamDto stream) {
+        log.debug("adding new stream for {} to group {}", userService.getUsername(), stream.getGroup());
+        feedService.newStream(stream);
+        return "";
+    }
 }
