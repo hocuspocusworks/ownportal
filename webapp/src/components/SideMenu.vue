@@ -1,81 +1,38 @@
 <template>
     <!-- @click="changeMe($event.currentTarget)" -->
-    <div class="accordion" id="accordionExample">
+    <div class="accordion" id="accordionExample" v-for="(item,i) in groups" :key="i">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingOne">
+            <h2 class="accordion-header" :id="'heading'+i">
                 <button
-                    class="accordion-button"
+                    class="accordion-button collapsed"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#collapseOne"
-                    aria-expanded="true"
-                    aria-controls="collapseOne"
-                >Accordion Item #1</button>
+                    :data-bs-target="'#collapse'+i"
+                    aria-expanded="false"
+                    :aria-controls="'collapse'+i"
+                >{{ item.name }}</button>
             </h2>
             <div
-                id="collapseOne"
-                class="accordion-collapse collapse show"
-                aria-labelledby="headingOne"
+                :id="'collapse'+i"
+                class="accordion-collapse collapse"
+                :aria-labelledby="'heading'+i"
                 data-bs-parent="#accordionExample"
             >
                 <div class="accordion-body">
                     <strong>Sources</strong>
-                    <p>Feed 1</p>
+                    <div v-for="(src,j) in item.streams" :key="j">
+                        {{ src.name }}
+                    </div>
                     <div>
-                        <button type="button" class="btn btn-secondary me-2">Open Feed</button>
+                        <button type="button" class="btn btn-secondary me-2" @click="feed(i)">Open Feed</button>
                         <button
                             type="button"
                             class="btn btn-secondary"
                             data-bs-toggle="modal"
                             data-bs-target="#addSourceModal"
+                            @click="source(i)"
                         >Add Source</button>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingTwo">
-                <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseTwo"
-                    aria-expanded="false"
-                    aria-controls="collapseTwo"
-                >Accordion Item #2</button>
-            </h2>
-            <div
-                id="collapseTwo"
-                class="accordion-collapse collapse"
-                aria-labelledby="headingTwo"
-                data-bs-parent="#accordionExample"
-            >
-                <div class="accordion-body">
-                    <strong>This is the second item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
-                    <code>.accordion-body</code>, though the transition does limit overflow.
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header" id="headingThree">
-                <button
-                    class="accordion-button collapsed"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapseThree"
-                    aria-expanded="false"
-                    aria-controls="collapseThree"
-                >Accordion Item #3</button>
-            </h2>
-            <div
-                id="collapseThree"
-                class="accordion-collapse collapse"
-                aria-labelledby="headingThree"
-                data-bs-parent="#accordionExample"
-            >
-                <div class="accordion-body">
-                    <strong>This is the third item's accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the
-                    <code>.accordion-body</code>, though the transition does limit overflow.
                 </div>
             </div>
         </div>
@@ -111,7 +68,7 @@
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
-                        @click="refreshGroupSources"
+                        @click="fetchFeed"
                     ></button>
                 </div>
                 <div class="modal-body">
@@ -145,7 +102,7 @@
                         type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
-                        @click="refreshGroupSources"
+                        @click="fetchFeed"
                     >Close</button>
                     <button
                         type="button"
@@ -174,7 +131,7 @@
                         class="btn-close"
                         data-bs-dismiss="modal"
                         aria-label="Close"
-                        @click="refreshGroupSources"
+                        @click="fetchFeed"
                     ></button>
                 </div>
                 <div class="modal-body">
@@ -197,7 +154,7 @@
                         type="button"
                         class="btn btn-secondary"
                         data-bs-dismiss="modal"
-                        @click="refreshGroupSources"
+                        @click="fetchFeed"
                     >Close</button>
                     <button
                         type="button"
@@ -211,6 +168,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import config from '../config';
+
 export default {
     name: "SideMenu",
     data() {
@@ -218,6 +178,8 @@ export default {
             newGroupName: "",
             newSourceName: "",
             newRssFeedUrl: "",
+            groups: null,
+            selectedGroup: -1,
         }
     },
     methods: {
@@ -232,22 +194,45 @@ export default {
         },
         createGroup() {
             console.log("create new group on remote: " + this.newGroupName);
+            let payload = {
+                "name": this.newGroupName
+            };
+            let group = config.server + "/feed/newGroup";
+            axios.post(group, payload);
             this.newGroupName = "";
         },
         createSource() {
-            console.log("create new source on remote: " + this.newSourceName);
+            let groupName = this.groups[this.selectedGroup].name;
+            let payload = {
+                "group": groupName,
+                "stream": this.newSourceName,
+                "url": this.newRssFeedUrl
+            };
+            let stream = config.server + "/feed/newStream";
+            axios.post(stream, payload);
             this.newSourceName = "";
             this.newRssFeedUrl = "";
         },
-        fetchGroups() {
-            console.log("fetch all groups and sources from remote!");
+        fetchFeed() {
+            let me = config.server + "/feed/me";
+            axios
+                .get(me)
+                .then(response => {
+                    this.updateView(response.data);
+                });
         },
-        refreshGroupSources() {
-            this.fetchGroups();
+        feed(number) {
+            console.log(number);
+        },
+        source(number) {
+            this.selectedGroup = number;
+        },
+        updateView(data) {
+            this.groups = data.groups;
         }
     },
     mounted() {
-        this.fetchGroups();
+        this.fetchFeed();
     },
 };
 </script>
