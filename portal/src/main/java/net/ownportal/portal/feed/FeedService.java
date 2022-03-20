@@ -33,6 +33,7 @@ class FeedService {
             return;
         }
         addNewStream(stream, feed);
+        log.debug("saving new stream for {}", userService.getUsername());
         repo.save(feed);
     }
     
