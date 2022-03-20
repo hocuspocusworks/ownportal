@@ -15,13 +15,13 @@ class FeedController {
     private final UserService userService;
     private final FeedService feedService;
 
-    public FeedController(UserService userService, FeedService feedService) {
+    FeedController(UserService userService, FeedService feedService) {
         this.userService = userService;
         this.feedService = feedService;
     }
 
     @PostMapping("/newGroup")
-    public String newGroup(@RequestBody GroupDto group) {
+    String newGroup(@RequestBody GroupDto group) {
         if (!userService.limitReached()) {
             log.debug("adding new group for user {}", userService);
             feedService.newGroup(group);

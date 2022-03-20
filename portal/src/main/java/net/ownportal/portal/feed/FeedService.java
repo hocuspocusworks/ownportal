@@ -10,11 +10,11 @@ import net.ownportal.portal.filter.UserService;
 
 @Component
 @Slf4j
-public class FeedService {
+class FeedService {
     private final UserService userService;
     private final FeedRepository repo;
 
-    public FeedService(UserService userService, FeedRepository repo) {
+    FeedService(UserService userService, FeedRepository repo) {
         this.userService = userService;
         this.repo = repo;
     }
