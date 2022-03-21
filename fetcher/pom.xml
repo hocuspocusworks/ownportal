@@ -12,16 +12,15 @@
 	<artifactId>fetcher</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>fetcher</name>
-	<description>Demo project for Spring Boot</description>
+	<description>Fetcher</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
 	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-
+        <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-webflux</artifactId>
+	    </dependency>
         <dependency>
             <groupId>net.ownportal</groupId>
             <artifactId>parser</artifactId>
