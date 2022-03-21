@@ -29,41 +29,42 @@ public class RssResolver {
         return true;
     }
 
-    public JsonObject rssToJson(final byte[] rssBytes) {
+    public RssPage rssToJson(final byte[] rssBytes) {
         final var rssOpt = rssFromBytes(rssBytes);
         if (rssOpt.isEmpty()) {
-            return new JsonObject();
+            return new RssPage();
         }
         final var rss = rssOpt.get();
         final var channel = rss.getChannel();
         final var items = channel.getItem();
 
-        final var json = new JsonObject();
+        final var rssPage = new RssPage();
         int i = 0;
         for (final var item : items) {
-            final var jsonEl = new JsonObject();
+            final var rssNode = new RssPage.RssNode();
             for (final var elem : item.getTitleOrDescriptionOrLink()) {
                 if (elem instanceof JAXBElement) {
                     final var el = (JAXBElement) elem;
                     final var type = el.getName().toString();
                     if (type.equals("title")) {
-                        jsonEl.addProperty("title", el.getValue().toString());
+                        rssNode.setTitle(el.getValue().toString());
                     }
                     if (type.equals("link")) {
-                        jsonEl.addProperty("link", el.getValue().toString());
+                        rssNode.setLink(el.getValue().toString());
                     }
                     if (type.equals("description")) {
-                        jsonEl.addProperty("description", el.getValue().toString());
+                        rssNode.setDescription(el.getValue().toString());
                     }
                     if (type.equals("pubDate")) {
-                        jsonEl.addProperty("publishDate", el.getValue().toString());
+                        rssNode.setPublishedDate(el.getValue().toString());
                     }
                 }
             }
-            json.add(String.valueOf(i++), jsonEl);
+            rssPage.addNode(rssNode);
+            i++;
         }
-        json.addProperty("size", i);
-        return json;
+        rssPage.setSize(i);
+        return rssPage;
     }
 
     Optional<Rss> rssFromBytes(final byte[] rss) {
