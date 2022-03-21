@@ -1,4 +1,10 @@
 <template>
+    <div v-if="loading" class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <div v-if="err" class="alert alert-danger" role="alert">
+        Cannot load the feed.
+    </div>
     <div class="accordion" id="accordionExample" v-for="(item,i) in groups" :key="i">
         <div class="accordion-item">
             <h2 class="accordion-header" :id="'heading'+i">
@@ -37,7 +43,7 @@
         </div>
     </div>
 
-    <div class="mt-2">
+    <div v-if="!err && !loading" class="mt-2">
         <button
             type="button"
             class="btn btn-primary w-100"
@@ -179,6 +185,8 @@ export default {
             newRssFeedUrl: "",
             groups: null,
             selectedGroup: -1,
+            err: false,
+            loading: true,
         }
     },
     methods: {
@@ -210,10 +218,14 @@ export default {
         },
         fetchFeed() {
             let me = config.server + "/feed/me";
-            axios
-                .get(me)
-                .then(response => {
+            axios({
+                method: "get",
+                url: me,
+                timeout: 1000*5
+                }).then(response => {
                     this.updateView(response.data);
+                }).catch(error => {
+                    this.updateError();
                 });
         },
         feed(number) {
@@ -224,6 +236,11 @@ export default {
         },
         updateView(data) {
             this.groups = data.groups;
+            this.loading = false;
+        },
+        updateError() {
+            this.err = true;
+            this.loading = false;
         }
     },
     mounted() {
