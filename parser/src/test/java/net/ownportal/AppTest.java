@@ -31,8 +31,7 @@ class AppTest {
 
     @Test
     void testParsingValidXml() {
-        RssResolver resolver = new RssResolver();
-        Rss rss = resolver.rssFromBytes(baos.toByteArray()).get();
+        Rss rss = RssResolver.rssFromBytes(baos.toByteArray()).get();
         RssChannel channel = rss.getChannel();
         List<RssItem> items = channel.getItem();
         assertTrue(items.size() > 0);
@@ -40,8 +39,7 @@ class AppTest {
 
     @Test
     void rssToJson() {
-        RssResolver resolver = new RssResolver();
-        final var result = resolver.rssToJson(baos.toByteArray());
+        final var result = RssResolver.rssToJson(baos.toByteArray());
         System.out.println(result.toString());
     }
 }

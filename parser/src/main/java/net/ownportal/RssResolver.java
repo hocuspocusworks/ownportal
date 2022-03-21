@@ -3,8 +3,6 @@ package net.ownportal;
 import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
-import com.google.gson.JsonObject;
-
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -12,7 +10,7 @@ import jakarta.xml.bind.UnmarshalException;
 import net.ownportal.rssjax.Rss;
 
 public class RssResolver {
-    public boolean isValid(final byte[] rss) {
+    public static boolean isValid(final byte[] rss) {
         try {
             var context = JAXBContext.newInstance(Rss.class);
             var unmarshaller = context.createUnmarshaller();
@@ -29,7 +27,7 @@ public class RssResolver {
         return true;
     }
 
-    public RssPage rssToJson(final byte[] rssBytes) {
+    public static RssPage rssToJson(final byte[] rssBytes) {
         final var rssOpt = rssFromBytes(rssBytes);
         if (rssOpt.isEmpty()) {
             return new RssPage();
@@ -67,7 +65,7 @@ public class RssResolver {
         return rssPage;
     }
 
-    Optional<Rss> rssFromBytes(final byte[] rss) {
+    static Optional<Rss> rssFromBytes(final byte[] rss) {
         if (!isValid(rss)) {
             return Optional.empty();
         }

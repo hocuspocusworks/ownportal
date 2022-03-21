@@ -30,10 +30,7 @@ class FetchController {
             .retrieve()
             .bodyToMono(byte[].class)
             .publishOn(Schedulers.boundedElastic())
-            .map(data -> {
-                RssResolver rss = new RssResolver();
-                return rss.isValid(data);
-            });
+            .map(RssResolver::isValid);
     }
 
     @GetMapping("/fetch")
@@ -44,9 +41,6 @@ class FetchController {
             .retrieve()
             .bodyToMono(byte[].class)
             .publishOn(Schedulers.boundedElastic())
-            .map(data -> {
-                RssResolver rss = new RssResolver();
-                return rss.rssToJson(data);
-            });
+            .map(RssResolver::rssToJson);
     }
 }
