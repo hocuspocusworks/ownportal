@@ -229,7 +229,8 @@ export default {
                 });
         },
         feed(number) {
-            console.log(number);
+            let url = this.groups[number].streams[0].url;
+            this.$emit("feedChanged", url);
         },
         source(number) {
             this.selectedGroup = number;
