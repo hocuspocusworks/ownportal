@@ -8,13 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.client.WebClient;
 
-import net.ownportal.RssPage;
+import lombok.extern.slf4j.Slf4j;
 import net.ownportal.RssResolver;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping("/rss")
+@Slf4j
 class FetchController {
     private final WebClient webClient;
 
@@ -23,24 +24,32 @@ class FetchController {
     }
 
     @PostMapping("/validate")
-    public Mono<Boolean> validateRss(final String url) throws Exception {
-        URL page = new URL(url);
-        return webClient.get()
-            .uri(page.toURI())
-            .retrieve()
-            .bodyToMono(byte[].class)
-            .publishOn(Schedulers.boundedElastic())
-            .map(RssResolver::isValid);
+    public Mono<ServiceResponse<?>> validateRss(final String url) {
+        try {
+            URL page = new URL(url);
+            return webClient.get()
+                .uri(page.toURI())
+                .retrieve()
+                .bodyToMono(byte[].class)
+                .onErrorResume(e -> Mono.just(new byte[]{0}))
+                .publishOn(Schedulers.boundedElastic())
+                .map(RssResolver::isValid)
+                .map(Response::ok);
+        } catch (Exception e) {
+            log.debug("unexpected error {}", e);
+        }
+        return Mono.just(Response.fail("unexpected error"));
     }
 
     @GetMapping("/fetch")
-    public Mono<RssPage> fetchRss(final String url) throws Exception {
+    public Mono<ServiceResponse<?>> fetchRss(final String url) throws Exception {
         URL page = new URL(url);
         return webClient.get()
             .uri(page.toURI())
             .retrieve()
             .bodyToMono(byte[].class)
             .publishOn(Schedulers.boundedElastic())
-            .map(RssResolver::rssToJson);
+            .map(RssResolver::rssToJson)
+            .map(Response::ok);
     }
 }
