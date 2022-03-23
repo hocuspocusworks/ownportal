@@ -61,6 +61,7 @@ export default {
         updateView(url) {
             this.content = null;
             this.loading = true;
+            this.err = false;
             let request = config.fetcher + "/rss/fetch?url=" + url;
             axios.get(request)
                 .then(response => {
