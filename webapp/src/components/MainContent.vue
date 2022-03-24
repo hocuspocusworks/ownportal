@@ -29,6 +29,7 @@
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">
                         <small class="text-muted">{{ item.publishedDate }}</small>
+                        <span class="ms-2 badge rounded-pill bg-light text-dark">{{ item.source }}</span>
                     </p>
                 </div>
             </div>
