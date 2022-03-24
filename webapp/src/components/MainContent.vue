@@ -7,9 +7,9 @@
     </div>
 
     <div v-for="(item,i) in content" :key="i" class="card mb-3 w-100">
+    <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">
         <div class="row g-0">
-            <div class="col-md-4">
-                <!-- <img src="..." class="img-fluid rounded-start" alt="..." /> -->
+            <div class="col-md-2">
                 <svg
                     class="bd-placeholder-img img-fluid rounded-start"
                     width="100%"
@@ -23,9 +23,9 @@
                     <rect width="100%" height="100%" fill="#868e96" />
                 </svg>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-10">
                 <div class="card-body">
-                    <h5 class="card-title"><a target="_blank" :href="item.link">{{ item.title }}</a></h5>
+                    <h5 class="card-title">{{ item.title }}</h5>
                     <p class="card-text">{{ item.description }}</p>
                     <p class="card-text">
                         <small class="text-muted">{{ item.publishedDate }}</small>
@@ -34,6 +34,7 @@
                 </div>
             </div>
         </div>
+    </a>
     </div>
 </template>
 
