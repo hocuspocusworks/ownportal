@@ -21,7 +21,7 @@ public class RssPage {
     @ToString
     @Getter
     @Setter
-    static class RssNode {
+    public static class RssNode {
         private String title;
         private String description;
         private String link;
