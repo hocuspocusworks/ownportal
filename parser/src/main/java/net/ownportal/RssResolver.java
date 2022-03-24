@@ -2,12 +2,14 @@ package net.ownportal;
 
 import java.io.ByteArrayInputStream;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.UnmarshalException;
 import net.ownportal.rssjax.Rss;
+import net.ownportal.rssjax.RssChannel;
 
 public class RssResolver {
     public static boolean isValid(final byte[] rss) {
@@ -37,6 +39,7 @@ public class RssResolver {
         final var items = channel.getItem();
 
         final var rssPage = new RssPage();
+        rssPage.setSource(getChannelName(channel));
         int i = 0;
         for (final var item : items) {
             final var rssNode = new RssPage.RssNode();
@@ -63,6 +66,25 @@ public class RssResolver {
         }
         rssPage.setSize(i);
         return rssPage;
+    }
+
+    private static String getChannelName(final RssChannel channel) {
+        final var title = channel
+            .getTitleOrLinkOrDescription()
+            .stream()
+            .filter(RssResolver::isTitle)
+            .collect(Collectors.toList());
+        if (!title.isEmpty()) {
+            return ((JAXBElement) title.get(0)).getValue().toString();
+        }
+        return "";
+    }
+
+    private static boolean isTitle(Object el) {
+        if (el instanceof JAXBElement) {
+            return ((JAXBElement) el).getName().toString().equals("title") ? true : false;
+        }
+        return false;
     }
 
     static Optional<Rss> rssFromBytes(final byte[] rss) {

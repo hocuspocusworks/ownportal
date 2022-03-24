@@ -12,6 +12,7 @@ import lombok.ToString;
 @Setter
 public class RssPage {
     private long size;
+    private String source;
     private List<RssNode> nodes = new ArrayList<>();
 
     public void addNode(RssNode node) {
