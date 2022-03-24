@@ -1,16 +1,21 @@
 package net.ownportal.fetcher;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 import net.ownportal.RssPage;
 
 @ToString
 @Getter
 @Setter
+@Slf4j
 public class Feed {
     private long size;
     private List<FeedItem> nodes = new ArrayList<>();
@@ -29,6 +34,7 @@ public class Feed {
                 nodes.add(feedItem);
             }
         }
+        Collections.sort(nodes, this::dateComparator);
     }
 
     @ToString
@@ -85,5 +91,16 @@ public class Feed {
             link = b.link;
             publishedDate = b.publishedDate;
         }
+    }
+
+    private int dateComparator(FeedItem i1, FeedItem i2) {
+        try {
+            var d1 = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss Z").parse(i1.getPublishedDate());
+            var d2 = new SimpleDateFormat("EEEE, dd MMMM yyyy HH:mm:ss Z").parse(i2.getPublishedDate());
+            return d2.compareTo(d1);
+        } catch (ParseException ex) {
+            log.debug("cannot parse {} or {}", i1.getPublishedDate(), i2.getPublishedDate());
+        }
+        return 0;
     }
 }
