@@ -62,8 +62,9 @@ export default {
             this.content = null;
             this.loading = true;
             this.err = false;
-            let request = config.fetcher + "/rss/fetch?url=" + url;
-            axios.get(request)
+            let request = config.fetcher + "/rss/fetchAll";
+            let data = {"urls": Object.values(url).map(i => i.url)};
+            axios.post(request, data)
                 .then(response => {
                     this.content = response.data.data.nodes;
                     console.log(this.content);

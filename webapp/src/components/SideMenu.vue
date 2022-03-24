@@ -229,7 +229,7 @@ export default {
                 });
         },
         feed(number) {
-            let url = this.groups[number].streams[0].url;
+            let url = this.groups[number].streams;
             this.$emit("feedChanged", url);
         },
         source(number) {
