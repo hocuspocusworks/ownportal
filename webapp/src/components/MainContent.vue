@@ -10,18 +10,9 @@
     <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">
         <div class="row g-0">
             <div class="col-md-2">
-                <svg
-                    class="bd-placeholder-img img-fluid rounded-start"
-                    width="100%"
-                    xmlns="http://www.w3.org/2000/svg"
-                    role="img"
-                    aria-label="Placeholder: Image"
-                    preserveAspectRatio="xMidYMid slice"
-                    focusable="false"
-                >
-                    <title>Placeholder</title>
-                    <rect width="100%" height="100%" fill="#868e96" />
-                </svg>
+                <div style="display: flex; align-items: center; justify-content: center; min-height: 100%;">
+                    <img style="width: 32px; height: 32px;" :src="baseUrl(item.link)+'/favicon.ico'" />
+                </div>
             </div>
             <div class="col-md-10">
                 <div class="card-body">
@@ -78,6 +69,12 @@ export default {
                     this.loading = false;
                     this.err = err;
                 });
+        },
+        baseUrl(url) {
+            var pathArray = url.split('/');
+            var protocol = pathArray[0];
+            var host = pathArray[2];
+            return protocol + '//' + host;
         }
     }
 }
