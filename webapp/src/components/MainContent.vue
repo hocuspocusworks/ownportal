@@ -11,7 +11,8 @@
         <div class="row g-0">
             <div class="col-md-2">
                 <div style="display: flex; align-items: center; justify-content: center; min-height: 100%;">
-                    <img style="width: 32px; height: 32px;" :src="baseUrl(item.link)+'/favicon.ico'" />
+                    <img style="width: 32px; height: 32px;" :src="baseUrl(item.link)+'/favicon.ico'"
+                        onerror="this.onerror=null;this.src='https://www.freeiconspng.com/uploads/no-image-icon-6.png';" />
                 </div>
             </div>
             <div class="col-md-10">
