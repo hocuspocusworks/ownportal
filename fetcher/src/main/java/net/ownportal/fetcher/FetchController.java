@@ -1,8 +1,6 @@
 package net.ownportal.fetcher;
 
 import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,14 +58,15 @@ class FetchController {
     }
 
     @PostMapping("/fetchAll")
-    public Mono<ServiceResponse<?>> fetchAllRss(@RequestBody Map<String, List<String>> url) throws Exception {
-        List<String> urls = url.get("urls");
+    public Mono<ServiceResponse<?>> fetchAllRss(@RequestBody FetchAllRequest request) throws Exception {
+        final var urls = request.getUrls();
+        final var sort = request.getSort().equals("asc") ? "asc" : "random";
         return Flux.fromIterable(urls)
             .flatMap(this::get)
             .publishOn(Schedulers.boundedElastic())
             .map(RssResolver::rssToJson)
             .collectList()
-            .map(Feed::new)
+            .map(f -> new Feed(f, sort))
             .map(Response::ok);
     }
 

@@ -20,7 +20,7 @@ public class Feed {
     private long size;
     private List<FeedItem> nodes = new ArrayList<>();
 
-    public Feed(List<RssPage> pages) {
+    public Feed(List<RssPage> pages, String sort) {
         for (var page : pages) {
             size += page.getSize();
             for (var item : page.getNodes()) {
@@ -34,7 +34,11 @@ public class Feed {
                 nodes.add(feedItem);
             }
         }
-        Collections.sort(nodes, this::dateComparator);
+        if (sort.equals("asc")) {
+            Collections.sort(nodes, this::dateComparator);
+        } else {
+            Collections.shuffle(nodes);
+        }
     }
 
     @ToString
