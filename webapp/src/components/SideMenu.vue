@@ -5,7 +5,7 @@
     <div v-if="err" class="alert alert-danger" role="alert">
         Cannot load the feed.
     </div>
-    <div class="accordion" id="accordionExample" v-for="(item,i) in groups" :key="i">
+    <div class="accordion accordion-flush" id="accordionExample" v-for="(item,i) in groups" :key="i">
         <div class="accordion-item">
             <h2 class="accordion-header" :id="'heading'+i">
                 <button
