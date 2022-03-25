@@ -200,7 +200,7 @@ export default {
             let payload = {
                 "name": this.newGroupName
             };
-            let group = config.server + "/feed/newGroup";
+            let group = config.gateway + "/portal/feed/newGroup";
             axios.post(group, payload);
             this.newGroupName = "";
         },
@@ -211,13 +211,13 @@ export default {
                 "stream": this.newSourceName,
                 "url": this.newRssFeedUrl
             };
-            let stream = config.server + "/feed/newStream";
+            let stream = config.gateway + "/portal/feed/newStream";
             axios.post(stream, payload);
             this.newSourceName = "";
             this.newRssFeedUrl = "";
         },
         fetchFeed() {
-            let me = config.server + "/feed/me";
+            let me = config.gateway + "/portal/feed/me";
             axios({
                 method: "get",
                 url: me,

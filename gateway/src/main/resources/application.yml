@@ -1,0 +1,23 @@
+spring:
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+      routes:
+        - id: fetcher_route
+          uri: http://localhost:8070
+          predicates:
+          - Path=/api/**
+          filters:
+          - StripPrefix=1
+          - name: Quota
+        - id: portal_route
+          uri: http://localhost:8077
+          predicates:
+          - Path=/portal/**
+          filters:
+          - StripPrefix=1

@@ -29,6 +29,7 @@ class FetchController {
 
     @PostMapping("/validate")
     public Mono<ServiceResponse<?>> validateRss(final String url) {
+        log.info("rss validating {}", url);
         try {
             URL page = new URL(url);
             return webClient.get()

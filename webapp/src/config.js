@@ -1,6 +1,5 @@
 const config = {
-    server: "http://localhost:8080",
-    fetcher: "http://localhost:8070"
+    gateway: "http://localhost:8080"
 };
 
 export default config;

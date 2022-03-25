@@ -56,7 +56,7 @@ export default {
             this.content = null;
             this.loading = true;
             this.err = false;
-            let request = config.fetcher + "/rss/fetchAll";
+            let request = config.gateway + "/api/rss/fetchAll";
             let data = {"urls": Object.values(url).map(i => i.url)};
             axios.post(request, data)
                 .then(response => {
