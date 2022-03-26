@@ -32,3 +32,9 @@ spring:
           - Path=/portal/**
           filters:
           - StripPrefix=1
+        - id: login
+          uri: http://localhost:8077
+          predicates:
+          - Path=/login
+          filters:
+          - StripPrefix=1
