@@ -8,13 +8,23 @@ spring:
             allowedMethods: "*"
             allowedHeaders: "*"
       routes:
-        - id: fetcher_route
+        - id: fetcher_route_api
           uri: http://localhost:8070
           predicates:
           - Path=/api/**
+          - Header=Authorization
           filters:
           - StripPrefix=1
-          - Auth
+          - ApiAuth
+          - Quota
+        - id: fetcher_route_web
+          uri: http://localhost:8070
+          predicates:
+          - Path=/api/**
+          - Cookie=ownportal, .*
+          filters:
+          - StripPrefix=1
+          - WebAuth
           - Quota
         - id: portal_route
           uri: http://localhost:8077

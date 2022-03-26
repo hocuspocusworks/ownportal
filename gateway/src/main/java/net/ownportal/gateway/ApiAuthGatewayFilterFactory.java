@@ -24,9 +24,9 @@ import reactor.core.publisher.Mono;
 
 @Component
 @Slf4j
-public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.Config> {
+public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<ApiAuthGatewayFilterFactory.Config> {
 
-    public AuthGatewayFilterFactory() {
+    public ApiAuthGatewayFilterFactory() {
         super(Config.class);
     }
 
@@ -36,9 +36,9 @@ public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthG
     }
 
     private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("hitting auth filter");
+        log.info("hitting API auth filter");
         return chain.filter(exchange)
-            .then(Mono.fromRunnable(() -> log.info("auth filter post call")));
+            .then(Mono.fromRunnable(() -> log.info("API auth filter post call")));
     }
 
     public static class Config {
