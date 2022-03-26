@@ -1,8 +1,8 @@
 package net.ownportal.gateway;
 
+import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
-import org.springframework.cloud.gateway.filter.GlobalFilter;
-import org.springframework.core.Ordered;
+import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -20,18 +20,27 @@ import reactor.core.publisher.Mono;
 //         });
 //     });
 
+// read the token header set by user or api token
+
 @Component
 @Slf4j
-public class AuthFilter implements GlobalFilter, Ordered {
+public class AuthGatewayFilterFactory extends AbstractGatewayFilterFactory<AuthGatewayFilterFactory.Config> {
+
+    public AuthGatewayFilterFactory() {
+        super(Config.class);
+    }
+
     @Override
-    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+    public GatewayFilter apply(Config config) {
+        return this::filter;
+    }
+
+    private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.info("hitting auth filter");
         return chain.filter(exchange)
             .then(Mono.fromRunnable(() -> log.info("auth filter post call")));
     }
 
-    @Override
-    public int getOrder() {
-        return 0;
+    public static class Config {
     }
 }

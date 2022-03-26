@@ -14,7 +14,8 @@ spring:
           - Path=/api/**
           filters:
           - StripPrefix=1
-          - name: Quota
+          - Auth
+          - Quota
         - id: portal_route
           uri: http://localhost:8077
           predicates:
