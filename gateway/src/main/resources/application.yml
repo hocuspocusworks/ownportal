@@ -1,12 +1,6 @@
 spring:
   cloud:
     gateway:
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
       routes:
         - id: fetcher_route_api
           uri: http://localhost:8070
@@ -36,3 +30,6 @@ spring:
           uri: http://localhost:8077
           predicates:
           - Path=/user/**
+          # filters:
+          # - AddResponseHeader=Access-Control-Allow-Origin, http://localhost:3000
+          # - AddResponseHeader=Access-Control-Allow-Credentials, true

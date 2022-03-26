@@ -2,7 +2,6 @@ package net.ownportal.fetcher;
 
 import java.net.URL;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +16,6 @@ import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
-@CrossOrigin
 @RequestMapping("/rss")
 @Slf4j
 class FetchController {

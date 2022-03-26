@@ -18,6 +18,8 @@
 </template>
 
 <script>
+import axios from "axios";
+import config from "../config";
 import router from "../router";
 
 export default {
@@ -30,10 +32,19 @@ export default {
     },
     methods: {
         login() {
-            if (this.isValidToken() || this.isValidCredentials()) {
-                localStorage.token = "new_token";
-                router.push("/");
-            }
+            let url = config.gateway + "/user/login";
+            let payload = {"username": this.username, "password": this.password };
+            axios.post(url, payload, {withCredentials: true})
+                .then(resp => {
+                    if (resp.status === 200) {
+                        router.push("/");
+                    }
+                    console.log(resp);
+                });
+            // if (this.isValidToken() || this.isValidCredentials()) {
+            //     localStorage.token = "new_token";
+            //     router.push("/");
+            // }
         },
         register() {
             router.push("/register");
