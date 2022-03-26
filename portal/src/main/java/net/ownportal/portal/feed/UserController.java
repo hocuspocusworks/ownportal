@@ -31,7 +31,11 @@ public class UserController {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "";
         }
+        response.addCookie(getCookie());
+        return "";
+    }
 
+    private Cookie getCookie() {
         String token = JWT.create()
                 .withIssuer("ownportal")
                 .sign(algorithm);
@@ -39,8 +43,7 @@ public class UserController {
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
-        response.addCookie(cookie);
-        return "";
+        return cookie;
     }
 
     @PostMapping("register")
