@@ -1,5 +1,6 @@
 package net.ownportal.portal.developer;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.Getter;
@@ -14,6 +15,8 @@ import lombok.ToString;
 class DeveloperDao {
     private static final DeveloperDao dao = new DeveloperDao();
 
+    @Id
+    private String id;
     @NonNull
     private String username;
     @NonNull
