@@ -1,7 +1,9 @@
 package net.ownportal.portal.developer;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Base64;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -20,6 +22,7 @@ import net.ownportal.portal.filter.UserService;
 @RestController
 @RequestMapping("/developer")
 class DeveloperController {
+    private static final long QOUTA_LIMIT = 100;
     private final UserService userService;
     private final DeveloperRepository repo;
 
@@ -41,6 +44,17 @@ class DeveloperController {
         }
         final var dev = developer();
         dev.setApiToken(generateApiToken());
+        return DeveloperDetail.from(repo.save(dev));
+    }
+
+    @PostMapping("qouta")
+    DeveloperDetail updateQouta() {
+        final var dev = developer();
+        if (isAtLeastNextDay(dev.getLastUsed())) {
+            dev.setQouta(QOUTA_LIMIT);
+        }
+        dev.setQouta(dev.getQouta() - 1);
+        dev.setLastUsed(Instant.now().getEpochSecond());
         return DeveloperDetail.from(repo.save(dev));
     }
 
@@ -75,8 +89,7 @@ class DeveloperController {
             .encodeToString(
                 AuthToken
                     .generateToken(userService.getUsername(),
-                        UUID.randomUUID().toString())
-                    .getBytes());
+                        String.valueOf(Instant.now().getEpochSecond())).getBytes());
     }
 
     private boolean exists(final String username) {
@@ -96,8 +109,20 @@ class DeveloperController {
     private DeveloperDetail detail() {
         if (exists(userService.getUsername())) {
             final var dao = repo.findOneByUsername(userService.getUsername()).get();
+            if (isAtLeastNextDay(dao.getLastUsed())) {
+                dao.setLastUsed(Instant.now().getEpochSecond());
+                dao.setQouta(QOUTA_LIMIT);
+                repo.save(dao);
+            }
             return DeveloperDetail.from(dao);
         }
         return DeveloperDetail.empty();
+    }
+
+    // FIXME: not ideal, e.g. if not used exactly one month or one year then this won't work
+    private static boolean isAtLeastNextDay(long time) {
+        final LocalDateTime now = LocalDateTime.now();
+        final LocalDateTime prev = LocalDateTime.ofEpochSecond(time, 0, ZoneOffset.UTC);
+        return now.getDayOfMonth() != prev.getDayOfMonth() ? true : false;
     }
 }

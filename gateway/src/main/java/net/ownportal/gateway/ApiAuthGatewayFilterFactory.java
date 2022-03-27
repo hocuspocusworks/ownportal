@@ -28,15 +28,18 @@ public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Ap
     }
 
     private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("hitting API auth filter");
+        log.debug("hitting API auth filter");
         return AuthToken
             .validate(extractApiToken(exchange))
+            .flatMap(AuthToken::qoutaCheck)
             .flatMap(result -> processValidation(result, exchange, chain));
     }
 
     private Mono<Void> processValidation(JwtResult result, ServerWebExchange exchange, GatewayFilterChain chain) {
-        if (result.isAuthorised()) {
+        if (result.isAuthorised() && !result.isLimitReached()) {
             return chain.filter(exchange);
+        } else if (result.isLimitReached()) {
+            return limitReached(exchange);
         }
         return discard(exchange);
     }

@@ -12,6 +12,7 @@ class DeveloperDetail {
     private final String email;
     private final boolean paidSubscription;
     private final long qouta;
+    private final long lastUsed;
     private final String token;
 
     public static DeveloperDetail empty() {
@@ -25,6 +26,7 @@ class DeveloperDetail {
             .paidSubscription(dao.isPaidSubscription())
             .qouta(dao.getQouta())
             .token(dao.getApiToken())
+            .lastUsed(dao.getLastUsed())
             .build();
     }
 }

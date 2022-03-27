@@ -1,5 +1,7 @@
 package net.ownportal.portal.developer;
 
+import java.time.Instant;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -25,6 +27,7 @@ class DeveloperDao {
     private String email;
     private boolean paidSubscription;
     private long qouta;
+    private long lastUsed;
     private String apiToken;
 
     private DeveloperDao() {}
@@ -39,6 +42,7 @@ class DeveloperDao {
         dao.setEmail(detail.getEmail());
         dao.setPaidSubscription(detail.isPaidSubscription());
         dao.setQouta(detail.getQouta());
+        dao.setLastUsed(detail.getLastUsed());
         return dao;
     }
 
@@ -46,6 +50,7 @@ class DeveloperDao {
         final var dao = new DeveloperDao();
         dao.setPaidSubscription(false);
         dao.setQouta(100L);
+        dao.setLastUsed(Instant.now().getEpochSecond());
         return dao;
     }
 }
