@@ -1,10 +1,9 @@
 package net.ownportal.portal.developer;
 
+import java.util.Base64;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletResponse;
-
-import com.github.f4b6a3.uuid.codec.base.Base62Codec;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import net.ownportal.portal.AuthToken;
 import net.ownportal.portal.UserDetail;
 import net.ownportal.portal.UserLogin;
 import net.ownportal.portal.WebToken;
@@ -71,7 +71,12 @@ class DeveloperController {
     }
 
     private String generateApiToken() {
-        return Base62Codec.INSTANCE.encode(UUID.randomUUID());
+        return Base64.getEncoder()
+            .encodeToString(
+                AuthToken
+                    .generateToken(userService.getUsername(),
+                        UUID.randomUUID().toString())
+                    .getBytes());
     }
 
     private boolean exists(final String username) {
