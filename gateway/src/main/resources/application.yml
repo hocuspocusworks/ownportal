@@ -26,6 +26,7 @@ spring:
           - Path=/portal/**
           filters:
           - StripPrefix=1
+          - WebAuth
         - id: user
           uri: http://localhost:8077
           predicates:

@@ -1,4 +1,4 @@
-package net.ownportal.portal.feed;
+package net.ownportal.portal.user;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @RequestMapping("/user")
 @Slf4j
-public class UserController {
+class UserController {
     private Algorithm algorithm;
     private UserRepository userRepository;
 
@@ -32,7 +32,7 @@ public class UserController {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "";
         }
-        final var token = generateToken();
+        final var token = generateToken(userOpt.get().getUsername());
         response.addCookie(getCookie(token));
         return "";
     }
@@ -58,9 +58,10 @@ public class UserController {
         return cookie;
     }
 
-    private String generateToken() {
+    private String generateToken(final String payload) {
         return JWT.create()
             .withIssuer("ownportal")
+            .withClaim("user", payload)
             .sign(algorithm);
     }
 

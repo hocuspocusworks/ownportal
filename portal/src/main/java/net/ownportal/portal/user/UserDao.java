@@ -1,4 +1,4 @@
-package net.ownportal.portal.feed;
+package net.ownportal.portal.user;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -11,7 +11,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class UserDao {
+class UserDao {
     @NonNull
     private String username;
     @NonNull

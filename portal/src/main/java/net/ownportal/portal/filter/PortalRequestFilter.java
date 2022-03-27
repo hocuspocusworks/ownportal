@@ -7,6 +7,7 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -23,8 +24,10 @@ class PortalRequestFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
     throws IOException, ServletException {
-        // TODO Auto-generated method stub
-        userService.username("test").qouta(1000);
+        final var httpRequest = (HttpServletRequest) request;
+        final var user = httpRequest.getHeader("X-Web-User");
+
+        userService.username(user).qouta(1000);
 
         chain.doFilter(request, response);
 

@@ -41,7 +41,12 @@ public class WebAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<We
 
     private Mono<Void> processValidation(JwtToken.JwtResult auth, ServerWebExchange exchange, GatewayFilterChain chain) {
         if (auth.isAuthorised()) {
-            return chain.filter(exchange);
+            var request = exchange.getRequest()
+                .mutate()
+                .header("X-Web-User", auth.getUser())
+                .build();
+            var mutExchange = exchange.mutate().request(request).build();
+            return chain.filter(mutExchange);
         }
         exchange.getResponse().setStatusCode(HttpStatus.FORBIDDEN);
         return exchange.getResponse().setComplete();

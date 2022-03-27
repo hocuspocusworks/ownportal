@@ -221,6 +221,7 @@ export default {
             axios({
                 method: "get",
                 url: me,
+                withCredentials: true,
                 timeout: 1000*5
                 }).then(response => {
                     this.updateView(response.data);
