@@ -11,6 +11,8 @@ import reactor.core.publisher.Mono;
 @Slf4j
 class JwtToken {
     private static JWTVerifier verifier;
+    private static final JwtResult AUTHORISED = new JwtResult(true);
+    private static final JwtResult UNAUTHORISED = new JwtResult(false);
 
     static {
         try {
@@ -31,16 +33,16 @@ class JwtToken {
                     verifier.verify(t);
                 } catch (Exception ex) {
                     log.info("could not validate token={}", t);
-                    return Mono.just(new JwtResult(false));
+                    return Mono.just(UNAUTHORISED);
                 }
-                return Mono.just(new JwtResult(true));
+                return Mono.just(AUTHORISED);
             });
     }
 
     static class JwtResult {
-        public boolean authorised;
+        private final boolean authorised;
 
-        public JwtResult(boolean auth) {
+        private JwtResult(boolean auth) {
             this.authorised = auth;
         }
 
