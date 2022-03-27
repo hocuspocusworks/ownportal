@@ -11,11 +11,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
-// @CrossOrigin(origins = "http://localhost:3000",
-//         methods = { RequestMethod.GET, RequestMethod.POST, RequestMethod.OPTIONS },
-//         allowCredentials = "true")
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     private Algorithm algorithm;
     private UserRepository userRepository;
@@ -32,19 +32,36 @@ public class UserController {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             return "";
         }
-        response.addCookie(getCookie());
+        final var token = generateToken();
+        response.addCookie(getCookie(token));
         return "";
     }
 
-    private Cookie getCookie() {
-        String token = JWT.create()
-                .withIssuer("ownportal")
-                .sign(algorithm);
-        Cookie cookie = new Cookie("ownportal", token);
+    @PostMapping("logout")
+    public String logout(final HttpServletResponse response) {
+        log.debug("unsetting the cookie");
+        response.addCookie(getCookie(null, 0));
+        return "";
+    }
+
+    private Cookie getCookie(final String content) {
+        Cookie cookie = new Cookie("ownportal", content);
         cookie.setHttpOnly(true);
         cookie.setSecure(true);
         cookie.setPath("/");
         return cookie;
+    }
+
+    private Cookie getCookie(final String content, final int expiry) {
+        final var cookie = getCookie(content);
+        cookie.setMaxAge(expiry);
+        return cookie;
+    }
+
+    private String generateToken() {
+        return JWT.create()
+            .withIssuer("ownportal")
+            .sign(algorithm);
     }
 
     @PostMapping("register")
