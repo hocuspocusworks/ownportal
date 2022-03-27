@@ -31,3 +31,7 @@ spring:
           uri: http://localhost:8077
           predicates:
           - Path=/user/**
+        - id: developer
+          uri: http://localhost:8077
+          predicates:
+          - Path=/developer/**

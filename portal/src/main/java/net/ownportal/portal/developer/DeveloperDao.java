@@ -20,6 +20,8 @@ class DeveloperDao {
     private String password;
     @NonNull
     private String email;
+    private boolean paidSubscription;
+    private long qouta;
     private String apiToken;
 
     private DeveloperDao() {}
@@ -28,7 +30,19 @@ class DeveloperDao {
         return dao;
     }
 
+    public static DeveloperDao from(final DeveloperDetail detail) {
+        final var dao = newDao();
+        dao.setUsername(detail.getUsername());
+        dao.setEmail(detail.getEmail());
+        dao.setPaidSubscription(detail.isPaidSubscription());
+        dao.setQouta(detail.getQouta());
+        return dao;
+    }
+
     public static DeveloperDao newDao() {
-        return new DeveloperDao();
+        final var dao = new DeveloperDao();
+        dao.setPaidSubscription(false);
+        dao.setQouta(100L);
+        return dao;
     }
 }

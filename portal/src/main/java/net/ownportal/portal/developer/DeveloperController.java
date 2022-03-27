@@ -29,19 +29,20 @@ class DeveloperController {
     }
 
     @GetMapping("me")
-    DeveloperDao me() {
+    DeveloperDetail me() {
         return developer();
     }
 
     @GetMapping("token")
-    DeveloperDao newApiToken(HttpServletResponse response) {
+    DeveloperDetail newApiToken(HttpServletResponse response) {
         final var dev = developer();
         if (dev.getUsername().isBlank()) {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            return DeveloperDao.empty();
+            return DeveloperDetail.empty();
         }
-        dev.setApiToken(generateApiToken());
-        return repo.save(dev);
+        final var dao = DeveloperDao.from(dev);
+        dao.setApiToken(generateApiToken());
+        return DeveloperDetail.from(repo.save(dao));
     }
 
     @PostMapping("login")
@@ -81,10 +82,11 @@ class DeveloperController {
         return true;
     }
 
-    private DeveloperDao developer() {
+    private DeveloperDetail developer() {
         if (exists(userService.getUsername())) {
-            return repo.findOneByUsername(userService.getUsername()).get();
+            final var dao = repo.findOneByUsername(userService.getUsername()).get();
+            return DeveloperDetail.from(dao);
         }
-        return DeveloperDao.empty();
+        return DeveloperDetail.empty();
     }
 }
