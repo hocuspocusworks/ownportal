@@ -14,9 +14,9 @@ import reactor.core.publisher.Mono;
 public class AccessLogFilter implements GlobalFilter, Ordered {
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("access log start");
+        log.debug("access log start");
         return chain.filter(exchange)
-            .then(Mono.fromRunnable(() -> log.info("access log end")));
+            .then(Mono.fromRunnable(() -> log.debug("access log end")));
     }
 
     @Override

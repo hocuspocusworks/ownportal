@@ -17,7 +17,7 @@ public class QuotaGatewayFilterFactory extends AbstractGatewayFilterFactory<Quot
     @Override
     public GatewayFilter apply(Config config) {
         return (exchange, chain) -> {
-            log.info("modifying qouta");
+            log.debug("modifying qouta");
             return chain.filter(exchange);
         };
     }

@@ -24,7 +24,7 @@ public class WebAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<We
     }
 
     private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        log.info("hitting WEB auth filter");
+        log.debug("hitting WEB auth filter");
         return JwtToken
             .validate(extractJwtToken(exchange))
             .flatMap(auth -> processValidation(auth, exchange, chain));

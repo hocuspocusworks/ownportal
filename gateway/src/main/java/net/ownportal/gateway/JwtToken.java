@@ -24,7 +24,7 @@ class JwtToken {
     }
     
     public static Mono<JwtResult> validate(String token) {
-        log.info("validating JWT token");
+        log.debug("validating JWT token");
         return Mono.just(token)
             .flatMap(t -> {
                 var user = "";
