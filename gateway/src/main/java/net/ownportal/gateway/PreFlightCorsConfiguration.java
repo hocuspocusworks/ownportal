@@ -20,7 +20,7 @@ public class PreFlightCorsConfiguration {
     private static final String ALLOWED_HEADERS = "content-type";
     private static final String ALLOWED_METHODS = "GET, PUT, POST, DELETE, OPTIONS, PATCH";
     private static final String ALLOWED_ORIGIN = "http://localhost:3000";
-    private static final String MAX_AGE = "7200"; // 2 hours (2 * 60 * 60)
+    private static final String MAX_AGE = "7200";
 
     @Bean
     public WebFilter corsFilter() {
@@ -31,10 +31,7 @@ public class PreFlightCorsConfiguration {
                 HttpHeaders headers = response.getHeaders();
                 headers.add("Access-Control-Allow-Origin", ALLOWED_ORIGIN);
                 headers.add("Access-Control-Allow-Methods", ALLOWED_METHODS);
-                headers.add("Access-Control-Max-Age", MAX_AGE); // OPTION how long the results of a preflight request
-                                                                // (that is the information contained in the
-                                                                // Access-Control-Allow-Methods and
-                                                                // Access-Control-Allow-Headers headers) can be cached.
+                headers.add("Access-Control-Max-Age", MAX_AGE);
                 headers.add("Access-Control-Allow-Headers", ALLOWED_HEADERS);
                 headers.add("Access-Control-Allow-Credentials", "true");
                 if (request.getMethod() == HttpMethod.OPTIONS) {
