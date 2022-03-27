@@ -37,14 +37,11 @@ export default {
             axios.post(url, payload, {withCredentials: true})
                 .then(resp => {
                     if (resp.status === 200) {
+                        localStorage.setItem('loggedIn', 'true');
                         router.push("/");
                     }
                     console.log(resp);
                 });
-            // if (this.isValidToken() || this.isValidCredentials()) {
-            //     localStorage.token = "new_token";
-            //     router.push("/");
-            // }
         },
         register() {
             router.push("/register");
@@ -53,12 +50,11 @@ export default {
             return this.username === "admin" && this.password === "admin" ? true : false;
         },
         isValidToken() {
-            return localStorage.token === "new_token" ? true : false;
+            return localStorage.getItem('loggedIn') === "true" ? true : false;
         }
     },
     mounted() {
-        console.log(localStorage.token);
-        if (localStorage.token === "new_token") {
+        if (this.isValidToken()) {
             router.push("/");
         }
     },

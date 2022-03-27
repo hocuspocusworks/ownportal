@@ -53,7 +53,7 @@
     </div>
 
     <div class="mt-2">
-        <button type="button" class="btn btn-danger w-100">Logout</button>
+        <button type="button" class="btn btn-danger w-100" @click="logout">Logout</button>
     </div>
 
     <!-- addSourceModal -->
@@ -242,6 +242,9 @@ export default {
         updateError() {
             this.err = true;
             this.loading = false;
+        },
+        logout() {
+            this.$emit('logout');
         }
     },
     mounted() {
