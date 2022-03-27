@@ -52,7 +52,8 @@
 
 <script>
 import router from "../router";
-// import axios from 'axios';
+import axios from 'axios';
+import config from "../config";
 
 export default {
     name: 'Register',
@@ -67,8 +68,14 @@ export default {
     methods: {
         register() {
             if (this.passwordValid()) {
-                // axios.post()
-                router.push("/login");
+                let url = config.gateway + "/user/register";
+                let payload = {'username': this.username, 'password': this.password, 'email': this.email};
+                axios.post(url, payload)
+                    .then(response => {
+                        if (response.status === 200) {
+                            router.push("/login");
+                        }
+                    });
             }
         },
         passwordValid() {

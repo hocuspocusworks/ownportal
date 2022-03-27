@@ -84,9 +84,16 @@ class FeedService {
     }
 
     private void createGroupIfNotExist(final String name) {
-        final var feed = repo.findOneByUsername(userService.getUsername()).get();
-        if (feedContainsGroup(name, feed)) {
+        final var opt = repo.findOneByUsername(userService.getUsername());
+        if (opt.isPresent() && feedContainsGroup(name, opt.get())) {
             return;
+        }
+        FeedDao feed;
+        if (opt.isPresent()) {
+            feed = opt.get();
+        } else {
+            feed = new FeedDao();
+            feed.setUsername(userService.getUsername());
         }
         addNewGroup(name, feed);
         log.debug("saving new feed group for {}", userService.getUsername());

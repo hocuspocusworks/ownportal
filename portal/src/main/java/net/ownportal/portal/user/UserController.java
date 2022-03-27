@@ -1,10 +1,6 @@
 package net.ownportal.portal.user;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,61 +8,56 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.extern.slf4j.Slf4j;
+import net.ownportal.portal.UserDetail;
+import net.ownportal.portal.UserLogin;
+import net.ownportal.portal.WebToken;
 
 @RestController
 @RequestMapping("/user")
 @Slf4j
 class UserController {
-    private Algorithm algorithm;
     private UserRepository userRepository;
 
     public UserController(UserRepository repo) {
-        algorithm = Algorithm.HMAC512("secret");
         userRepository = repo;
     }
 
+    @PostMapping("register")
+    UserDao register(@RequestBody UserDetail user, HttpServletResponse response) {
+        if (exists(user.getUsername())) {
+            response.setStatus(HttpServletResponse.SC_CONFLICT);
+            return UserDao.empty();
+        }
+        final var userDao = new UserDao();
+        userDao.setUsername(user.getUsername());
+        userDao.setPassword(user.getPassword());
+        userDao.setEmail(user.getEmail());
+        return userRepository.save(userDao);
+    }
+
     @PostMapping("login")
-    public String login(@RequestBody UserDao input, final HttpServletResponse response) {
+    public String login(@RequestBody UserLogin input, final HttpServletResponse response) {
         var userOpt = userRepository.findOneByUsernameAndPassword(input.getUsername(), input.getPassword());
         if (userOpt.isEmpty()) {
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return "";
         }
-        final var token = generateToken(userOpt.get().getUsername());
-        response.addCookie(getCookie(token));
+        final var token = WebToken.generateToken(userOpt.get().getUsername());
+        response.addCookie(WebToken.getCookie(token));
         return "";
     }
 
     @PostMapping("logout")
     public String logout(final HttpServletResponse response) {
         log.debug("unsetting the cookie");
-        response.addCookie(getCookie(null, 0));
+        response.addCookie(WebToken.getCookie(null, 0));
         return "";
     }
 
-    private Cookie getCookie(final String content) {
-        Cookie cookie = new Cookie("ownportal", content);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        return cookie;
-    }
-
-    private Cookie getCookie(final String content, final int expiry) {
-        final var cookie = getCookie(content);
-        cookie.setMaxAge(expiry);
-        return cookie;
-    }
-
-    private String generateToken(final String payload) {
-        return JWT.create()
-            .withIssuer("ownportal")
-            .withClaim("user", payload)
-            .sign(algorithm);
-    }
-
-    @PostMapping("register")
-    public String register() {
-        return "";
+    private boolean exists(final String username) {
+        if (userRepository.findOneByUsername(username).isEmpty()) {
+            return false;
+        }
+        return true;
     }
 }

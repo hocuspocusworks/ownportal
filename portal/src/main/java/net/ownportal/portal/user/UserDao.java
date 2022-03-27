@@ -12,8 +12,16 @@ import lombok.ToString;
 @Getter
 @Setter
 class UserDao {
+    private static UserDao dao = new UserDao();
+
     @NonNull
     private String username;
     @NonNull
     private String password;
+    @NonNull
+    private String email;
+
+    static UserDao empty() {
+        return dao;
+    }
 }
