@@ -201,7 +201,7 @@ export default {
                 "name": this.newGroupName
             };
             let group = config.gateway + "/portal/feed/newGroup";
-            axios.post(group, payload);
+            axios.post(group, payload, {withCredentials: true});
             this.newGroupName = "";
         },
         createSource() {
@@ -212,7 +212,7 @@ export default {
                 "url": this.newRssFeedUrl
             };
             let stream = config.gateway + "/portal/feed/newStream";
-            axios.post(stream, payload);
+            axios.post(stream, payload, {withCredentials: true});
             this.newSourceName = "";
             this.newRssFeedUrl = "";
         },
