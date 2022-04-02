@@ -6,11 +6,14 @@
                 <InputText type="text" v-model="value3" placeholder="Search" />
             </span>
         </div>
-        <div class="col-12 text-left">
+        <!-- <div class="col-12 text-left">
             <Button label="Dashboard" icon="pi pi-bars" class="p-button-text ml-3 text-white" />
+        </div> -->
+        <div class="col-12 text-left">
+            <Button label="Read later" icon="pi pi-bookmark" class="p-button-text ml-3 text-white" />
         </div>
         <div class="col-12 text-left">
-            <Button label="Read later" icon="pi pi-star" class="p-button-text ml-3 text-white" />
+            <Button label="Favourites" icon="pi pi-heart" class="p-button-text ml-3 text-white" />
         </div>
         <div class="col-12 text-left">
             <Button label="Explore" icon="pi pi-cloud" class="p-button-text ml-3 text-white" />
