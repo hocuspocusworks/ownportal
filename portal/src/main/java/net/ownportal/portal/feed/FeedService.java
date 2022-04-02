@@ -1,6 +1,7 @@
 package net.ownportal.portal.feed;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -136,6 +137,7 @@ class FeedService {
     private void addNewGroup(String name, FeedDao feed) {
         final var group = new GroupDao();
         group.setName(name);
+        group.setStreams(Collections.emptyList());
         var groups = groupsForFeed(feed);
         groups.add(group);
         feed.setGroups(groups);

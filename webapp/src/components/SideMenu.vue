@@ -16,16 +16,19 @@
             <Button label="Explore" icon="pi pi-cloud" class="p-button-text ml-3 text-white" />
         </div>
     </div>
+    <ProgressSpinner v-if="loading" />
+    <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>
     <Tree :value="root" class="border-none text-white bg-bluegray-600" @node-select="onNodeSelect"
             selectionMode="single" v-model:selectionKeys="selectedKey"></Tree>
-
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-    <div v-if="err" class="alert alert-danger" role="alert">
-        Cannot load the feed.
-    </div>
-
+    <Inplace :closable="true">
+        <template #display>
+            <span class="pi pi-plus" style="vertical-align: middle"></span>
+            {{newGroupName || 'Add new group'}}
+        </template>
+        <template #content>
+            <InputText v-model="newGroupName" autoFocus @keyup.enter="createGroupCallback" />
+        </template>
+    </Inplace>
 </template>
 
 <script>
@@ -35,6 +38,9 @@ import Card from 'primevue/card';
 import Tree from 'primevue/tree';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import Inplace from 'primevue/inplace';
+import ProgressSpinner from 'primevue/progressspinner';
+import Message from 'primevue/message';
 
 export default {
     name: "SideMenu",
@@ -42,7 +48,10 @@ export default {
         Card,
         Tree,
         Button,
-        InputText
+        InputText,
+        Inplace,
+        ProgressSpinner,
+        Message
     },
     data() {
         return {
@@ -50,6 +59,7 @@ export default {
             loading: true,
             root: [],
             selectedKey: "",
+            newGroupName: "",
         }
     },
     methods: {
@@ -60,6 +70,7 @@ export default {
             this.createSource();
         },
         createGroup() {
+            console.log("invoked new group callback");
             let payload = {
                 "name": this.newGroupName
             };

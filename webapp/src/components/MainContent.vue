@@ -2,12 +2,8 @@
     <div class="grid min-w-full bg-bluegray-400" style="height: 62px;">
     </div>
     <div class="grid min-w-full mt-2">
-        <div v-if="loading" class="spinner-border" role="status">
-        <span class="visually-hidden">Loading...</span>
-        </div>
-        <div v-if="err" class="alert alert-danger" role="alert">
-            Cannot load the feed.
-        </div>
+        <ProgressSpinner v-if="loading" />
+        <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>
 
         <div v-for="(item,i) in content" :key="i" class="p-2 sm:col-12 lg:col-4">
         <div class="min-h-full border-1 border-round border-bluegray-100" style="height: 300px;">
@@ -36,11 +32,15 @@
 import axios from 'axios';
 import config from '../config';
 import Card from 'primevue/card';
+import ProgressSpinner from 'primevue/progressspinner';
+import Message from 'primevue/message';
 
 export default {
     name: 'MainContent',
     components: {
-        Card
+        Card,
+        ProgressSpinner,
+        Message
     },
     props: {
         contentUrl: String,
