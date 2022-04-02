@@ -1,5 +1,5 @@
 <template>
-    <div class="grid min-w-full bg-bluegray-400" style="height: 62px;">
+    <div class="grid min-w-full bg-bluegray-400 align-content-center" style="height: 62px;">
     </div>
     <div class="grid min-w-full mt-2">
         <ProgressSpinner v-if="loading" />
