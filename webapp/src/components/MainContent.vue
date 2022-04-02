@@ -1,5 +1,8 @@
 <template>
     <div class="grid min-w-full bg-bluegray-400 align-content-center" style="height: 62px;">
+        <div class="flex-grow-1"></div>
+        <Tag value="DEV" class="mr-2" />
+        <Button icon="pi pi-power-off" class="p-button-lg p-button-text p-button-rounded p-button-danger" />
     </div>
     <div class="grid min-w-full mt-2">
         <ProgressSpinner v-if="loading" />
@@ -15,6 +18,7 @@
                         <small>{{ item.source }}</small>
                     </template>
                     <template class="flex-grow-1" #content>
+                        <a v-if="!item.description" style="text-decoration: none; color: black;" target="_blank" :href="item.link">Missing content...</a>
                         <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">{{ item.description }}</a>
                     </template>
                     <template #footer>
@@ -40,6 +44,7 @@ import Card from 'primevue/card';
 import ProgressSpinner from 'primevue/progressspinner';
 import Message from 'primevue/message';
 import Button from 'primevue/button';
+import Tag from 'primevue/tag';
 
 export default {
     name: 'MainContent',
@@ -47,7 +52,8 @@ export default {
         Card,
         ProgressSpinner,
         Message,
-        Button
+        Button,
+        Tag
     },
     props: {
         contentUrl: String,
