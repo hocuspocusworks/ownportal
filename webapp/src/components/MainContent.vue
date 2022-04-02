@@ -1,41 +1,47 @@
 <template>
-    <div v-if="loading" class="spinner-border" role="status">
-      <span class="visually-hidden">Loading...</span>
+    <div class="grid min-w-full bg-bluegray-400" style="height: 62px;">
     </div>
-    <div v-if="err" class="alert alert-danger" role="alert">
-        Cannot load the feed.
-    </div>
-
-    <div v-for="(item,i) in content" :key="i" class="card mb-3 w-100">
-    <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">
-        <div class="row g-0">
-            <div class="col-md-2">
-                <div style="display: flex; align-items: center; justify-content: center; min-height: 100%;">
-                    <img style="width: 32px; height: 32px;" :src="baseUrl(item.link)+'/favicon.ico'"
-                        onerror="this.onerror=null;this.src='https://www.freeiconspng.com/uploads/no-image-icon-6.png';" />
-                </div>
-            </div>
-            <div class="col-md-10">
-                <div class="card-body">
-                    <h5 class="card-title">{{ item.title }}</h5>
-                    <p class="card-text">{{ item.description }}</p>
-                    <p class="card-text">
-                        <small class="text-muted">{{ item.publishedDate }}</small>
-                        <span class="ms-2 badge rounded-pill bg-light text-dark">{{ item.source }}</span>
-                    </p>
-                </div>
-            </div>
+    <div class="grid min-w-full mt-2">
+        <div v-if="loading" class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
         </div>
-    </a>
+        <div v-if="err" class="alert alert-danger" role="alert">
+            Cannot load the feed.
+        </div>
+
+        <div v-for="(item,i) in content" :key="i" class="p-2 sm:col-12 lg:col-4">
+        <div class="min-h-full border-1 border-round border-bluegray-100" style="height: 300px;">
+            <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">
+                <Card>
+                    <template #title>
+                        {{ item.title }}
+                    </template>
+                    <template #subtitle>
+                        {{ item.source }}
+                    </template>
+                    <template class="flex-grow-1" #content>
+                        {{ item.description }}
+                    </template>
+                    <template #footer>
+                        <small class="text-muted">{{ item.publishedDate }}</small>
+                    </template>
+                </Card>
+            </a>
+        </div>
+        </div>
     </div>
 </template>
 
 <script>
 import axios from 'axios';
 import config from '../config';
+import Card from 'primevue/card';
 
 export default {
     name: 'MainContent',
+    components: {
+        Card
+    },
     props: {
         contentUrl: String,
     },
@@ -57,7 +63,7 @@ export default {
             this.loading = true;
             this.err = false;
             let request = config.gateway + "/api/rss/fetchAll";
-            let data = {"urls": Object.values(url).map(i => i.url)};
+            let data = {"urls": url};
             axios.post(request, data, {withCredentials: true})
                 .then(response => {
                     this.content = response.data.data.nodes;

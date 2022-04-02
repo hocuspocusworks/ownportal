@@ -1,6 +1,5 @@
 <template>
-  <h1>OwnPortal</h1>
-  <p>
+  <p class="m-0 p-0">
     <router-link to="/"></router-link>
     <router-link to="/login"></router-link>
   </p>
@@ -9,8 +8,6 @@
 
 <script>
 import router from './router/index';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.min.js';
 
 export default {
   name: 'App',

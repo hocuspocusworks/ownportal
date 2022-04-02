@@ -4,5 +4,18 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.p-card-body {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  height: 300px;
+}
+
+.p-card-content {
+  flex-grow: 1;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  height: 60px;
 }
