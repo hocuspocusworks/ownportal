@@ -7,22 +7,27 @@
 
         <div v-for="(item,i) in content" :key="i" class="p-2 sm:col-12 lg:col-4">
         <div class="min-h-full border-1 border-round border-bluegray-100" style="height: 300px;">
-            <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">
                 <Card>
                     <template #title>
-                        {{ item.title }}
+                        <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">{{ item.title }}</a>
                     </template>
                     <template #subtitle>
-                        {{ item.source }}
+                        <small>{{ item.source }}</small>
                     </template>
                     <template class="flex-grow-1" #content>
-                        {{ item.description }}
+                        <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">{{ item.description }}</a>
                     </template>
                     <template #footer>
-                        <small class="text-muted">{{ item.publishedDate }}</small>
+                        <div class="flex">
+                            <div class="flex-grow-1 text-left">
+                                <Button icon="pi pi-check" class="p-button-text p-button-rounded" />
+                                <Button icon="pi pi-heart" class="p-button-text p-button-rounded p-button-help" />
+                                <Button icon="pi pi-bookmark" class="p-button-text p-button-rounded p-button-secondary" />
+                            </div>
+                            <div class="flex-column align-items-center" style="margin: auto;"><small class="text-muted">{{ item.publishedDate }}</small></div>
+                        </div>
                     </template>
                 </Card>
-            </a>
         </div>
         </div>
     </div>
@@ -34,13 +39,15 @@ import config from '../config';
 import Card from 'primevue/card';
 import ProgressSpinner from 'primevue/progressspinner';
 import Message from 'primevue/message';
+import Button from 'primevue/button';
 
 export default {
     name: 'MainContent',
     components: {
         Card,
         ProgressSpinner,
-        Message
+        Message,
+        Button
     },
     props: {
         contentUrl: String,
