@@ -29,7 +29,7 @@
             {{newGroupName || 'Add new group'}}
         </template>
         <template #content>
-            <InputText v-model="newGroupName" autoFocus @keyup.enter="createGroupCallback" />
+            <InputText v-model="newGroupName" placeholder="type name followed by enter" autoFocus @keyup.enter="createGroupCallback" />
         </template>
     </Inplace>
 </template>
