@@ -1,0 +1,29 @@
+version: '3.9'
+services:
+  mongodb:
+    image: mongo:5.0.6
+    container_name: mongodb
+    ports:
+      - "27017:27017"
+  fetcher:
+    container_name: fetcher
+    build:
+      context: ./fetcher
+  portal:
+    container_name: portal
+    build:
+      context: ./portal
+    depends_on:
+      - mongodb
+  gateway:
+    container_name: gateway
+    build:
+      context: ./gateway
+    ports:
+      - "8080:8080"
+  webapp:
+    container_name: webapp
+    build:
+      context: ./webapp
+    ports:
+      - "3000:80"

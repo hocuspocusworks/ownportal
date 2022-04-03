@@ -3,7 +3,7 @@ spring:
     gateway:
       routes:
         - id: fetcher_route_api
-          uri: http://localhost:8070
+          uri: http://fetcher:8070
           predicates:
           - Path=/api/**
           - Header=Authorization
@@ -12,7 +12,7 @@ spring:
           - ApiAuth
           - Quota
         - id: fetcher_route_web
-          uri: http://localhost:8070
+          uri: http://fetcher:8070
           predicates:
           - Path=/api/**
           - Cookie=ownportal, .*
@@ -21,17 +21,17 @@ spring:
           - WebAuth
           - Quota
         - id: portal_route
-          uri: http://localhost:8077
+          uri: http://portal:8077
           predicates:
           - Path=/portal/**
           filters:
           - StripPrefix=1
           - WebAuth
         - id: user
-          uri: http://localhost:8077
+          uri: http://portal:8077
           predicates:
           - Path=/user/**
         - id: developer
-          uri: http://localhost:8077
+          uri: http://portal:8077
           predicates:
           - Path=/developer/**

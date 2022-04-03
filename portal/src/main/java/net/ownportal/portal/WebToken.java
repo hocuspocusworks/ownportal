@@ -1,9 +1,9 @@
 package net.ownportal.portal;
 
-import javax.servlet.http.Cookie;
-
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+
+import org.springframework.http.ResponseCookie;
 
 public class WebToken {
     private static Algorithm algorithm;
@@ -12,18 +12,25 @@ public class WebToken {
         algorithm = Algorithm.HMAC512("secret");
     }
 
-    public static Cookie getCookie(final String content) {
-        Cookie cookie = new Cookie("ownportal", content);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        return cookie;
+    public static String getCookie(final String content) {
+        return ResponseCookie.from("ownportal", content)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .sameSite("None")
+            .build()
+            .toString();
     }
 
-    public static Cookie getCookie(final String content, final int expiry) {
-        final var cookie = getCookie(content);
-        cookie.setMaxAge(expiry);
-        return cookie;
+    public static String getCookie(final String content, final int expiry) {
+        return ResponseCookie.from("ownportal", content)
+            .httpOnly(true)
+            .secure(true)
+            .path("/")
+            .sameSite("None")
+            .maxAge(expiry)
+            .build()
+            .toString();
     }
 
     public static String generateToken(final String payload) {

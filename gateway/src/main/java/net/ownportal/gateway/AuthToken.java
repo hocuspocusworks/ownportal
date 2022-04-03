@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
 
 @Slf4j
 public class AuthToken {
-    private static final String PORTAL_URI = "http://localhost:8077";
+    private static final String PORTAL_URI = "http://portal:8077";
     private static JWTVerifier verifier;
 
     static {

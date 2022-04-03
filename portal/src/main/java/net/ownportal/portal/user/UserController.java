@@ -2,6 +2,7 @@ package net.ownportal.portal.user;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,14 +44,14 @@ class UserController {
             return "";
         }
         final var token = WebToken.generateToken(userOpt.get().getUsername());
-        response.addCookie(WebToken.getCookie(token));
+        response.addHeader(HttpHeaders.SET_COOKIE, WebToken.getCookie(token));
         return "";
     }
 
     @PostMapping("logout")
     public String logout(final HttpServletResponse response) {
         log.debug("unsetting the cookie");
-        response.addCookie(WebToken.getCookie(null, 0));
+        response.addHeader(HttpHeaders.SET_COOKIE, WebToken.getCookie(null, 0));
         return "";
     }
 

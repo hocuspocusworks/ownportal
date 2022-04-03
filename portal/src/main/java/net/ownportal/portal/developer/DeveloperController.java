@@ -7,6 +7,7 @@ import java.util.Base64;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -66,7 +67,7 @@ class DeveloperController {
             return "";
         }
         final var token = WebToken.generateToken(opt.get().getUsername());
-        response.addCookie(WebToken.getCookie(token));
+        response.addHeader(HttpHeaders.SET_COOKIE, WebToken.getCookie(token));
         return "";
     }
 

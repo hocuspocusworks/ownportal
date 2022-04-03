@@ -1,5 +1,5 @@
 const config = {
-    gateway: "http://localhost:8080"
+    gateway: "http://gateway:8080"
 };
 
 export default config;
