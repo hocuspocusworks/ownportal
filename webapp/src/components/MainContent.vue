@@ -1,9 +1,4 @@
 <template>
-    <div class="grid min-w-full bg-bluegray-400 align-content-center" style="height: 62px;">
-        <div class="flex-grow-1"></div>
-        <Tag value="DEV" class="mr-2" />
-        <Button icon="pi pi-power-off" class="p-button-lg p-button-text p-button-rounded p-button-danger" />
-    </div>
     <div class="grid min-w-full mt-2">
         <ProgressSpinner v-if="loading" />
         <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>

@@ -1,14 +1,5 @@
 <template>
-    <div class="grid">
-        <div class="col-12 bg-bluegray-400">
-            <span class="p-input-icon-left">
-                <i class="pi pi-search" />
-                <InputText type="text" v-model="value3" placeholder="Search" />
-            </span>
-        </div>
-        <!-- <div class="col-12 text-left">
-            <Button label="Dashboard" icon="pi pi-bars" class="p-button-text ml-3 text-white" />
-        </div> -->
+    <div>
         <div class="col-12 text-left">
             <Button label="Read later" icon="pi pi-bookmark" class="p-button-text ml-3 text-white" />
         </div>
