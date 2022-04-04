@@ -13,7 +13,7 @@
                 <Tag value="DEV" class="mr-2" />
             </div>
             <div class="align-self-center">
-                <Button icon="pi pi-power-off" class="p-button-lg p-button-text p-button-rounded p-button-danger" />
+                <Button icon="pi pi-power-off" class="p-button-lg p-button-text p-button-rounded p-button-danger" @click="logout" />
             </div>
         </div>
         <div class="grid min-w-full m-0 p-0">
