@@ -4,7 +4,7 @@
         <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>
 
         <div v-for="(item,i) in content" :key="i" class="p-2 sm:col-12 lg:col-4">
-        <div class="min-h-full border-1 border-round border-bluegray-100" style="height: 300px;">
+        <div class="min-h-full border-1 border-round border-bluegray-50" style="height: 300px;">
                 <Card>
                     <template #title>
                         <a style="text-decoration: none; color: black;" target="_blank" :href="item.link">{{ item.title }}</a>
