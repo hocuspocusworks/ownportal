@@ -39,7 +39,11 @@ public class RssResolver {
         final var items = channel.getItem();
 
         final var rssPage = new RssPage();
-        rssPage.setSource(getChannelName(channel));
+        rssPage.setSource(getChannelItemValue(channel, "title"));
+        rssPage.setSource(getChannelItemValue(channel, "link"));
+        rssPage.setDescription(getChannelItemValue(channel, "description"));
+        rssPage.setDescription(getChannelItemValue(channel, "language"));
+        rssPage.setDescription(getChannelItemValue(channel, "lastBuildDate"));
         int i = 0;
         for (final var item : items) {
             final var rssNode = new RssPage.RssNode();
@@ -59,6 +63,9 @@ public class RssResolver {
                     if (type.equals("pubDate")) {
                         rssNode.setPublishedDate(el.getValue().toString());
                     }
+                    if (type.equals("category")) {
+                        rssNode.getCategories().add(el.getValue().toString());
+                    }
                 }
             }
             rssPage.addNode(rssNode);
@@ -68,21 +75,21 @@ public class RssResolver {
         return rssPage;
     }
 
-    private static String getChannelName(final RssChannel channel) {
-        final var title = channel
+    private static String getChannelItemValue(final RssChannel channel, final String field) {
+        final var item = channel
             .getTitleOrLinkOrDescription()
             .stream()
-            .filter(RssResolver::isTitle)
+            .filter(el -> isField(el, field))
             .collect(Collectors.toList());
-        if (!title.isEmpty()) {
-            return ((JAXBElement) title.get(0)).getValue().toString();
+        if (!item.isEmpty()) {
+            return ((JAXBElement) item.get(0)).getValue().toString();
         }
         return "";
     }
 
-    private static boolean isTitle(Object el) {
+    private static boolean isField(final Object el, final String field) {
         if (el instanceof JAXBElement) {
-            return ((JAXBElement) el).getName().toString().equals("title") ? true : false;
+            return ((JAXBElement) el).getName().toString().toLowerCase().equals(field) ? true : false;
         }
         return false;
     }
