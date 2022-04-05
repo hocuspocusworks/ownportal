@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld.vue'
 import SideMenu from '../components/SideMenu.vue'
 import MainContent from '../components/MainContent.vue'
 import Menubar from 'primevue/menubar';
@@ -41,7 +40,6 @@ import Button from 'primevue/button';
 export default {
     name: 'Home',
     components: {
-        HelloWorld,
         SideMenu,
         MainContent,
         Menubar,
