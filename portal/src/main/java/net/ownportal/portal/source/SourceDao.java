@@ -20,6 +20,7 @@ public class SourceDao {
     private String id;
     private String name;
     private String description;
+    private String language;
     private List<String> categories;
     private String icon;
     private String url;

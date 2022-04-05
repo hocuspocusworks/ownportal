@@ -31,7 +31,7 @@ class ExploreController {
 
     @GetMapping("/rss")
     public SourceDao findRssPage(final String url) {
-        final var result = getRssFeed(url);
+        final var result = getRssFeed(url); // WHY MAKE THE CALL FIRST? BETTER CHECK MONGODB FIRST, THEN CALL IF NOT THERE
         
         if (result == null) {
             return SourceDao.builder().build();
@@ -39,8 +39,9 @@ class ExploreController {
 
         final var source = SourceDao.builder()
             .name(result.getData().getSource())
-            .description("")
+            .description(result.getData().getDescription())
             .icon("")
+            .language(result.getData().getLanguage())
             .categories(Collections.emptyList())
             .url(url)
             .build();
@@ -69,6 +70,10 @@ class ExploreController {
         private static class Data {
             private long size;
             private String source;
+            private String link;
+            private String description;
+            private String language;
+            private String lastBuildDate;
             private List<RssNode> nodes;
 
             @Getter @Setter
@@ -77,6 +82,7 @@ class ExploreController {
                 private String description;
                 private String link;
                 private String publishedDate;
+                private List<String> categories;
             }
         }
     }
