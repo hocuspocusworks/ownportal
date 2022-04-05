@@ -40,10 +40,10 @@ public class RssResolver {
 
         final var rssPage = new RssPage();
         rssPage.setSource(getChannelItemValue(channel, "title"));
-        rssPage.setSource(getChannelItemValue(channel, "link"));
+        rssPage.setLink(getChannelItemValue(channel, "link"));
         rssPage.setDescription(getChannelItemValue(channel, "description"));
-        rssPage.setDescription(getChannelItemValue(channel, "language"));
-        rssPage.setDescription(getChannelItemValue(channel, "lastBuildDate"));
+        rssPage.setLanguage(getChannelItemValue(channel, "language"));
+        rssPage.setLastBuildDate(getChannelItemValue(channel, "lastBuildDate"));
         int i = 0;
         for (final var item : items) {
             final var rssNode = new RssPage.RssNode();
