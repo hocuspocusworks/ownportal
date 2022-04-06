@@ -1,6 +1,7 @@
 package net.ownportal.portal.explore;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,8 +32,8 @@ class ExploreController {
 
     @GetMapping("/rss")
     public SourceDao findRssPage(final String url) {
-        final var result = getRssFeed(url); // WHY MAKE THE CALL FIRST? BETTER CHECK MONGODB FIRST, THEN CALL IF NOT THERE
-        
+        final var result = getRssFeed(url);
+
         if (result == null) {
             return SourceDao.builder().build();
         }
@@ -42,7 +43,7 @@ class ExploreController {
             .description(result.getData().getDescription())
             .icon("")
             .language(result.getData().getLanguage())
-            .categories(Collections.emptyList())
+            .categories(extractCategories(result))
             .url(url)
             .build();
         return service.saveSource(source);
@@ -57,6 +58,16 @@ class ExploreController {
             .bodyToMono(RssFetchResponse.class)
             .onErrorResume(WebClientResponseException.class, ex -> Mono.empty())
             .block();
+    }
+
+    private List<String> extractCategories(RssFetchResponse result) {
+        final var nodes = result.getData().getNodes();
+        var list = new HashSet<String>();
+        for (var item : nodes) {
+            if (item.getCategories().isEmpty()) continue;
+            list.addAll(item.getCategories());
+        }
+        return new ArrayList<>(list);
     }
 
     @Getter @Setter
@@ -82,6 +93,7 @@ class ExploreController {
                 private String description;
                 private String link;
                 private String publishedDate;
+                private List<String> rawCategories;
                 private List<String> categories;
             }
         }

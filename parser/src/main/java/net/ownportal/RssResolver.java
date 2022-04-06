@@ -64,7 +64,12 @@ public class RssResolver {
                         rssNode.setPublishedDate(el.getValue().toString());
                     }
                     if (type.equals("category")) {
-                        rssNode.getCategories().add(el.getValue().toString());
+                        var cat = ((net.ownportal.rssjax.Category) el.getValue()).getValue();
+                        rssNode.getRawCategories().add(cat);
+                        var optCategory = Category.keywordToCategory(cat);
+                        if (optCategory.isPresent()) {
+                            rssNode.getCategories().add(optCategory.get());
+                        }
                     }
                 }
             }

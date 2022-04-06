@@ -31,6 +31,7 @@ public class RssPage {
         private String description;
         private String link;
         private String publishedDate;
+        private List<String> rawCategories = new ArrayList<>();
         private List<String> categories = new ArrayList<>();
     }
 }
