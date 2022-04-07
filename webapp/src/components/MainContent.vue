@@ -51,7 +51,10 @@ export default {
         Tag
     },
     props: {
-        contentUrl: String,
+        contentUrl: {
+            type: Array,
+            default: []
+        }
     },
     data() {
         return {
@@ -61,8 +64,13 @@ export default {
         }
     },
     watch: {
-        contentUrl: function(newUrl, oldUrl) {
-            this.updateView(newUrl);
+        contentUrl: {
+            handler: function(newUrl) {
+                console.log('MainContent url='+newUrl);
+                this.updateView(newUrl);
+            },
+            deep: true,
+            immediate: true
         }
     },
     methods: {

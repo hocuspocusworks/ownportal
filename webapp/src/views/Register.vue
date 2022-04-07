@@ -73,7 +73,7 @@ export default {
                 axios.post(url, payload)
                     .then(response => {
                         if (response.status === 200) {
-                            router.push("/login");
+                            router.push({name: "/login"});
                         }
                     });
             }

@@ -1,12 +1,35 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '../views/Home.vue';
+import Explore from '../views/Explore.vue';
+import MainContent from '../components/MainContent.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 
 const routes = [
-  { path: "/", component: Home },
-  { path: "/login", component: Login },
-  { path: "/register", component: Register }
+  {
+    name: "home",
+    path: "/home",
+    component: Home,
+    redirect: {
+      name: "content",
+      params: {contentUrl: []}
+    },
+    children: [
+      {
+        name: "explore",
+        path: "explore",
+        component: Explore
+      },
+      {
+        name: "content",
+        path: "content",
+        component: MainContent,
+        props: true,
+      }
+    ]
+  },
+  { name: "login", path: "/login", component: Login },
+  { name: "register", path: "/register", component: Register }
 ];
 
 const router = createRouter({

@@ -7,7 +7,7 @@
             <Button label="Favourites" icon="pi pi-heart" class="p-button-text ml-3 text-white" />
         </div>
         <div class="col-12 text-left">
-            <Button label="Explore" icon="pi pi-cloud" class="p-button-text ml-3 text-white" />
+            <Button label="Explore" icon="pi pi-cloud" class="p-button-text ml-3 text-white" @click="toExplore" />
         </div>
     </div>
     <ProgressSpinner v-if="loading" />
@@ -126,8 +126,11 @@ export default {
                     url.push(node.data);
                 }
             }
-            console.log(url);
+            console.log("SideMenu.vue: url="+url);
             this.$emit('feedChanged', url);
+        },
+        toExplore() {
+            this.$emit('explore');
         }
     },
     mounted() {

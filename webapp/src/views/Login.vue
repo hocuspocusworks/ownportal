@@ -38,13 +38,13 @@ export default {
                 .then(resp => {
                     if (resp.status === 200) {
                         localStorage.setItem('loggedIn', 'true');
-                        router.push("/");
+                        router.push({name: "home"});
                     }
                     console.log(resp);
                 });
         },
         register() {
-            router.push("/register");
+            router.push({name: "register"});
         },
         isValidCredentials() {
             return this.username === "admin" && this.password === "admin" ? true : false;
@@ -55,7 +55,7 @@ export default {
     },
     mounted() {
         if (this.isValidToken()) {
-            router.push("/");
+            router.push({name: "home"});
         }
     },
 };

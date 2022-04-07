@@ -18,10 +18,10 @@
         </div>
         <div class="grid min-w-full m-0 p-0">
             <div class="sm:col-6 lg:col-2 bg-bluegray-600 pt-2 min-h-screen">
-                <SideMenu @feed-changed="feedCallback" @logout="logout" />
+                <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" />
             </div>
             <div class="sm:col-6 lg:col-10">
-                <MainContent :contentUrl="url" />
+                <router-view></router-view>
             </div>
         </div>
     </div>
@@ -29,19 +29,18 @@
 
 <script>
 import SideMenu from '../components/SideMenu.vue'
-import MainContent from '../components/MainContent.vue'
 import Menubar from 'primevue/menubar';
 import InputText from 'primevue/inputtext';
 import axios from 'axios'
 import config from '../config'
 import Tag from 'primevue/tag';
 import Button from 'primevue/button';
+import router from "../router";
 
 export default {
     name: 'Home',
     components: {
         SideMenu,
-        MainContent,
         Menubar,
         InputText,
         Tag,
@@ -49,7 +48,6 @@ export default {
     },
     data() {
         return {
-            url: "",
             items: [
 				{
 					label: 'Logout',
@@ -60,7 +58,13 @@ export default {
     },
     methods: {
         feedCallback(url) {
+            console.log("Home.vue: this.url.before=" + this.url);
             this.url = url;
+            console.log("Home.vue: this.url.after=" + this.url);
+            router.push({name: "content", params: {contentUrl: url}});
+        },
+        explore() {
+            router.push({name: "explore"});
         },
         logout() {
             this.sendLogoutToServer();
