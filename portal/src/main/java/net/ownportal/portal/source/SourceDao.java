@@ -24,4 +24,5 @@ public class SourceDao {
     private List<String> categories;
     private String icon;
     private String url;
+    private long timestamp;
 }

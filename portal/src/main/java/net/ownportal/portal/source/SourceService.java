@@ -1,5 +1,7 @@
 package net.ownportal.portal.source;
 
+import java.time.Instant;
+
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
@@ -14,6 +16,8 @@ public class SourceService {
         if (result.isEmpty()) {
             return repository.save(dao);
         }
-        return result.get();
+        result.get().setCategories(dao.getCategories());
+        result.get().setTimestamp(Instant.now().toEpochMilli());
+        return repository.save(result.get());
     }
 }

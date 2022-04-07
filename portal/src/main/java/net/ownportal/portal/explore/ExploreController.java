@@ -1,5 +1,6 @@
 package net.ownportal.portal.explore;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +46,7 @@ class ExploreController {
             .language(result.getData().getLanguage())
             .categories(extractCategories(result))
             .url(url)
+            .timestamp(Instant.now().toEpochMilli())
             .build();
         return service.saveSource(source);
     }
