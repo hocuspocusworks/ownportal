@@ -69,7 +69,6 @@ export default {
                 console.log('MainContent url='+newUrl);
                 this.updateView(newUrl);
             },
-            deep: true,
             immediate: true
         }
     },
