@@ -11,8 +11,7 @@ const routes = [
     path: "/home",
     component: Home,
     redirect: {
-      name: "content",
-      params: {contentUrl: []}
+      name: "explore"
     },
     children: [
       {
