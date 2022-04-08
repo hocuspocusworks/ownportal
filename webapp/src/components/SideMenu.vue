@@ -74,7 +74,12 @@ export default {
                 "name": this.newGroupName
             };
             let group = config.gateway + "/portal/feed/newGroup";
-            axios.post(group, payload, {withCredentials: true});
+            axios.post(group, payload, {withCredentials: true})
+                .then(response => {
+                    if (response.status === 200) {
+                        this.fetchFeed();
+                    }
+                });
             this.newGroupName = "";
         },
         createSource() {
@@ -90,6 +95,7 @@ export default {
             this.newRssFeedUrl = "";
         },
         fetchFeed() {
+            this.loading = true;
             let me = config.gateway + "/portal/feed/prime/me";
             axios({
                 method: "get",

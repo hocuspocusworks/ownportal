@@ -149,6 +149,7 @@ export default {
                         if (response.status === 200 && response.data.id !== null) {
                             this.sources = [response.data];
                             this.featured = false;
+                            this.loadGroups(); // should be watched separetly and invoked only when new group created
                         } else {
                             this.featured = true;
                         }
