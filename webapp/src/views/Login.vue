@@ -40,7 +40,6 @@ export default {
                         localStorage.setItem('loggedIn', 'true');
                         router.push({name: "home"});
                     }
-                    console.log(resp);
                 });
         },
         register() {

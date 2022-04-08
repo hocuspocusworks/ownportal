@@ -66,7 +66,6 @@ export default {
     watch: {
         contentUrl: {
             handler: function(newUrl) {
-                console.log('MainContent url='+newUrl);
                 this.updateView(newUrl);
             },
             immediate: true
@@ -82,7 +81,6 @@ export default {
             axios.post(request, data, {withCredentials: true})
                 .then(response => {
                     this.content = response.data.data.nodes;
-                    console.log(this.content);
                 })
                 .then(load => {
                     this.loading = false;

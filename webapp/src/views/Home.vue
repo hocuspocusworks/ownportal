@@ -18,10 +18,10 @@
         </div>
         <div class="grid min-w-full m-0 p-0">
             <div class="sm:col-6 lg:col-2 bg-bluegray-600 pt-2 min-h-screen">
-                <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" />
+                <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" :needRefresh="refreshMenu" />
             </div>
             <div class="sm:col-6 lg:col-10">
-                <router-view></router-view>
+                <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
     </div>
@@ -48,6 +48,7 @@ export default {
     },
     data() {
         return {
+            refreshMenu: "",
             items: [
 				{
 					label: 'Logout',
@@ -58,10 +59,11 @@ export default {
     },
     methods: {
         feedCallback(url) {
-            console.log("Home.vue: this.url.before=" + this.url);
             this.url = url;
-            console.log("Home.vue: this.url.after=" + this.url);
             router.push({name: "content", params: {contentUrl: url}});
+        },
+        informMenu() {
+            this.refreshMenu = (Math.random() + 1).toString(36).substring(7);
         },
         explore() {
             router.push({name: "explore"});

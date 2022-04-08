@@ -47,6 +47,12 @@ export default {
         ProgressSpinner,
         Message
     },
+    props: {
+        needRefresh: {
+            type: String,
+            default: ""
+        }
+    },
     data() {
         return {
             err: false,
@@ -64,7 +70,6 @@ export default {
             this.createSource();
         },
         createGroup() {
-            console.log("invoked new group callback");
             let payload = {
                 "name": this.newGroupName
             };
@@ -126,7 +131,6 @@ export default {
                     url.push(node.data);
                 }
             }
-            console.log("SideMenu.vue: url="+url);
             this.$emit('feedChanged', url);
         },
         toExplore() {
@@ -136,5 +140,13 @@ export default {
     mounted() {
         this.fetchFeed();
     },
+    watch: {
+        needRefresh: {
+            handler: function() {
+                this.fetchFeed();
+            },
+            immediate: true
+        }
+    }
 };
 </script>
