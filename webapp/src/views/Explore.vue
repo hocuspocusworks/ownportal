@@ -23,7 +23,7 @@
                                 <div class="grid col-12">
                                     <div class="col-3" v-for="(item, i) in trending" :key="i">
                                         <div class="card border-round surface-200 h-14rem flex justify-content-center">
-                                            <div class="flex align-items-center">{{ item }}</div>
+                                            <div class="flex align-items-center">{{ item.name }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -34,7 +34,7 @@
                                 <div class="grid col-12">
                                     <div class="col-3" v-for="(item, i) in categories" :key="i">
                                         <div class="card border-round surface-200 h-6rem flex justify-content-center">
-                                            <div class="flex align-items-center">{{ item }}</div>
+                                            <div class="flex align-items-center">{{ item.name }}</div>
                                         </div>
                                     </div>
                                 </div>
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import axios from 'axios';
+import config from '../config';
 import TabView from 'primevue/tabview';
 import TabPanel from 'primevue/tabpanel';
 import InputText from 'primevue/inputtext';
@@ -74,6 +76,19 @@ export default {
                 {label: 'Calendar', icon: 'pi pi-fw pi-calendar'},
             ]
         }
+    },
+    methods: {
+        loadCategories() {
+            let url = config.gateway + "/portal/explore/categories";
+            axios.get(url, {withCredentials: true})
+                .then(response => {
+                    this.trending = response.data.categories.slice(0, 4);
+                    this.categories = response.data.categories.slice(4);
+                });
+        }
+    },
+    mounted() {
+        this.loadCategories();
     }
 }
 </script>
