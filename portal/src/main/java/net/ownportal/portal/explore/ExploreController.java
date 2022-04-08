@@ -15,6 +15,7 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 import lombok.Getter;
 import lombok.Setter;
+import net.ownportal.portal.source.CategoryDao;
 import net.ownportal.portal.source.SourceDao;
 import net.ownportal.portal.source.SourceService;
 import reactor.core.publisher.Mono;
@@ -49,6 +50,11 @@ class ExploreController {
             .timestamp(Instant.now().toEpochMilli())
             .build();
         return service.saveSource(source);
+    }
+
+    @GetMapping("/categories")
+    public CategoryDao getCategories() {
+        return service.getCategories();
     }
 
     private RssFetchResponse getRssFeed(final String url) {

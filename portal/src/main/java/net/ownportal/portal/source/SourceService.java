@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class SourceService {
     private final SourceRepository repository;
+    private final CategoryRepository category;
 
     public SourceDao saveSource(SourceDao dao) {
         final var result = repository.findByName(dao.getName());
@@ -19,5 +20,9 @@ public class SourceService {
         result.get().setCategories(dao.getCategories());
         result.get().setTimestamp(Instant.now().toEpochMilli());
         return repository.save(result.get());
+    }
+
+    public CategoryDao getCategories() {
+        return category.findAll().get(0);
     }
 }
