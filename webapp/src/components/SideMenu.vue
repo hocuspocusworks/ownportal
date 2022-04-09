@@ -34,11 +34,14 @@
             </div>
         </div>
         <ul class="list-group">
-            <li class="my-li my-li-item" v-for="(item, i) in data" :key="item.name">
-                <button class="btn my-li-text shadow-none" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i" @click="onItemSelect(item)">
-                    <i class="bi bi-chevron-right me-2"></i>{{ item.name }}
-                </button>
-                <div class="collapse" :id="'i-'+i">
+            <li class="my-li my-li-item row gx-0" v-for="(item, i) in data" :key="item.name">
+                <div class="row gx-0">
+                    <button class="btn my-li-text shadow-none col-10" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i" @click="onItemSelect(item)">
+                        <i class="bi bi-chevron-right me-2"></i>{{ item.name }}
+                    </button>
+                    <button class="btn my-li-text shadow-none col-2"><i class="bi bi-trash me-2"></i></button>
+                </div>
+                <div class="collapse row gx-0" :id="'i-'+i">
                     <ul class="list-group list-group-flush">
                         <li class="my-li ps-4 my-li-item" v-for="(subitem, j) in item.streams" :key="subitem.name">
                             <button type="button" class="btn my-li-text shadow-none" @click="onItemSelect(subitem)">
