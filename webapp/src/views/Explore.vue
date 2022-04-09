@@ -1,6 +1,58 @@
 <template>
+    <div class="container-fluid text-gray-600">
+        <div class="mt-5"></div>
+        <div class="row">
+            <div class="col-sm-0 col-lg-2"></div>
+
+            <div class="col-sm-12 col-lg-8">
+                <div class="row">
+                    <div class="d-flex ps-4">
+                        <p class="fs-4">Discover new feeds and articles</p>
+                    </div>
+
+                    <div class="d-flex p-4">
+                        <div class="input-group input-group-lg">
+                            <span class="input-group-text" id="basic-addon1"><i class="bi bi-search"></i></span>
+                            <input v-model="search" type="text" class="form-control shadow-none" placeholder="Start typing some subject or insert an RSS link" aria-label="Start typing some subject or insert an RSS link" aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+
+                    <div v-if="featured" class="row p-0 m-0">
+                        <div class="d-flex mt-3 ps-4">
+                            <div><small class="fw-bold">TRENDING</small></div>
+                        </div>
+    
+                        <div class="row ms-1 mt-2">
+                            <div class="col-3 p-2" v-for="(item, i) in trending" :key="i">
+                                <div class="card bg-gray-200" style="height: 14rem;">{{ item.name }}</div>
+                            </div>
+                        </div>
+    
+                        <div class="d-flex mt-3 ps-4">
+                            <div><small class="fw-bold">CATEGORIES</small></div>
+                        </div>
+    
+                        <div class="row ms-1 mt-2">
+                            <div class="col-3 p-2" v-for="(item, i) in categories" :key="i">
+                                <div class="card bg-gray-200" style="height: 6rem;">{{ item.name }}</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="!featured" class="row p-0 m-0">
+                        <div class="card" v-for="(item, i) in sources" :key="i">
+                            {{item.name}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-0 col-lg-2"></div>
+        </div>
+    </div>
+    <!--
     <div class="grid">
-        <div class="col-12 lg:col-8 lg:col-offset-2">
+        <div class="col-8 lg:col-offset-2">
             <TabView>
                 <TabPanel header="Feeds">
                     <div class="col-12 text-600">
@@ -65,6 +117,7 @@
         </div>
         <div class="lg:col-2"></div>
     </div>
+    -->
 </template>
 
 <script>
