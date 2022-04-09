@@ -19,3 +19,25 @@
   overflow: hidden;
   height: 60px;
 }
+
+.my-li-item {
+  padding: 0 !important;
+  border: 0 !important;
+  display: grid !important;
+  background-color: var(--bluegray-600) !important;
+}
+
+.my-li {
+  border-bottom-right-radius: inherit;
+  border-bottom-left-radius: inherit;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
+  width: 100%;
+  text-align: inherit;
+}
+
+.my-li-text {
+  --bs-text-opacity: 1;
+  color: rgba(var(--bs-white-rgb),var(--bs-text-opacity)) !important;
+  text-align: left !important;
+}

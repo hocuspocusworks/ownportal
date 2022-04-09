@@ -1,49 +1,62 @@
 <template>
-    <div>
-        <div class="col-12 text-left">
-            <Button label="Read later" icon="pi pi-bookmark" class="p-button-text ml-3 text-white" />
-        </div>
-        <div class="col-12 text-left">
-            <Button label="Favourites" icon="pi pi-heart" class="p-button-text ml-3 text-white" />
-        </div>
-        <div class="col-12 text-left">
-            <Button label="Explore" icon="pi pi-cloud" class="p-button-text ml-3 text-white" @click="toExplore" />
-        </div>
+    <div class="container-fluid p-2 bg-bluegray-600">
+        <ul class="list-group">
+            <li class="my-li my-li-item">
+                <button class="btn my-li-text shadow-none"><i class="bi bi-archive me-2"></i>Read later</button>
+            </li>
+            <div class="mt-2"></div>
+            <li class="my-li my-li-item">
+                <button class="btn my-li-text shadow-none"><i class="bi bi-balloon-heart me-2"></i>Favourites</button>
+            </li>
+            <div class="mt-2"></div>
+            <li class="my-li my-li-item">
+                <button class="btn my-li-text shadow-none" @click="toExplore"><i class="bi bi-globe me-2"></i>Explore</button>
+            </li>
+        </ul>
+        <div class="mt-3"></div>
+        <ul class="list-group">
+            <li class="my-li my-li-item">
+                <button class="btn my-li-text shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group"><i class="bi bi-plus-circle me-2"></i>New group</button>
+                <div class="collapse" id="new-group">
+                    <ul class="list-group list-group-flush">
+                        <li class="my-li ps-4 my-li-item">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="new-group-name" v-model="newGroupName" placeholder="type name followed by enter" @keyup.enter="createGroupCallback">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+        <ProgressSpinner v-if="loading" />
+        <ul class="list-group">
+            <li class="my-li my-li-item" v-for="(item, i) in data" :key="item.name">
+                <button class="btn my-li-text shadow-none" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i" @click="onItemSelect(item)">
+                    <i class="bi bi-chevron-right me-2"></i>{{ item.name }}
+                </button>
+                <div class="collapse" :id="'i-'+i">
+                    <ul class="list-group list-group-flush">
+                        <li class="my-li ps-4 my-li-item" v-for="(subitem, j) in item.streams" :key="subitem.name">
+                            <button type="button" class="btn my-li-text shadow-none" @click="onItemSelect(subitem)">
+                                {{ subitem.name }}
+                            </button>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
     </div>
-    <ProgressSpinner v-if="loading" />
-    <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>
-    <Tree :value="root" class="border-none text-white bg-bluegray-600" @node-select="onNodeSelect"
-            selectionMode="single" v-model:selectionKeys="selectedKey"></Tree>
-    <Inplace :closable="true">
-        <template #display>
-            <span class="pi pi-plus" style="vertical-align: middle"></span>
-            {{newGroupName || 'Add new group'}}
-        </template>
-        <template #content>
-            <InputText v-model="newGroupName" placeholder="type name followed by enter" autoFocus @keyup.enter="createGroupCallback" />
-        </template>
-    </Inplace>
 </template>
 
 <script>
 import axios from 'axios';
 import config from '../config';
-import Card from 'primevue/card';
-import Tree from 'primevue/tree';
-import Button from 'primevue/button';
-import InputText from 'primevue/inputtext';
-import Inplace from 'primevue/inplace';
 import ProgressSpinner from 'primevue/progressspinner';
 import Message from 'primevue/message';
 
 export default {
     name: "SideMenu",
     components: {
-        Card,
-        Tree,
-        Button,
-        InputText,
-        Inplace,
         ProgressSpinner,
         Message
     },
@@ -57,7 +70,7 @@ export default {
         return {
             err: false,
             loading: true,
-            root: [],
+            data: [],
             selectedKey: "",
             newGroupName: "",
         }
@@ -96,14 +109,14 @@ export default {
         },
         fetchFeed() {
             this.loading = true;
-            let me = config.gateway + "/portal/feed/prime/me";
+            let me = config.gateway + "/portal/feed/me";
             axios({
                 method: "get",
                 url: me,
                 withCredentials: true,
                 timeout: 1000*5
                 }).then(response => {
-                    this.updateView(response.data);
+                    this.updateView(response.data.groups);
                 }).catch(error => {
                     this.updateError();
                 });
@@ -116,7 +129,7 @@ export default {
             this.selectedGroup = number;
         },
         updateView(data) {
-            this.root = data;
+            this.data = data;
             this.loading = false;
         },
         updateError() {
@@ -126,16 +139,14 @@ export default {
         logout() {
             this.$emit('logout');
         },
-        onNodeSelect(node) {
+        onItemSelect(item) {
             let url = [];
-            if (node.children !== null) {
-                node.children.forEach(el => {
-                    url.push(el.data);
+            if (item.streams !== undefined) {
+                item.streams.forEach(el => {
+                    url.push(el.url);
                 });
             } else {
-                if (node.data !== null) {
-                    url.push(node.data);
-                }
+                url.push(item.url);
             }
             this.$emit('feedChanged', url);
         },
