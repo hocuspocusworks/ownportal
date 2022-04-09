@@ -28,7 +28,11 @@
                 </div>
             </li>
         </ul>
-        <ProgressSpinner v-if="loading" />
+        <div class="d-flex justify-content-center" v-if="loading">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
         <ul class="list-group">
             <li class="my-li my-li-item" v-for="(item, i) in data" :key="item.name">
                 <button class="btn my-li-text shadow-none" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i" @click="onItemSelect(item)">
@@ -51,15 +55,9 @@
 <script>
 import axios from 'axios';
 import config from '../config';
-import ProgressSpinner from 'primevue/progressspinner';
-import Message from 'primevue/message';
 
 export default {
     name: "SideMenu",
-    components: {
-        ProgressSpinner,
-        Message
-    },
     props: {
         needRefresh: {
             type: String,
