@@ -36,9 +36,10 @@
         <ul class="list-group">
             <li class="my-li my-li-item row gx-0" v-for="(item, i) in data" :key="item.name">
                 <div class="row gx-0">
-                    <button class="btn my-li-text shadow-none col-10" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i" @click="onItemSelect(item)">
-                        <i class="bi bi-chevron-right me-2"></i>{{ item.name }}
+                    <button @click="swapDropdownIcon(i)" class="btn my-li-text shadow-none col-2" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i">
+                        <i class="bi me-2" :class="{'bi-chevron-down': icon[i], 'bi-chevron-right': !icon[i]}"></i>
                     </button>
+                    <button class="btn my-li-text shadow-none ps-0 col-8" @click="onItemSelect(item)">{{ item.name }}</button>
                     <button class="btn my-li-text shadow-none col-2" @click="deleteGroup(item.name)"><i class="bi bi-trash me-2"></i></button>
                 </div>
                 <div class="collapse row gx-0" :id="'i-'+i">
@@ -72,6 +73,7 @@ export default {
             err: false,
             loading: true,
             data: [],
+            icon: [],
             selectedKey: "",
             newGroupName: "",
         }
@@ -162,6 +164,10 @@ export default {
                         this.fetchFeed();
                     }
                 });
+        },
+        swapDropdownIcon(el) {
+            this.icon[el] = this.icon[el] ? false : true;
+            console.log(this.icon);
         }
     },
     mounted() {
