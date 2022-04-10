@@ -32,7 +32,7 @@ public class FeedServiceTest {
         when(userServiceMock.getUsername()).thenReturn("user");
         when(feedRepositoryMock.findOneByUsername("user")).thenReturn(Optional.of(feedMock));
 
-        var feedService = new FeedService(userServiceMock, feedRepositoryMock);
+        var feedService = new FeedService(userServiceMock, feedRepositoryMock, null);
         feedService.newGroup(groupMock);
 
         verify(feedRepositoryMock, times(1)).save(feedMock);
@@ -51,7 +51,7 @@ public class FeedServiceTest {
         when(existingGroup.getName()).thenReturn("mockGroup2");
         when(feedMock.getGroups()).thenReturn(List.of(existingGroup));
 
-        var feedService = new FeedService(userServiceMock, feedRepositoryMock);
+        var feedService = new FeedService(userServiceMock, feedRepositoryMock, null);
         feedService.newGroup(groupMock);
 
         verify(feedRepositoryMock, times(1)).save(feedMock);
@@ -70,7 +70,7 @@ public class FeedServiceTest {
         when(existingGroup.getName()).thenReturn("mockGroup");
         when(feedMock.getGroups()).thenReturn(List.of(existingGroup));
 
-        var feedService = new FeedService(userServiceMock, feedRepositoryMock);
+        var feedService = new FeedService(userServiceMock, feedRepositoryMock, null);
         feedService.newGroup(groupMock);
 
         verify(feedRepositoryMock, times(0)).save(feedMock);

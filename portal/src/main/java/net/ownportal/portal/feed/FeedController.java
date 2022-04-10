@@ -2,6 +2,7 @@ package net.ownportal.portal.feed;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +46,12 @@ class FeedController {
     String newStream(@RequestBody StreamDto stream) {
         log.debug("adding new stream for {} to group {}", userService.getUsername(), stream.getGroup());
         feedService.newStream(stream);
+        return "";
+    }
+
+    @DeleteMapping("/group")
+    String deleteGroup(@RequestBody String name) {
+        feedService.deleteGroup(name);
         return "";
     }
 }

@@ -8,19 +8,17 @@ import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.ownportal.portal.filter.UserService;
 
 @Component
 @Slf4j
+@RequiredArgsConstructor
 class FeedService {
     private final UserService userService;
     private final FeedRepository repo;
-
-    FeedService(UserService userService, FeedRepository repo) {
-        this.userService = userService;
-        this.repo = repo;
-    }
+    private final ExtendedFeedRepository extRepo;
 
     FeedDao getFeedForUsername(final String username) {
         var feedOpt = repo.findOneByUsername(username);
@@ -44,6 +42,10 @@ class FeedService {
         addNewStream(stream, feed);
         log.debug("saving new stream for {}", userService.getUsername());
         repo.save(feed);
+    }
+
+    void deleteGroup(final String name) {
+        extRepo.deleteGroupByName(userService.getUsername(), name);
     }
     
     private boolean groupContainsStream(StreamDto stream, FeedDao feed) {
