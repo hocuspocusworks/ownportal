@@ -1,58 +1,53 @@
 <template>
-    <div class="container-fluid p-2 bg-bluegray-600">
-        <ul class="list-group">
-            <li class="my-li my-li-item">
-                <button class="btn my-li-text shadow-none"><i class="bi bi-archive me-2"></i>Read later</button>
-            </li>
-            <div class="mt-2"></div>
-            <li class="my-li my-li-item">
-                <button class="btn my-li-text shadow-none"><i class="bi bi-balloon-heart me-2"></i>Favourites</button>
-            </li>
-            <div class="mt-2"></div>
-            <li class="my-li my-li-item">
-                <button class="btn my-li-text shadow-none" @click="toExplore"><i class="bi bi-globe me-2"></i>Explore</button>
-            </li>
-        </ul>
-        <div class="mt-3"></div>
-        <ul class="list-group">
-            <li class="my-li my-li-item">
-                <button class="btn my-li-text shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group"><i class="bi bi-plus-circle me-2"></i>New group</button>
-                <div class="collapse" id="new-group">
-                    <ul class="list-group list-group-flush">
-                        <li class="my-li ps-4 my-li-item">
-                            <div class="mb-3">
-                                <input type="text" class="form-control" id="new-group-name" v-model="newGroupName" placeholder="type name followed by enter" @keyup.enter="createGroupCallback">
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-        </ul>
-        <div class="d-flex justify-content-center" v-if="loading">
-            <div class="spinner-border" role="status">
-                <span class="visually-hidden">Loading...</span>
+    <div id="mySidebar" class="text-white bg-bluegray-600" style="min-width: 320px;">
+        <div class="p-3">
+            <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-archive me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white">Read later</button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-balloon-heart me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white">Favourites</button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-globe me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toExplore">Explore</button>
             </div>
         </div>
-        <ul class="list-group">
-            <li class="my-li my-li-item row gx-0" v-for="(item, i) in data" :key="item.name">
-                <div class="row gx-0">
-                    <button @click="swapDropdownIcon(i)" class="btn my-li-text shadow-none col-2" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i">
-                        <i class="bi me-2" :class="{'bi-chevron-down': icon[i], 'bi-chevron-right': !icon[i]}"></i>
+
+        <div class="ps-3 pe-3">
+            <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-plus-circle me-2"></i>
+                <button class="btn shadow-none text-white" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group">New group</button>
+            </div>
+            <div class="collapse" id="new-group">
+                <input type="text" class="form-control" id="new-group-name" v-model="newGroupName" placeholder="type name followed by enter" @keyup.enter="createGroupCallback">
+            </div>
+        </div>
+
+        <div class="ps-3 pe-3">
+            <div class="d-flex justify-content-center" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+            <div v-for="(item, i) in data" :key="item.name">
+                <div class="d-flex ps-2 pe-2 align-items-center">
+                    <button @click="swapDropdownIcon(i)" class="btn shadow-none p-0" type="button" data-bs-toggle="collapse" :data-bs-target="'#i-'+i" aria-expanded="false" :aria-controls="'i-'+i">
+                        <i class="bi me-1 text-white" :class="{'bi-chevron-down': icon[i], 'bi-chevron-right': !icon[i]}"></i>
                     </button>
-                    <button class="btn my-li-text shadow-none ps-0 col-8" @click="onItemSelect(item)">{{ item.name }}</button>
-                    <button class="btn my-li-text shadow-none col-2" @click="deleteGroup(item.name)"><i class="bi bi-trash me-2"></i></button>
+                    <button class="btn shadow-none flex-grow-1 text-start text-white" @click="onItemSelect(item)">{{ item.name }}</button>
+                    <button class="btn shadow-none text-white" @click="deleteGroup(item.name)"><i class="bi bi-trash"></i></button>
                 </div>
-                <div class="collapse row gx-0" :id="'i-'+i">
-                    <ul class="list-group list-group-flush">
-                        <li class="my-li ps-4 my-li-item" v-for="(subitem, j) in item.streams" :key="subitem.name">
-                            <button type="button" class="btn my-li-text shadow-none" @click="onItemSelect(subitem)">
-                                {{ subitem.name }}
-                            </button>
-                        </li>
-                    </ul>
+                <div class="collapse" :id="'i-'+i">
+                    <div class="d-flex" v-for="(subitem, j) in item.streams" :key="subitem.name">
+                        <button type="button" class="btn my-li-text shadow-none ps-5" @click="onItemSelect(subitem)">
+                            {{ subitem.name }}
+                        </button>
+                    </div>
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
     </div>
 </template>
 
