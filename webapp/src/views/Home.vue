@@ -5,7 +5,7 @@
                 <i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 3rem;"></i>
             </div>
             <div class="align-self-center">
-                <Button icon="pi pi-power-off" class="p-button-lg p-button-text p-button-rounded p-button-danger" @click="logout" />
+                <button class="btn btn-danger rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
             </div>
         </div>
         <div class="d-flex min-h-screen">
@@ -19,23 +19,15 @@
 
 <script>
 import SideMenu from '../components/SideMenu.vue'
-import Menubar from 'primevue/menubar';
-import InputText from 'primevue/inputtext';
 import axios from 'axios'
 import config from '../config'
-import Tag from 'primevue/tag';
-import Button from 'primevue/button';
 import router from "../router";
 import sidebar from '../sidebar';
 
 export default {
     name: 'Home',
     components: {
-        SideMenu,
-        Menubar,
-        InputText,
-        Tag,
-        Button
+        SideMenu
     },
     data() {
         return {
