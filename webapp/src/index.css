@@ -6,9 +6,17 @@
   color: #2c3e50;
 }
 
-#mySidebar {
-  transition: 0.5s;
-}
+#mySidebar {transition: 0.5s;}
+
+.bg-bluegray-50 {background-color: #f7f9f9 !important;}
+.bg-bluegray-400 {background-color: #7e96a1 !important;}
+.bg-bluegray-600 {background-color: #526a76 !important;}
+.bg-gray-200 {background-color: var(--gray-200) !important;}
+.min-h-screen {min-height: 100vh;}
+.f-basis-0 {flex-basis: 0;}
+.f-equal {flex: 1 1 0;}
+.full-height {min-height: 100%;}
+.my-link:hover {background-color: #f7f8f9;}
 
 .p-card-body {
   display: flex;
@@ -22,22 +30,6 @@
   text-overflow: ellipsis;
   overflow: hidden;
   height: 60px;
-}
-
-.f-basis-0 {
-  flex-basis: 0;
-}
-
-.f-equal {
-  flex: 1 1 0;
-}
-
-.full-height {
-  min-height: 100%;
-}
-
-.my-link:hover {
-  background-color: #f7f8f9;
 }
 
 .my-li-item {
