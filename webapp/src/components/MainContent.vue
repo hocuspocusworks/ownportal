@@ -1,33 +1,34 @@
 <template>
-    <div class="grid min-w-full mt-2">
-        <ProgressSpinner v-if="loading" />
-        <Message v-if="err" severity="error" closable="false" class="col-12">Cannot load the feed.</Message>
+    <div class="d-flex justify-content-center p-2">
+        <div class="container-fluid">
+            <div v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
 
-        <div v-for="(item,i) in content" :key="i" class="p-2 sm:col-12 lg:col-4">
-        <div class="min-h-full border-1 border-round border-bluegray-50 text-600 no-underline" style="height: 300px;">
-                <Card>
-                    <template #title>
-                        <a class="text-800 no-underline" target="_blank" :href="item.link">{{ item.title }}</a>
-                    </template>
-                    <template #subtitle>
-                        <small>{{ item.source }}</small>
-                    </template>
-                    <template class="flex-grow-1" #content>
-                        <a v-if="!item.description" class="text-600 no-underline"  target="_blank" :href="item.link">Missing content...</a>
-                        <a class="text-600 no-underline" target="_blank" :href="item.link">{{ item.description }}</a>
-                    </template>
-                    <template #footer>
-                        <div class="flex">
-                            <div class="flex-grow-1 text-left">
-                                <Button icon="pi pi-check" class="p-button-text p-button-rounded" />
-                                <Button icon="pi pi-heart" class="p-button-text p-button-rounded p-button-help" />
-                                <Button icon="pi pi-bookmark" class="p-button-text p-button-rounded p-button-secondary" />
-                            </div>
-                            <div class="flex-column align-items-center" style="margin: auto;"><small class="text-muted">{{ item.publishedDate }}</small></div>
+            <div v-if="err">
+                <div class="alert alert-danger" role="alert">
+                    Could not load the feed. Try later.
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
+                    <div class="card full-height my-link">
+                        <div class="card-body" @click="openFeed(item.link)">
+                            <h5 class="card-title">{{ item.title }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ item.source }} | {{ item.publishedDate }}</h6>
+                            <p>{{ processText(item.description) }}</p>
                         </div>
-                    </template>
-                </Card>
-        </div>
+                        <div class="pb-3">
+                            <button class="btn shadow-none" @click=""><i class="bi bi-book"></i></button>
+                            <button class="btn shadow-none" @click=""><i class="bi bi-heart"></i></button>
+                            <button class="btn shadow-none" @click=""><i class="bi bi-bookmark"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -35,21 +36,9 @@
 <script>
 import axios from 'axios';
 import config from '../config';
-import Card from 'primevue/card';
-import ProgressSpinner from 'primevue/progressspinner';
-import Message from 'primevue/message';
-import Button from 'primevue/button';
-import Tag from 'primevue/tag';
 
 export default {
     name: 'MainContent',
-    components: {
-        Card,
-        ProgressSpinner,
-        Message,
-        Button,
-        Tag
-    },
     props: {
         contentUrl: {
             type: Array,
@@ -95,6 +84,14 @@ export default {
             var protocol = pathArray[0];
             var host = pathArray[2];
             return protocol + '//' + host;
+        },
+        processText(text) {
+            return text.length > 200 ?
+                text.substring(0, 200) + "..." :
+                text;
+        },
+        openFeed(url) {
+            window.open(url, '_blank').focus();
         }
     }
 }
