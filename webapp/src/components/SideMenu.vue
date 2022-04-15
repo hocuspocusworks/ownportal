@@ -2,16 +2,12 @@
     <div id="mySidebar" class="text-white bg-bluegray-600" style="min-width: 320px;">
         <div class="p-3">
             <div class="d-flex p-2 align-items-center">
-                <i class="bi bi-archive me-2"></i>
-                <button class="btn shadow-none flex-grow-1 text-start text-white">Read later</button>
+                <i class="bi bi-globe me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toExplore">Explore</button>
             </div>
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-balloon-heart me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
-            </div>
-            <div class="d-flex p-2 align-items-center">
-                <i class="bi bi-globe me-2"></i>
-                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toExplore">Explore</button>
             </div>
         </div>
 
