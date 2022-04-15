@@ -57,6 +57,11 @@ class ExploreController {
         return service.getCategories();
     }
 
+    @GetMapping("/search")
+    public List<SourceDao> searchRssPages(final String keyword) {
+        return service.getByKeyword(keyword);
+    }
+
     private RssFetchResponse getRssFeed(final String url) {
         return client.method(HttpMethod.GET)
             .uri(uriBuilder -> uriBuilder

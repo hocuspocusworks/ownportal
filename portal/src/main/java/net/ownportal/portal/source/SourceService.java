@@ -1,6 +1,7 @@
 package net.ownportal.portal.source;
 
 import java.time.Instant;
+import java.util.List;
 
 import org.springframework.stereotype.Service;
 
@@ -24,5 +25,9 @@ public class SourceService {
 
     public CategoryDao getCategories() {
         return category.findAll().get(0);
+    }
+
+    public List<SourceDao> getByKeyword(String keyword) {
+        return repository.findByDescriptionContainingIgnoreCase(keyword);
     }
 }
