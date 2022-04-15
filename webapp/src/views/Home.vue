@@ -5,7 +5,7 @@
                 <i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 3rem;"></i>
             </div>
             <div class="align-self-center">
-                <button class="btn btn-danger rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
+                <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
             </div>
         </div>
         <div class="d-flex min-h-screen">
