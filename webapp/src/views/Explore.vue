@@ -17,6 +17,12 @@
                         </div>
                     </div>
 
+                    <div v-if="!results" class="row p-0 m-0">
+                        <div class="alert alert-danger" role="alert">
+                            No results.
+                        </div>
+                    </div>
+
                     <!--
                     <div v-if="featured" class="row p-0 m-0">
                         <div class="d-flex mt-3 ps-4">
@@ -79,6 +85,7 @@ export default {
         return {
             search: "",
             featured: true,
+            results: true,
             sources: [],
             groups: [],
             trending: ["t1", "t2", "t3", "t4"],
@@ -127,6 +134,8 @@ export default {
     },
     watch: {
         search: function(newValue, oldValue) {
+            this.sources = [];
+            this.results = true;
             if (this.isValidHttpUrl(newValue) && newValue.length > 16) {
                 let url = config.gateway + "/portal/explore/rss?url="+newValue;
                 axios.get(url, {withCredentials: true})
@@ -147,6 +156,9 @@ export default {
                             this.sources = response.data;
                             this.featured = false;
                             this.loadGroups();
+                            if (this.sources.length === 0) {
+                                this.results = false;
+                            }
                         } else {
                             this.featured = true;
                         }
