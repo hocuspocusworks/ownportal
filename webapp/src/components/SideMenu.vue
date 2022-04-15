@@ -7,7 +7,7 @@
             </div>
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-balloon-heart me-2"></i>
-                <button class="btn shadow-none flex-grow-1 text-start text-white">Favourites</button>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-globe me-2"></i>
@@ -147,6 +147,9 @@ export default {
                 url.push(item.url);
             }
             this.$emit('feedChanged', url);
+        },
+        toFavourites() {
+            this.$emit('favourite');
         },
         toExplore() {
             this.$emit('explore');

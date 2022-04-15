@@ -22,9 +22,8 @@
                             <p>{{ processText(item.description) }}</p>
                         </div>
                         <div class="pb-3">
-                            <button class="btn shadow-none" @click=""><i class="bi bi-book"></i></button>
-                            <button class="btn shadow-none" @click=""><i class="bi bi-heart"></i></button>
-                            <button class="btn shadow-none" @click=""><i class="bi bi-bookmark"></i></button>
+                            <button class="btn shadow-none" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
+                            <button class="btn shadow-none" @click="bookmark(item)"><i class="bi" :class="{'bi-bookmark': !item.bookmark, 'bi-bookmark-fill': item.bookmark}"></i></button>
                         </div>
                     </div>
                 </div>
@@ -92,6 +91,24 @@ export default {
         },
         openFeed(url) {
             window.open(url, '_blank').focus();
+        },
+        like(item) {
+            console.log(item);
+            let url = config.gateway + "/portal/story/favourite";
+            let data = {'username': '', 'title': item.title,
+                'description': item.description, 'link': item.link,
+                'publisher': item.source, 'publishedDate': item.publishedDate};
+            axios.post(url, data, {withCredentials: true})
+                .then(response => {
+                    if (response.status === 200) {
+                        item.heart = true;
+                    }
+                }).catch(err => {
+                    console.log(err);
+                });
+        },
+        bookmark(item) {
+            item.bookmark = true;
         }
     }
 }

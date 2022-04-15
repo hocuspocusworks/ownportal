@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex min-h-screen">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" :needRefresh="refreshMenu" />
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" :needRefresh="refreshMenu" />
             <div class="f-equal bg-bluegray-50">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
@@ -50,6 +50,9 @@ export default {
         },
         explore() {
             router.push({name: "explore"});
+        },
+        favourite() {
+            router.push({name: "favourite"});
         },
         logout() {
             this.sendLogoutToServer();

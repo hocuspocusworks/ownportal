@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Home from '../views/Home.vue';
 import Explore from '../views/Explore.vue';
 import MainContent from '../components/MainContent.vue';
+import Favourite from '../components/Favourite.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 
@@ -24,6 +25,11 @@ const routes = [
         path: "content",
         component: MainContent,
         props: true,
+      },
+      {
+        name: "favourite",
+        path: "favourite",
+        component: Favourite
       }
     ]
   },
