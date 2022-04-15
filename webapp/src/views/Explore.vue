@@ -17,6 +17,7 @@
                         </div>
                     </div>
 
+                    <!--
                     <div v-if="featured" class="row p-0 m-0">
                         <div class="d-flex mt-3 ps-4">
                             <div><small class="fw-bold">TRENDING</small></div>
@@ -38,6 +39,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
 
                     <div v-if="!featured" class="p-0 m-0">
                         <div class="p-4" style="height: 8rem;" v-for="(item, i) in sources" :key="i">
