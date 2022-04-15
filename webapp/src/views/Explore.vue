@@ -42,7 +42,7 @@
                     -->
 
                     <div v-if="!featured" class="p-0 m-0">
-                        <div class="p-4" style="height: 8rem;" v-for="(item, i) in sources" :key="i">
+                        <div class="mb-3" v-for="(item, i) in sources" :key="i">
                             <div class="row border rounded gx-0">
                                 <div class="col-12 text-start gx-3 fs-4">
                                     {{ item.name }}
@@ -135,6 +135,18 @@ export default {
                             this.sources = [response.data];
                             this.featured = false;
                             this.loadGroups(); // should be watched separetly and invoked only when new group created
+                        } else {
+                            this.featured = true;
+                        }
+                    });
+            } else if (newValue.length >= 2) {
+                let url = config.gateway + "/portal/explore/search?keyword="+newValue;
+                axios.get(url, {withCredentials: true})
+                    .then(response => {
+                        if (response.status === 200) {
+                            this.sources = response.data;
+                            this.featured = false;
+                            this.loadGroups();
                         } else {
                             this.featured = true;
                         }
