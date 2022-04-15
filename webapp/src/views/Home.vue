@@ -57,7 +57,7 @@ export default {
         logout() {
             this.sendLogoutToServer();
             localStorage.setItem('loggedIn', 'false');
-            location.reload();
+            router.push({name: "login"});
         },
         sendLogoutToServer() {
             let url = config.gateway + '/user/logout';
