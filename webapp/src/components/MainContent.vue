@@ -23,7 +23,6 @@
                         </div>
                         <div class="pb-3">
                             <button class="btn shadow-none" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
-                            <button class="btn shadow-none" @click="bookmark(item)"><i class="bi" :class="{'bi-bookmark': !item.bookmark, 'bi-bookmark-fill': item.bookmark}"></i></button>
                         </div>
                     </div>
                 </div>
@@ -106,9 +105,6 @@ export default {
                 }).catch(err => {
                     console.log(err);
                 });
-        },
-        bookmark(item) {
-            item.bookmark = true;
         }
     }
 }
