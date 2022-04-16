@@ -64,7 +64,7 @@ export default {
             this.loading = true;
             this.err = false;
             let request = config.gateway + "/api/rss/fetchAll";
-            let data = {"urls": url};
+            let data = {"urls": url, "sort": "asc"};
             axios.post(request, data, {withCredentials: true})
                 .then(response => {
                     this.content = response.data.data.nodes;
