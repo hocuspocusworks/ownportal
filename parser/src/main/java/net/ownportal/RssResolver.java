@@ -58,7 +58,7 @@ public class RssResolver {
                         rssNode.setLink(el.getValue().toString());
                     }
                     if (type.equals("description")) {
-                        rssNode.setDescription(el.getValue().toString());
+                        rssNode.setDescription(HtmlParser.parse(el.getValue().toString()));
                     }
                     if (type.equals("pubDate")) {
                         rssNode.setPublishedDate(el.getValue().toString());
