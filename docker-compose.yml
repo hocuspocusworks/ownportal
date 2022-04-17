@@ -3,6 +3,8 @@ services:
   mongodb:
     image: mongo:5.0.6
     container_name: mongodb
+    volumes:
+      - dbdata:/data/db
     ports:
       - "27017:27017"
   fetcher:
@@ -27,3 +29,5 @@ services:
       context: ./webapp
     ports:
       - "3000:80"
+volumes:
+  dbdata:
