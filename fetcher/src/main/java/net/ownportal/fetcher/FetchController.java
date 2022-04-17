@@ -1,6 +1,7 @@
 package net.ownportal.fetcher;
 
 import java.net.URL;
+import java.time.Duration;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import lombok.extern.slf4j.Slf4j;
 import net.ownportal.RssResolver;
+import reactor.core.Exceptions;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
@@ -20,6 +22,7 @@ import reactor.core.scheduler.Schedulers;
 @Slf4j
 class FetchController {
     private final WebClient webClient;
+    private static final long REQUEST_TIMEOUT = 3L;
 
     FetchController(WebClient.Builder builder) {
         this.webClient = builder.build();
@@ -62,6 +65,7 @@ class FetchController {
         final var sort = request.getSort().equals("asc") ? "asc" : "random";
         return Flux.fromIterable(urls)
             .flatMap(this::get)
+            .onErrorResume(e -> Flux.just(new byte[]{0}))
             .publishOn(Schedulers.boundedElastic())
             .map(RssResolver::rssToJson)
             .collectList()
@@ -75,10 +79,10 @@ class FetchController {
             return webClient.get()
                 .uri(page.toURI())
                 .retrieve()
-                .bodyToMono(byte[].class);
-        } catch (Exception e) {
-            log.debug(e.getMessage());
+                .bodyToMono(byte[].class)
+                .timeout(Duration.ofSeconds(REQUEST_TIMEOUT));
+        } catch (Exception ex) {
+            throw Exceptions.propagate(ex);
         }
-        return Mono.empty();
     }
 }
