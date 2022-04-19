@@ -8,8 +8,8 @@
 
         <ul class="nav nav-pills">
             <li class="nav-item"><a href="#" class="nav-link" @click="login">Login</a></li>
-            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page" @click="register">Register</a></li>
-            <li class="nav-item"><a href="#" class="nav-link">About</a></li>
+            <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">Register</a></li>
+            <li class="nav-item"><a href="#" class="nav-link" @click="about">About</a></li>
         </ul>
         </header>
     </div>
@@ -71,6 +71,9 @@ export default {
         },
         login() {
             router.push({name: "login"});
+        },
+        about() {
+            router.push({name: "about"});
         }
     },
     mounted() {
