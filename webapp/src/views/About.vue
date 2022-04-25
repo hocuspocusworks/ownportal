@@ -24,13 +24,11 @@
         </div>
         <div class="col-md-10 mx-auto col-lg-5">
             <form class="p-4 p-md-5 border rounded-3 bg-light">
-            <div class="form-floating mb-3">
-                <input v-model="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
+            <div class="input-group input-group-lg mb-3">
+                <input v-model="username" type="email" class="form-control" id="floatingInput" placeholder="Email">
             </div>
-            <div class="form-floating mb-3">
+            <div class="input-group input-group-lg mb-3">
                 <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
             </div>
             <div class="checkbox mb-3">
                 <label>

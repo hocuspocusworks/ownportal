@@ -19,17 +19,14 @@
             <!-- <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57"> -->
             <h1 class="h3 mb-3 fw-normal">Register</h1>
     
-            <div class="form-floating">
-            <input v-model="username" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-            <label for="floatingInput">Email address</label>
+            <div class="input-group input-group-lg mb-3">
+                <input v-model="username" type="email" class="form-control" id="floatingInput" placeholder="Email">
             </div>
-            <div class="form-floating">
-            <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-            <label for="floatingPassword">Password</label>
+            <div class="input-group input-group-lg mb-3">
+                <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
             </div>
-            <div class="form-floating">
-            <input v-model="password_repeated" type="password" class="form-control" id="floatingPassword" placeholder="Repeat password">
-            <label for="floatingPassword">Repeat password</label>
+            <div class="input-group input-group-lg mb-3">
+                <input v-model="password_repeated" type="password" class="form-control" id="floatingPasswordRepeated" placeholder="Repeat password">
             </div>
     
             <div class="checkbox mt-3 mb-3"></div>
