@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex bg-bluegray-400" style="height: 3.5rem;">
             <div class="flex-grow-1 text-start">
-                <i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 3rem;"></i>
+                <i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i>
             </div>
             <div class="align-self-center">
                 <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
@@ -44,15 +44,18 @@ export default {
         feedCallback(url) {
             this.url = url;
             router.push({name: "content", params: {contentUrl: url}});
+            this.toggleSidebar();
         },
         informMenu() {
             this.refreshMenu = (Math.random() + 1).toString(36).substring(7);
         },
         explore() {
             router.push({name: "explore"});
+            this.toggleSidebar();
         },
         favourite() {
             router.push({name: "favourite"});
+            this.toggleSidebar();
         },
         logout() {
             this.sendLogoutToServer();
