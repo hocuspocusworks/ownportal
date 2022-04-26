@@ -22,6 +22,8 @@ class UserDao {
     @NonNull
     private String password;
     @NonNull
+    private String salt;
+    @NonNull
     private String email;
 
     static UserDao empty() {
