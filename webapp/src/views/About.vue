@@ -28,7 +28,7 @@
                 <input v-model="username" type="email" class="form-control" id="floatingInput" placeholder="Email">
             </div>
             <div class="input-group input-group-lg mb-3">
-                <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input v-model="password" type="password" class="form-control" id="floatingPassword" placeholder="Password" @keyup.enter="login">
             </div>
             <div class="checkbox mb-3">
                 <label>
