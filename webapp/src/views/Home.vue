@@ -2,7 +2,7 @@
     <div>
         <div class="d-flex bg-bluegray-400" style="height: 3.5rem;">
             <div class="flex-grow-1 text-start">
-                <a href="#"><i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i></a>
+                <a href="javascript:;"><i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i></a>
             </div>
             <div class="align-self-center">
                 <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
