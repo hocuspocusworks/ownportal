@@ -3,7 +3,7 @@
         <header class="d-flex flex-wrap justify-content-center py-3 mb-4 border-bottom">
         <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-dark text-decoration-none">
             <svg class="bi me-2" width="40" height="32"><use xlink:href="#bootstrap"/></svg>
-            <span class="fs-4">Ownportal<sup><small>BETA</small></sup></span>
+            <span class="fs-4">OwnPortal<sup><small>BETA</small></sup></span>
         </a>
 
         <ul class="nav nav-pills">
@@ -18,7 +18,7 @@
         <div class="col-lg-7 text-center text-lg-start">
             <h1 class="display-4 fw-bold lh-1 mb-3">Create your own Internet experience.</h1>
             <p class="col-lg-10 fs-4">
-                Ownportal is a simple RSS reader allowing you to add feeds and organise them as you like. Try it out, it's free!
+                OwnPortal is a simple RSS reader allowing you to add feeds and organise them as you like. Try it out, it's free!
             </p>
             <button type="button" class="btn btn-primary btn-lg px-4 gap-3" @click="register">Register</button>
         </div>
@@ -69,8 +69,8 @@
         <div class="col-lg-6 mx-auto">
         <p class="lead mb-4">
             Choose your own sources of information, whether it's about general news, technologies, cooking or many more.
-            Then organise them in groups and enjoy reading. You will notice the <sup><small>BETA</small></sup> sign next to Ownportal<sup><small>BETA</small></sup>.
-            This is a one person hobby project. You will encounter some rough edges while using Ownportal, but you can
+            Then organise them in groups and enjoy reading. You will notice the <sup><small>BETA</small></sup> sign next to OwnPortal<sup><small>BETA</small></sup>.
+            This is a one person hobby project. You will encounter some rough edges while using OwnPortal, but you can
             report issues <a target="_blank" href="https://github.com/hocuspocusworks/ownportal/issues">here</a>.
         </p>
         </div>
