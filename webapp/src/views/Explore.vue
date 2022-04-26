@@ -17,6 +17,12 @@
                         </div>
                     </div>
 
+                    <div v-if="loading">
+                        <div class="spinner-border" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
                     <div v-if="!results" class="row p-0 m-0">
                         <div class="alert alert-danger" role="alert">
                             No results.
@@ -84,6 +90,7 @@ export default {
     data() {
         return {
             search: "",
+            loading: false,
             featured: true,
             results: true,
             sources: [],
@@ -134,6 +141,7 @@ export default {
     },
     watch: {
         search: function(newValue, oldValue) {
+            this.loading = true;
             this.sources = [];
             this.results = true;
             if (this.isValidHttpUrl(newValue) && newValue.length > 16) {
@@ -147,6 +155,7 @@ export default {
                         } else {
                             this.featured = true;
                         }
+                        this.loading = false;
                     });
             } else if (newValue.length >= 2) {
                 let url = config.gateway + "/portal/explore/search?keyword="+newValue;
@@ -162,7 +171,10 @@ export default {
                         } else {
                             this.featured = true;
                         }
+                        this.loading = false;
                     });
+            } else {
+                this.loading = false;
             }
         }
     },
