@@ -12,6 +12,12 @@
             <li class="nav-item"><a href="#" class="nav-link" @click="about">About</a></li>
         </ul>
         </header>
+
+        <div v-if="err">
+            <div class="alert alert-danger" role="alert">
+                Could not register {{username}} at the moment. Please try again later.
+            </div>
+        </div>
     </div>
 
     <div class="form-signin">
@@ -31,6 +37,13 @@
     
             <div class="checkbox mt-3 mb-3"></div>
             <button class="w-100 btn btn-lg btn-primary" type="button" @click="register">Register</button>
+            
+            <div class="m-3" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
             <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
     </div>
@@ -45,6 +58,8 @@ export default {
     name: 'Register',
     data() {
         return {
+            err: false,
+            loading: false,
             username: "",
             password: "",
             password_repeated: ""
@@ -53,15 +68,26 @@ export default {
     methods: {
         register() {
             if (this.passwordValid()) {
+                this.err = false;
+                this.loading = true;
                 let url = config.gateway + "/user/register";
                 let payload = {'username': this.username, 'password': this.password, 'email': this.username};
                 axios.post(url, payload)
                     .then(response => {
                         if (response.status === 200) {
                             router.push({name: "login"});
+                        } else {
+                            this.reportError();
                         }
+                    })
+                    .catch(ex => {
+                        this.reportError();
                     });
             }
+        },
+        reportError() {
+            this.err = true;
+            this.loading = false;
         },
         passwordValid() {
             return this.password === this.password_repeated ? true : false;

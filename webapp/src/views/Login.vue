@@ -12,6 +12,12 @@
             <li class="nav-item"><a href="#" class="nav-link" @click="about">About</a></li>
         </ul>
         </header>
+
+        <div v-if="err">
+            <div class="alert alert-danger" role="alert">
+                There are some issues logging you in. Please try again later.
+            </div>
+        </div>
     </div>
     
     <div class="form-signin">
@@ -32,6 +38,13 @@
             </label>
             </div>
             <button class="w-100 btn btn-lg btn-primary" type="button" @click="login">Sign in</button>
+
+            <div class="m-3" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
             <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
     </div>
@@ -46,12 +59,16 @@ export default {
     name: 'Login',
     data() {
         return {
+            err: false,
+            loading: false,
             username: "",
             password: ""
         }
     },
     methods: {
         login() {
+            this.err = false;
+            this.loading = true;
             let url = config.gateway + "/user/login";
             let payload = {"username": this.username, "password": this.password };
             axios.post(url, payload, {withCredentials: true})
@@ -59,8 +76,17 @@ export default {
                     if (resp.status === 200) {
                         localStorage.setItem('loggedIn', 'true');
                         router.push({name: "home"});
+                    } else {
+                        this.reportError();
                     }
+                })
+                .catch(ex => {
+                    this.reportError();
                 });
+        },
+        reportError() {
+            this.err = true;
+            this.loading = false;
         },
         register() {
             router.push({name: "register"});
