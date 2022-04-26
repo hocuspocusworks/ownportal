@@ -14,7 +14,7 @@ class JwtToken {
 
     static {
         try {
-            Algorithm algorithm = Algorithm.HMAC512("secret");
+            Algorithm algorithm = Algorithm.HMAC512("c8aP9xnmwXTWF1BMeBsHx02AnLe1eLDbZ50V9MQJPw");
             verifier = JWT.require(algorithm)
                         .withIssuer("ownportal")
                         .build();

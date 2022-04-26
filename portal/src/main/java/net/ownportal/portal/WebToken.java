@@ -9,7 +9,7 @@ public class WebToken {
     private static Algorithm algorithm;
 
     static {
-        algorithm = Algorithm.HMAC512("secret");
+        algorithm = Algorithm.HMAC512("c8aP9xnmwXTWF1BMeBsHx02AnLe1eLDbZ50V9MQJPw");
     }
 
     public static String getCookie(final String content) {
