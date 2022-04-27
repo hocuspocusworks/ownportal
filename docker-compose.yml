@@ -5,6 +5,10 @@ services:
     container_name: mongodb
     volumes:
       - /root/ownportal-data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: E70nd3HGyXthxtbwU1DBpiDHQblvd5J3zNLghdm91dk
+      MONGO_INITDB_DATABASE: ownportal
   fetcher:
     container_name: fetcher
     build:
