@@ -47,7 +47,11 @@ class FeedService {
     void deleteGroup(final String name) {
         extRepo.deleteGroupByName(userService.getUsername(), name);
     }
-    
+
+    public void deleteStream(String name) {
+        extRepo.deleteStreamByName(userService.getUsername(), name);
+    }
+
     private boolean groupContainsStream(StreamDto stream, FeedDao feed) {
         var group = groupForFeed(stream.getGroup(), feed).get();
         if (group.getStreams() == null) {

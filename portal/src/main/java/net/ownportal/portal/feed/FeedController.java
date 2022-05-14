@@ -54,4 +54,10 @@ class FeedController {
         feedService.deleteGroup(name);
         return "";
     }
+
+    @DeleteMapping("/stream")
+    String deleteStream(@RequestBody String name) {
+        feedService.deleteStream(name);
+        return "";
+    }
 }

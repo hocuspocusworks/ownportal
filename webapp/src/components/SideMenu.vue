@@ -33,13 +33,14 @@
                         <i class="bi me-1 text-white" :class="{'bi-chevron-down': icon[i], 'bi-chevron-right': !icon[i]}"></i>
                     </button>
                     <button class="btn shadow-none flex-grow-1 text-start text-white" @click="onItemSelect(item)">{{ item.name }}</button>
-                    <button class="btn shadow-none text-white" @click="deleteGroup(item.name)"><i class="bi bi-trash"></i></button>
+                    <button class="btn shadow-none text-white" @click="deleteGroup(item.name)"><i class="bi bi-folder-x"></i></button>
                 </div>
                 <div class="collapse" :id="'i-'+i">
                     <div class="d-flex" v-for="(subitem, j) in item.streams" :key="subitem.name">
-                        <button type="button" class="btn my-li-text shadow-none ps-5" @click="onItemSelect(subitem)">
+                        <button type="button" class="btn my-li-text shadow-none ps-5 flex-grow-1" @click="onItemSelect(subitem)">
                             {{ subitem.name }}
                         </button>
+                        <button class="btn shadow-none text-white" @click="deleteFeed(subitem.name)"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
             </div>
@@ -152,6 +153,15 @@ export default {
         },
         deleteGroup(name) {
             let url = config.gateway + "/portal/feed/group";
+            axios.delete(url, {data: name, withCredentials: true})
+                .then(response => {
+                    if (response.status === 200) {
+                        this.fetchFeed();
+                    }
+                });
+        },
+        deleteFeed(name) {
+            let url = config.gateway + "/portal/feed/stream";
             axios.delete(url, {data: name, withCredentials: true})
                 .then(response => {
                     if (response.status === 200) {
