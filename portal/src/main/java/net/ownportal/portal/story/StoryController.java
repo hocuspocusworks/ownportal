@@ -21,15 +21,15 @@ public class StoryController {
     private final UserService userService;
 
     @PostMapping("/favourite")
-    String newFavourite(@RequestBody FavouriteDao dao) {
+    String newFavourite(@RequestBody Favourite dao) {
         log.debug("saving a like");
-        dao.setUsername(userService.getUsername());
+        // dao.setUser(userService.getUser());
         repository.save(dao);
         return "";
     }
 
     @GetMapping("/favourite")
-    List<FavouriteDao> getFavourites() {
-        return repository.findAllByUsername(userService.getUsername());
+    List<Favourite> getFavourites() {
+        return repository.findAllByUser(userService.user());
     }
 }

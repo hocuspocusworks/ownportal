@@ -2,16 +2,17 @@ package net.ownportal.portal.filter;
 
 import org.springframework.stereotype.Component;
 
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import net.ownportal.portal.user.User;
+import net.ownportal.portal.user.UserRepository;
 
 @Component
 @ToString
+@RequiredArgsConstructor
 public class UserService {
     private final UserDetail userDetail;
-
-    public UserService(final UserDetail userDetail) {
-        this.userDetail = userDetail;
-    }
+    private final UserRepository repo;
 
     UserService username(final String username) {
         userDetail.setUsername(username);
@@ -21,6 +22,14 @@ public class UserService {
     UserService qouta(final int qouta) {
         userDetail.setQouta(qouta);
         return this;
+    }
+
+    public User user() {
+        return repo.findOneByEmail(getUsername()).get();
+    }
+
+    public void save(User user) {
+        repo.save(user);
     }
 
     public String getUsername() {

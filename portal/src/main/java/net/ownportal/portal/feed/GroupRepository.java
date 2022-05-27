@@ -1,8 +1,8 @@
-package net.ownportal.portal.source;
+package net.ownportal.portal.feed;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface CategoryRepository extends JpaRepository<Category, String> {
+interface GroupRepository extends JpaRepository<Group, Long> {
 }

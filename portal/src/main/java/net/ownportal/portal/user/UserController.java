@@ -26,25 +26,24 @@ class UserController {
     }
 
     @PostMapping("register")
-    UserDao register(@RequestBody UserDetail user, HttpServletResponse response) {
+    User register(@RequestBody UserDetail user, HttpServletResponse response) {
         if (exists(user.getUsername())) {
             response.setStatus(HttpServletResponse.SC_CONFLICT);
-            return UserDao.empty();
+            return null;
         }
-        final var userDao = new UserDao();
+        final var userDao = new User();
         final var hash = Password.hash(user.getPassword())
             .addRandomSalt()
             .withPBKDF2();
-        userDao.setUsername(user.getUsername());
+        userDao.setEmail(user.getUsername());
         userDao.setPassword(hash.getResult());
         userDao.setSalt(hash.getSalt());
-        userDao.setEmail(user.getEmail());
         return userRepository.save(userDao);
     }
 
     @PostMapping("login")
     public String login(@RequestBody UserLogin input, final HttpServletResponse response) {
-        var userOpt = userRepository.findOneByUsername(input.getUsername());
+        var userOpt = userRepository.findOneByEmail(input.getUsername());
         if (userOpt.isEmpty()) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return "";
@@ -56,7 +55,7 @@ class UserController {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             return "";
         }
-        final var token = WebToken.generateToken(userOpt.get().getUsername());
+        final var token = WebToken.generateToken(userOpt.get().getEmail());
         response.addHeader(HttpHeaders.SET_COOKIE, WebToken.getCookie(token));
         return "";
     }
@@ -69,7 +68,7 @@ class UserController {
     }
 
     private boolean exists(final String username) {
-        if (userRepository.findOneByUsername(username).isEmpty()) {
+        if (userRepository.findOneByEmail(username).isEmpty()) {
             return false;
         }
         return true;

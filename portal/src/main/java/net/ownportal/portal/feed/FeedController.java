@@ -1,7 +1,5 @@
 package net.ownportal.portal.feed;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,52 +10,57 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.ownportal.portal.filter.UserService;
+import net.ownportal.portal.user.User;
 
 @RestController
-@RequestMapping("/feed")
+@RequestMapping("feed")
 @Slf4j
 @RequiredArgsConstructor
 class FeedController {
     private final UserService userService;
-    private final FeedService feedService;
-    private final FeedPrimeService primeService;
+    private final GroupRepository groupRepo;
 
-    @GetMapping("/me")
-    FeedDao getMyFeed() {
-        return feedService.getFeedForUsername(userService.getUsername());
-    }
-
-    @GetMapping("/prime/me")
-    List<FeedPrimeDto> getMyPrimeFeed() {
-        return primeService.getFeedForUsername(userService.getUsername());
-    }
-
-    @PostMapping("/newGroup")
-    String newGroup(@RequestBody GroupDao group) {
-        if (!userService.limitReached()) {
-            log.debug("adding new group for user {}", userService);
-            feedService.newGroup(group);
-            userService.increaseGroupNumber(1);
+    @GetMapping("me")
+    FeedResponse getMyFeed() {
+        final var feed = new FeedResponse();
+        for (var group : userService.user().getUserGroups()) {
+            var g = new GroupResponse();
+            g.setName(group.getName());
+            for (var stream : group.getStreams()) {
+                var s = new StreamResponse();
+                s.setName(stream.getName());
+                s.setUrl(stream.getSource().getUrl());
+                g.getStreams().add(s);
+            }
+            feed.getGroups().add(g);
         }
+        return feed;
+    }
+
+    @PostMapping("newGroup")
+    String newGroup(@RequestBody GroupDto group) {
+        Group g = new Group();
+        groupRepo.save(g);
+        User u = userService.user();
+        g.setName(group.getName());
+        u.getUserGroups().add(g);
+        userService.save(u);
         return "";
     }
 
-    @PostMapping("/newStream")
+    @PostMapping("newStream")
     String newStream(@RequestBody StreamDto stream) {
         log.debug("adding new stream for {} to group {}", userService.getUsername(), stream.getGroup());
-        feedService.newStream(stream);
         return "";
     }
 
-    @DeleteMapping("/group")
+    @DeleteMapping("group")
     String deleteGroup(@RequestBody String name) {
-        feedService.deleteGroup(name);
         return "";
     }
 
-    @DeleteMapping("/stream")
+    @DeleteMapping("stream")
     String deleteStream(@RequestBody String name) {
-        feedService.deleteStream(name);
         return "";
     }
 }

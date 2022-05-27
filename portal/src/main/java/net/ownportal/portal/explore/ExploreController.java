@@ -1,8 +1,6 @@
 package net.ownportal.portal.explore;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,8 +13,8 @@ import org.springframework.web.reactive.function.client.WebClientResponseExcepti
 
 import lombok.Getter;
 import lombok.Setter;
-import net.ownportal.portal.source.CategoryDao;
-import net.ownportal.portal.source.SourceDao;
+import net.ownportal.portal.source.Category;
+import net.ownportal.portal.source.Source;
 import net.ownportal.portal.source.SourceService;
 import reactor.core.publisher.Mono;
 
@@ -33,19 +31,19 @@ class ExploreController {
     }
 
     @GetMapping("/rss")
-    public SourceDao findRssPage(final String url) {
+    public Source findRssPage(final String url) {
         final var result = getRssFeed(url);
 
         if (result == null) {
-            return SourceDao.builder().build();
+            return Source.builder().build();
         }
 
-        final var source = SourceDao.builder()
+        final var source = Source.builder()
             .name(result.getData().getSource())
             .description(result.getData().getDescription())
             .icon("")
             .language(result.getData().getLanguage())
-            .categories(extractCategories(result))
+            // .categories(extractCategories(result))
             .url(url)
             .timestamp(Instant.now().toEpochMilli())
             .build();
@@ -53,12 +51,12 @@ class ExploreController {
     }
 
     @GetMapping("/categories")
-    public CategoryDao getCategories() {
+    public Category getCategories() {
         return service.getCategories();
     }
 
     @GetMapping("/search")
-    public List<SourceDao> searchRssPages(final String keyword) {
+    public List<Source> searchRssPages(final String keyword) {
         return service.getByKeyword(keyword);
     }
 
@@ -73,15 +71,15 @@ class ExploreController {
             .block();
     }
 
-    private List<String> extractCategories(RssFetchResponse result) {
-        final var nodes = result.getData().getNodes();
-        var list = new HashSet<String>();
-        for (var item : nodes) {
-            if (item.getCategories().isEmpty()) continue;
-            list.addAll(item.getCategories());
-        }
-        return new ArrayList<>(list);
-    }
+    // private Set<Category> extractCategories(RssFetchResponse result) {
+    //     final var nodes = result.getData().getNodes();
+    //     var list = new HashSet<String>();
+    //     for (var item : nodes) {
+    //         if (item.getCategories().isEmpty()) continue;
+    //         list.addAll(item.getCategories());
+    //     }
+    //     return new HashSet<>(list);
+    // }
 
     @Getter @Setter
     private static class RssFetchResponse {

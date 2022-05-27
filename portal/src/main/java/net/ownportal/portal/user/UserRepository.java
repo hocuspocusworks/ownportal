@@ -2,12 +2,12 @@ package net.ownportal.portal.user;
 
 import java.util.Optional;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-interface UserRepository extends MongoRepository<UserDao, String> {
+public interface UserRepository extends JpaRepository<User, String> {
 
-    Optional<UserDao> findOneByUsername(String username);
-    Optional<UserDao> findOneByUsernameAndPassword(String username, String password);
+    Optional<User> findOneByEmail(String username);
+    Optional<User> findOneByEmailAndPassword(String username, String password);
 }

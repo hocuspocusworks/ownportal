@@ -13,7 +13,7 @@ public class SourceService {
     private final SourceRepository repository;
     private final CategoryRepository category;
 
-    public SourceDao saveSource(SourceDao dao) {
+    public Source saveSource(Source dao) {
         final var result = repository.findByName(dao.getName());
         if (result.isEmpty()) {
             return repository.save(dao);
@@ -23,11 +23,11 @@ public class SourceService {
         return repository.save(result.get());
     }
 
-    public CategoryDao getCategories() {
+    public Category getCategories() {
         return category.findAll().get(0);
     }
 
-    public List<SourceDao> getByKeyword(String keyword) {
+    public List<Source> getByKeyword(String keyword) {
         return repository.findByDescriptionContainingIgnoreCase(keyword);
     }
 }

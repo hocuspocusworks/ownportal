@@ -13,7 +13,5 @@ public class UserDetail {
     private String username;
     @NonNull
     private String password;
-    @NonNull
-    private String email;
     private String token;
 }
