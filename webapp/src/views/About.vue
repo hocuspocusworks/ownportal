@@ -7,6 +7,7 @@
         </a>
 
         <ul class="nav nav-pills">
+            <li class="nav-item"><a href="#" class="nav-link" @click="loginView">Login</a></li>
             <li class="nav-item"><a href="#" class="nav-link" @click="register">Register</a></li>
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">About</a></li>
         </ul>
@@ -96,6 +97,9 @@ export default {
         // },
         register() {
             router.push({name: "register"});
+        },
+        loginView() {
+            router.push({name: "login"});
         },
         login() {
             let url = config.gateway + "/user/login";
