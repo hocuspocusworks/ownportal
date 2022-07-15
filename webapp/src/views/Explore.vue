@@ -179,7 +179,7 @@ export default {
         }
     },
     mounted() {
-        this.loadCategories();
+        // this.loadCategories();
         this.loadGroups();
     }
 }
