@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.ownportal.portal.filter.UserService;
-import net.ownportal.portal.user.User;
+import net.ownportal.portal.source.SourceService;
 
 @RestController
 @RequestMapping("feed")
@@ -18,12 +18,14 @@ import net.ownportal.portal.user.User;
 @RequiredArgsConstructor
 class FeedController {
     private final UserService userService;
-    private final GroupRepository groupRepo;
+    private final SourceService sourceService;
+    private final GroupService groupService;
+    private final StreamRepository streamRepo;
 
     @GetMapping("me")
     FeedResponse getMyFeed() {
         final var feed = new FeedResponse();
-        for (var group : userService.user().getUserGroups()) {
+        for (var group : userService.user().getGroups()) {
             var g = new GroupResponse();
             g.setName(group.getName());
             for (var stream : group.getStreams()) {
@@ -38,19 +40,21 @@ class FeedController {
     }
 
     @PostMapping("newGroup")
-    String newGroup(@RequestBody GroupDto group) {
-        Group g = new Group();
-        groupRepo.save(g);
-        User u = userService.user();
-        g.setName(group.getName());
-        u.getUserGroups().add(g);
-        userService.save(u);
+    String newGroup(@RequestBody GroupDto dto) {
+        Group group = new Group();
+        group.setName(dto.getName());
+        group.setUser(userService.user());
+        groupService.save(group);
         return "";
     }
 
     @PostMapping("newStream")
     String newStream(@RequestBody StreamDto stream) {
         log.debug("adding new stream for {} to group {}", userService.getUsername(), stream.getGroup());
+        var source = sourceService.getByUrl(stream.getUrl());
+        var group = groupService.getByNameAndUser(stream.getGroup(), userService.user());
+        var newStream = Stream.build(stream.getStream(), group, source.get());
+        streamRepo.save(newStream);
         return "";
     }
 

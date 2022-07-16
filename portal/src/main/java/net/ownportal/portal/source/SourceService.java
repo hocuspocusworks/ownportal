@@ -2,6 +2,7 @@ package net.ownportal.portal.source;
 
 import java.time.Instant;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
@@ -29,5 +30,9 @@ public class SourceService {
 
     public List<Source> getByKeyword(String keyword) {
         return repository.findByDescriptionContainingIgnoreCase(keyword);
+    }
+
+    public Optional<Source> getByUrl(String url) {
+        return repository.findByUrl(url);
     }
 }

@@ -2,7 +2,9 @@ package net.ownportal.portal.source;
 
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,13 +33,14 @@ public class Source {
     private String name;
     private String description;
     private String language;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "source_category",
         joinColumns = @JoinColumn(name = "source_id"),
         inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
     private String icon;
+    @Column(unique=true)
     private String url;
     private long timestamp;
 }

@@ -9,5 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 interface SourceRepository extends JpaRepository<Source, String> {
     Optional<Source> findByName(String name);
+    Optional<Source> findByUrl(String url);
     List<Source> findByDescriptionContainingIgnoreCase(String keyword);
 }
