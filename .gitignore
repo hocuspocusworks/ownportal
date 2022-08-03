@@ -33,3 +33,5 @@ api/public/assets
 
 # Ignore master key for decrypting credentials and more.
 api/config/master.key
+
+.DS_Store
