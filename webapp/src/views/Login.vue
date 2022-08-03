@@ -69,12 +69,12 @@ export default {
         login() {
             this.err = false;
             this.loading = true;
-            let url = config.gateway + "/user/login";
-            let payload = {"username": this.username, "password": this.password };
-            axios.post(url, payload, {withCredentials: true})
+            let url = config.gateway + "/api/sessions";
+            let payload = {"session": {"email": this.username, "password": this.password }};
+            axios.post(url, payload)
                 .then(resp => {
                     if (resp.status === 200) {
-                        localStorage.setItem('loggedIn', 'true');
+                        localStorage.setItem('token', resp.data.session.token);
                         router.push({name: "home"});
                     } else {
                         this.reportError();
@@ -91,11 +91,8 @@ export default {
         register() {
             router.push({name: "register"});
         },
-        isValidCredentials() {
-            return this.username === "admin" && this.password === "admin" ? true : false;
-        },
         isValidToken() {
-            return localStorage.getItem('loggedIn') === "true" ? true : false;
+            return localStorage.getItem('token') !== null ? true : false;
         },
         about() {
             router.push({name: "about"});

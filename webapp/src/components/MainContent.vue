@@ -65,7 +65,8 @@ export default {
             this.err = false;
             let request = config.gateway + "/api/rss/fetchAll";
             let data = {"urls": url, "sort": "asc"};
-            axios.post(request, data, {withCredentials: true})
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.post(request, data, headers)
                 .then(response => {
                     this.content = response.data.data.nodes;
                 })
@@ -92,12 +93,13 @@ export default {
             window.open(url, '_blank').focus();
         },
         like(item) {
-            console.log(item);
+            item.heart = true; // should replace with loading
             let url = config.gateway + "/portal/story/favourite";
             let data = {'username': '', 'title': item.title,
                 'description': item.description, 'link': item.link,
                 'publisher': item.source, 'publishedDate': item.publishedDate};
-            axios.post(url, data, {withCredentials: true})
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.post(url, data, headers)
                 .then(response => {
                     if (response.status === 200) {
                         item.heart = true;

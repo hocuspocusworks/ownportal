@@ -158,7 +158,7 @@ export default {
                         this.loading = false;
                     });
             } else if (newValue.length >= 2) {
-                let url = config.gateway + "/portal/explore/search?keyword="+newValue;
+                let url = config.gateway + "/api/explores/search?keyword="+newValue;
                 axios.get(url, {withCredentials: true})
                     .then(response => {
                         if (response.status === 200) {

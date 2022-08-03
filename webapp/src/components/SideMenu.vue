@@ -33,14 +33,14 @@
                         <i class="bi me-1 text-white" :class="{'bi-chevron-down': icon[i], 'bi-chevron-right': !icon[i]}"></i>
                     </button>
                     <button class="btn shadow-none flex-grow-1 text-start text-white" @click="onItemSelect(item)">{{ item.name }}</button>
-                    <button class="btn shadow-none text-white" @click="deleteGroup(item.name)"><i class="bi bi-folder-x"></i></button>
+                    <button class="btn shadow-none text-white" @click="deleteGroup(item.id)"><i class="bi bi-folder-x"></i></button>
                 </div>
                 <div class="collapse" :id="'i-'+i">
                     <div class="d-flex" v-for="(subitem, j) in item.streams" :key="subitem.name">
                         <button type="button" class="btn my-li-text shadow-none ps-5 flex-grow-1" @click="onItemSelect(subitem)">
                             {{ subitem.name }}
                         </button>
-                        <button class="btn shadow-none text-white" @click="deleteFeed(subitem.name)"><i class="bi bi-trash3"></i></button>
+                        <button class="btn shadow-none text-white" @click="deleteFeed(subitem.id)"><i class="bi bi-trash3"></i></button>
                     </div>
                 </div>
             </div>
@@ -78,13 +78,16 @@ export default {
             this.createSource();
         },
         createGroup() {
+            let group = config.gateway + "/api/groups";
             let payload = {
-                "name": this.newGroupName
+                "group": {
+                    "name": this.newGroupName
+                }
             };
-            let group = config.gateway + "/portal/feed/newGroup";
-            axios.post(group, payload, {withCredentials: true})
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.post(group, payload, {headers})
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 201) {
                         this.fetchFeed();
                     }
                 });
@@ -97,33 +100,33 @@ export default {
                 "stream": this.newSourceName,
                 "url": this.newRssFeedUrl
             };
-            let stream = config.gateway + "/portal/feed/newStream";
-            axios.post(stream, payload, {withCredentials: true});
+            let headers = {Authorization: localStorage.getItem('token')};
+            let stream = config.gateway + "/api/streams";
+            axios.post(stream, payload, {headers});
             this.newSourceName = "";
             this.newRssFeedUrl = "";
         },
         fetchFeed() {
             this.loading = true;
-            let me = config.gateway + "/portal/feed/me";
+            let me = config.gateway + "/api/groups";
             axios({
                 method: "get",
                 url: me,
-                withCredentials: true,
-                timeout: 1000*5
+                timeout: 1000*5,
+                headers: {
+                    Authorization: localStorage.getItem('token')
+                }
                 }).then(response => {
                     this.updateView(response.data.groups);
                 }).catch(error => {
                     this.updateError();
                 });
         },
-        feed(number) {
-            let url = this.groups[number].streams;
-            this.$emit("feedChanged", url);
-        },
         source(number) {
             this.selectedGroup = number;
         },
         updateView(data) {
+            console.log(data);
             this.data = data;
             this.loading = false;
         },
@@ -138,10 +141,10 @@ export default {
             let url = [];
             if (item.streams !== undefined) {
                 item.streams.forEach(el => {
-                    url.push(el.url);
+                    url.push(el.source.url);
                 });
             } else {
-                url.push(item.url);
+                url.push(item.source.url);
             }
             this.$emit('feedChanged', url);
         },
@@ -151,20 +154,23 @@ export default {
         toExplore() {
             this.$emit('explore');
         },
-        deleteGroup(name) {
-            let url = config.gateway + "/portal/feed/group";
-            axios.delete(url, {data: name, withCredentials: true})
+        deleteGroup(id) {
+            let url = config.gateway + "/api/groups/" + id;
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.delete(url, {headers})
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 204) {
                         this.fetchFeed();
                     }
                 });
         },
-        deleteFeed(name) {
-            let url = config.gateway + "/portal/feed/stream";
-            axios.delete(url, {data: name, withCredentials: true})
+        deleteFeed(id) {
+            console.log(id);
+            let url = config.gateway + "/api/streams/" + id;
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.delete(url, {headers})
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 204) {
                         this.fetchFeed();
                     }
                 });
