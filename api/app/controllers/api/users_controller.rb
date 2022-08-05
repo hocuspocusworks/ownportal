@@ -9,6 +9,7 @@ module Api
     end
 
     def create
+      authorize User
       user = User.create(user_params)
 
       if user.save

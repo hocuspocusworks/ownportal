@@ -6,6 +6,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     get 'explores/search'
-    resources :users, :sources, :groups, :streams, :sessions
+
+    resources :users, :sources, :groups, :streams
+    resource :sessions
   end
 end

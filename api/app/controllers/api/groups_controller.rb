@@ -2,6 +2,7 @@ module Api
   class GroupsController < ApplicationController
     def index
       # refactor - should be a special serialiser. group one should be simple so other ops work
+      authorize Group
       render json: GroupSerializer.render(GroupsQueries.new.with_streams(current_user.id), root: :groups),
              status: :ok
     end

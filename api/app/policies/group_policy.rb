@@ -10,7 +10,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    true
   end
 
   def create?
