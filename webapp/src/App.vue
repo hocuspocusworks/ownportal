@@ -8,7 +8,7 @@ import router from './router/index';
 export default {
   name: 'App',
   mounted() {
-    router.push({name: "about"});
+    router.push({name: "login"});
   },
 }
 </script>
