@@ -7,30 +7,22 @@ module Api
     end
 
     def create
-      group = Group.new(user_params)
-      group.user_id = current_user.id
-      authorize group
-
-      if group.save
-        render json: GroupSerializer.render(group), status: :created
+      if @group.save
+        render_json @group, status: :created
       else
-        render json: { errors: group.errors }, status: :bad_request
+        render json: { errors: @group.errors }, status: :bad_request
       end
     end
 
     def update
-      authorize @group
-
       if @group.update(user_params)
-        render json: GroupSerializer.render(@group), status: :ok
+        render_json @group
       else
         render json: { errors: @group.errors }, status: :bad_request
       end
     end
 
     def destroy
-      authorize @group
-
       @group.destroy
       render json: {}, status: :no_content
     end
