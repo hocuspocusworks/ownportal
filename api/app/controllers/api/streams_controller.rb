@@ -18,7 +18,7 @@ module Api
 
     def update
       if @stream.update(user_params)
-        render json: UserSerializer.render(@stream), status: :ok
+        render_json @stream
       else
         render json: { errors: @stream.errors }, status: :bad_request
       end
