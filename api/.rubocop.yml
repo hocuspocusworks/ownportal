@@ -1,7 +1,10 @@
+Style/Documentation:
+  Enabled: false
+
 Style/FrozenStringLiteralComment:
   Enabled: false
 
-Style/Documentation:
+Style/StringLiterals:
   Enabled: false
 
 Naming/MemoizedInstanceVariableName:

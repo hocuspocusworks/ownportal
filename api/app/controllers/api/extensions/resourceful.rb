@@ -5,6 +5,8 @@ module Api
 
       included do
         before_action :authorise_resource
+        before_action :load_collection, only: [:index]
+        before_action :resource_from_attributes, only: [:create]
       end
 
       private
@@ -21,7 +23,35 @@ module Api
         controller_name.classify.constantize
       end
 
+      def resource_from_attributes
+        instance_variable_set(resource_variable, params_to_object)
+      end
+
+      def params_to_object
+        "#{resource_class}Deserialiser".constantize.deserialise(permit_params, current_user)
+      end
+
+      def permit_params
+        params.require(resource_name.to_sym).permit(policy(resource_class).permitted_attributes)
+      end
+
       def policy_class; end
+
+      def policy_identifier
+        policy_class.to_s.downcase.to_sym
+      end
+
+      def resource_policy
+        policy_class&.new(current_user, resource_item) || policy(resource_item)
+      end
+
+      def resource_name
+        controller_name.singularize.downcase
+      end
+
+      def resource_variable
+        "@#{resource_name}"
+      end
     end
   end
 end

@@ -3,21 +3,19 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json Stream.first(20)
+      render_json top_streams
     end
 
     def create
-      stream_obj = stream.save
-
-      if stream_obj
-        render_json stream_obj, status: :created
+      if @stream.save
+        render_json @stream, status: :created
       else
-        render json: { errors: stream.errors }, status: :bad_request
+        render json: { errors: @stream.errors }, status: :bad_request
       end
     end
 
     def update
-      if @stream.update(user_params)
+      if @stream.update(permit_params)
         render_json @stream
       else
         render json: { errors: @stream.errors }, status: :bad_request
@@ -39,8 +37,8 @@ module Api
       @stream ||= Stream.find(params[:id])
     end
 
-    def user_params
-      params.require(:stream).permit(policy(Stream).permitted_attributes)
+    def top_streams
+      Stream.first(20)
     end
   end
 end

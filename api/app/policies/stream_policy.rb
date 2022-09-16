@@ -30,7 +30,7 @@ class StreamPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[group stream url]
+    %i[name group url]
   end
 
   private

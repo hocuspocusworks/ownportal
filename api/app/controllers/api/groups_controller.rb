@@ -1,9 +1,9 @@
 module Api
   class GroupsController < ApplicationController
+    include Api::Extensions::Resourceful
+
     def index
-      # refactor - should be a special serialiser. group one should be simple so other ops work
-      render json: GroupSerializer.render(GroupsQueries.new.with_streams(current_user.id), root: :groups),
-             status: :ok
+      render_json @groups
     end
 
     def create
@@ -39,6 +39,10 @@ module Api
 
     def load_resource
       @group ||= Group.find(params[:id])
+    end
+
+    def load_collection
+      @groups ||= GroupsQueries.new.with_streams(current_user.id)
     end
 
     def user_params
