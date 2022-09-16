@@ -1,24 +1,22 @@
 module Api
   class StreamsController < ApplicationController
+    include Api::Extensions::Resourceful
+
     def index
-      render json: StreamSerializer.render(Stream.first(20), root: :streams), status: :ok
+      render_json Stream.first(20)
     end
 
     def create
-      group = Group.with_name(params[:group], current_user).ids[0]
-      source = Source.with_url(params[:url]).ids[0]
-      stream = Stream.new(name: params[:stream], group_id: group, source_id: source)
+      stream_obj = stream.save
 
-      if stream.save
-        render json: StreamSerializer.render(stream), status: :created
+      if stream_obj
+        render_json stream_obj, status: :created
       else
         render json: { errors: stream.errors }, status: :bad_request
       end
     end
 
     def update
-      authorize Stream
-
       if @stream.update(user_params)
         render json: UserSerializer.render(@stream), status: :ok
       else
@@ -27,13 +25,15 @@ module Api
     end
 
     def destroy
-      authorize Stream.joins(:group).where('streams.id = ?', params[:id])
-
       @stream.destroy
       render json: {}, status: :no_content
     end
 
     private
+
+    def policy_class
+      StreamPolicy
+    end
 
     def load_resource
       @stream ||= Stream.find(params[:id])

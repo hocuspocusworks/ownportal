@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::API
   include Pundit::Authorization
   include Api::Extensions::Authentication
+  include Api::Extensions::Respondable
 
   before_action :authenticate
   before_action :load_resource, only: %i[show update destroy]

@@ -5,5 +5,5 @@ class Source < ApplicationRecord
 
   validates :description, length: { maximum: 256 }
 
-  scope :with_url, ->(url) { where('url = ?', url) }
+  scope :with_url, ->(url) { where(url: url) }
 end
