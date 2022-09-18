@@ -110,7 +110,7 @@ export default {
                 });
         },
         isValidToken() {
-            return localStorage.getItem('token') !== null ? true : false;
+            return localStorage.getItem('token') ? true : false;
         }
     },
     mounted() {

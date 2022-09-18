@@ -14,6 +14,10 @@ class UserPolicy < ApplicationPolicy
     user.admin?
   end
 
+  def create?
+    true
+  end
+
   def show?
     admin_and_user_permissions
   end

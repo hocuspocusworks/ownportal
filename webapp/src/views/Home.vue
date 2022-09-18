@@ -58,13 +58,14 @@ export default {
             this.toggleSidebar();
         },
         logout() {
+            localStorage.setItem('token', '');
             this.sendLogoutToServer();
-            localStorage.setItem('loggedIn', 'false');
             router.push({name: "login"});
         },
         sendLogoutToServer() {
-            let url = config.gateway + '/user/logout';
-            axios.post(url);
+            let url = config.gateway + '/api/sessions';
+            let headers = {Authorization: localStorage.getItem('token')};
+            axios.delete(url, {headers});
         },
         toggleSidebar() {
             sidebar.toggleSidebar();

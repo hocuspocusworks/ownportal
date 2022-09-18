@@ -11,7 +11,7 @@ default: &default
   port: 5432
   database: ownportal
   username: postgres
-  password:
+  password: postgres
 
 development:
   <<: *default

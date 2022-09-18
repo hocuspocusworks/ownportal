@@ -21,7 +21,7 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false },
                     format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
-  validates :password, presence: true, length: { minimum: 6, maximum: 256 }
+  validates :password, length: { minimum: 6, allow_nil: true }
 
   def admin?
     role == 'admin'

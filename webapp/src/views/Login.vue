@@ -15,7 +15,8 @@
 
         <div v-if="err">
             <div class="alert alert-danger" role="alert">
-                There are some issues logging you in. Please try again later.
+                <span v-if="!errInfo">There are some issues logging you in. Please try again later.</span>
+                <span v-if="errInfo">Error: {{ errInfo }}</span>
             </div>
         </div>
     </div>
@@ -60,9 +61,10 @@ export default {
     data() {
         return {
             err: false,
+            errInfo: '',
             loading: false,
-            username: "",
-            password: ""
+            username: '',
+            password: ''
         }
     },
     methods: {
@@ -77,22 +79,25 @@ export default {
                         localStorage.setItem('token', resp.data.session.token);
                         router.push({name: "home"});
                     } else {
-                        this.reportError();
+                        this.reportError(resp);
                     }
                 })
                 .catch(ex => {
-                    this.reportError();
+                    this.reportError(ex.response);
                 });
         },
-        reportError() {
+        reportError(response) {
             this.err = true;
             this.loading = false;
+            if (response && response.data) {
+                this.errInfo = response.data.errors;
+            }
         },
         register() {
             router.push({name: "register"});
         },
         isValidToken() {
-            return localStorage.getItem('token') !== null ? true : false;
+            return localStorage.getItem('token') ? true : false;
         },
         about() {
             router.push({name: "about"});
