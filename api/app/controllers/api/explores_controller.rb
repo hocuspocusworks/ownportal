@@ -10,22 +10,22 @@ module Api
     end
 
     def search
-      url = url_from_param
-      return unless Source.with_url(url).empty?
+      result = if valid_url?
+                 Source.with_url(keyword)
+               else
+                 Source.with_keyword(keyword)
+               end
+      render_json result
     end
 
     private
 
-    def url_from_param
-      valid_url || raise_error
+    def keyword
+      @keyword ||= user_params[:keyword]
     end
 
-    def valid_url
-      user_params[:keyword] =~ URI::DEFAULT_PARSER.make_regexp ? user_params[:keyword] : false
-    end
-
-    def raise_error
-      # raise some error
+    def valid_url?
+      keyword =~ URI::DEFAULT_PARSER.make_regexp ? keyword : false
     end
 
     def user_params

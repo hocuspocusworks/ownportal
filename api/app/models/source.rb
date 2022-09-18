@@ -20,4 +20,5 @@ class Source < ApplicationRecord
   validates :description, length: { maximum: 256 }
 
   scope :with_url, ->(url) { where(url: url) }
+  scope :with_keyword, ->(keyword) { where('name like ?', "%#{keyword}%") }
 end
