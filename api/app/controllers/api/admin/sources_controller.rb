@@ -10,11 +10,7 @@ module Api
       def update
         @source.processed = true
 
-        if @source.update(user_params)
-          render_json @source
-        else
-          render json: { errors: @source.errors }, status: :bad_request
-        end
+        save_form
       end
 
       def destroy

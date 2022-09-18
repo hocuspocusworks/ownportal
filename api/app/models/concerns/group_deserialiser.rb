@@ -1,7 +1,7 @@
 class GroupDeserialiser
   def self.deserialise(resource, params, user)
     group = resource || Group.new
-    group.name = params[:name]
+    group.name = params[:name] || resource&.name
     group.user = user
     group
   end
