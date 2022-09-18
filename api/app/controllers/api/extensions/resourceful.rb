@@ -11,6 +11,14 @@ module Api
 
       private
 
+      def save_form(opts = {})
+        if resource_item.save
+          render_json resource_item, opts
+        else
+          render json: { errors: resource_item.errors }, status: :bad_request
+        end
+      end
+
       def authorise_resource
         authorize(resource_item || resource_class, policy_class: policy_class)
       end

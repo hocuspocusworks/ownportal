@@ -7,23 +7,14 @@ module Api
     end
 
     def create
-      if @favourite.save
-        render_json @favourite
-      else
-        render json: { errors: @favourite.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def update
-      if @favourite.save
-        render_json @favourite
-      else
-        render json: { errors: @favourite.errors }, status: :bad_request
-      end
+      save_form
     end
 
-    def destroy
-    end
+    def destroy; end
 
     private
 
