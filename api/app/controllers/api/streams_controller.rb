@@ -7,19 +7,11 @@ module Api
     end
 
     def create
-      if @stream.save
-        render @stream, status: :created
-      else
-        render json: { errors: @stream.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def update
-      if @stream.update(permit_params)
-        render_json @stream
-      else
-        render json: { errors: @stream.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def destroy
