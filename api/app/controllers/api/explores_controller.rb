@@ -10,15 +10,18 @@ module Api
     end
 
     def search
-      result = if valid_url?
-                 Source.with_url(keyword)
-               else
-                 Source.with_keyword(keyword)
-               end
-      render_json result
+      render_json valid_url? ? search_by_url : search_by_keyword
     end
 
     private
+
+    def search_by_url
+      Source.with_url(keyword)
+    end
+
+    def search_by_keyword
+      Source.with_keyword(keyword)
+    end
 
     def keyword
       @keyword ||= user_params[:keyword]
