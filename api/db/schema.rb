@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_16_193604) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_18_133724) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,6 +44,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_193604) do
     t.string "url", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "processed"
     t.index ["url"], name: "index_sources_on_url", unique: true
   end
 
@@ -58,6 +59,24 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_193604) do
     t.index ["source_id"], name: "index_streams_on_source_id"
   end
 
+  create_table "taggings", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "favourite_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["favourite_id"], name: "index_taggings_on_favourite_id"
+    t.index ["tag_id"], name: "index_taggings_on_tag_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.string "colour"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_tags_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", null: false
     t.string "password_digest"
@@ -65,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_16_193604) do
     t.string "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "sysadmin"
     t.index ["email"], name: "unique_emails", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
   end

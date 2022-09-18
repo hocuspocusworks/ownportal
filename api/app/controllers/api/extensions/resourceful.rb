@@ -23,6 +23,16 @@ module Api
         controller_name.classify.constantize
       end
 
+      def resource_scope
+        policy_scope(resource_class, policy_scope_class: policy_scope_class)
+      end
+
+      def policy_scope_class
+        return unless policy_class
+
+        "#{policy_class.name}::Scope".constantize
+      end
+
       def resource_from_attributes
         instance_variable_set(resource_variable, params_to_object)
       end

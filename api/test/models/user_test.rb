@@ -9,6 +9,7 @@
 #  role            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  sysadmin        :boolean
 #
 require "test_helper"
 

@@ -11,6 +11,7 @@
 #  url         :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  processed   :boolean
 #
 class Source < ApplicationRecord
   has_many :streams
@@ -19,6 +20,7 @@ class Source < ApplicationRecord
 
   validates :description, length: { maximum: 256 }
 
+  scope :with_processed, -> { where(processed: true) }
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('name like ?', "%#{keyword}%") }
 end

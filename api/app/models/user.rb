@@ -9,6 +9,7 @@
 #  role            :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
+#  sysadmin        :boolean
 #
 class User < ApplicationRecord
   has_secure_password
@@ -24,5 +25,9 @@ class User < ApplicationRecord
 
   def admin?
     role == 'admin'
+  end
+
+  def sysadmin?
+    sysadmin
   end
 end

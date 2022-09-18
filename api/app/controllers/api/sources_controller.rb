@@ -14,23 +14,6 @@ module Api
       end
     end
 
-    def update
-      authorize Source
-
-      if @source.update(user_params)
-        render json: @source, status: :ok
-      else
-        render json: { errors: @source.errors }, status: :bad_request
-      end
-    end
-
-    def destroy
-      authorize Source
-
-      @source.destroy
-      render json: {}, status: :no_content
-    end
-
     private
 
     def load_resource
