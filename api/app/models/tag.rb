@@ -11,4 +11,13 @@
 #
 class Tag < ApplicationRecord
   belongs_to :user
+
+  def self.find_or_create(tag_list, user)
+    tags = Tag.where(name: tag_list)
+    result_tags = []
+    tag_list.each do |tag|
+      result_tags.append(tags.find_by(name: tag) || Tag.create(name: tag, user: user))
+    end
+    result_tags
+  end
 end

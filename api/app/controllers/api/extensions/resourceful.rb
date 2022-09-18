@@ -6,7 +6,7 @@ module Api
       included do
         before_action :authorise_resource
         before_action :load_collection, only: [:index]
-        before_action :resource_from_attributes, only: [:create]
+        before_action :resource_from_attributes, only: %i[create update]
       end
 
       private
@@ -38,7 +38,7 @@ module Api
       end
 
       def params_to_object
-        "#{resource_class}Deserialiser".constantize.deserialise(permit_params, current_user)
+        "#{resource_class}Deserialiser".constantize.deserialise(resource_item, permit_params, current_user)
       end
 
       def permit_params
