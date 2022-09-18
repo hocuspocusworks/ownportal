@@ -27,6 +27,7 @@ module Api
     end
 
     def policy_class
+      FavouritePolicy
     end
 
     def user_params
