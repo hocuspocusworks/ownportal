@@ -5,14 +5,14 @@ module Api
     def index
       authorize User
 
-      render json: UserSerializer.render(User.all, root: :users), status: :ok
+      render_json User.all
     end
 
     def create
       user = User.create(user_params)
 
       if user.save
-        render json: UserSerializer.render(user), status: :created
+        render json: user, status: :created
       else
         render json: { errors: user.errors }, status: :bad_request
       end
@@ -22,7 +22,7 @@ module Api
       authorize @user
 
       if @user.update(user_params)
-        render json: UserSerializer.render(@user), status: :ok
+        render json: @user, status: :ok
       else
         render json: { errors: @user.errors }, status: :bad_request
       end

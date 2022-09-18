@@ -1,14 +1,14 @@
 module Api
   class SourcesController < ApplicationController
     def index
-      render json: SourceSerializer.render(Source.first(20), root: :sources), status: :ok
+      render json: Source.first(20)
     end
 
     def create
       source = Source.create(user_params)
 
       if source.save
-        render json: SourceSerializer.render(source), status: :created
+        render json: source, status: :created
       else
         render json: { errors: source.errors }, status: :bad_request
       end
@@ -18,7 +18,7 @@ module Api
       authorize Source
 
       if @source.update(user_params)
-        render json: UserSerializer.render(@source), status: :ok
+        render json: @source, status: :ok
       else
         render json: { errors: @source.errors }, status: :bad_request
       end

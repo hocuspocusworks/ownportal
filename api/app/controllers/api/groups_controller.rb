@@ -3,7 +3,7 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json @groups
+      render_json @groups, include: :user
     end
 
     def create

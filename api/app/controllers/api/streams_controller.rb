@@ -3,12 +3,12 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json top_streams
+      render_json @streams, include: %i[source group]
     end
 
     def create
       if @stream.save
-        render_json @stream, status: :created
+        render @stream, status: :created
       else
         render json: { errors: @stream.errors }, status: :bad_request
       end
@@ -35,6 +35,10 @@ module Api
 
     def load_resource
       @stream ||= Stream.find(params[:id])
+    end
+
+    def load_collection
+      @streams ||= top_streams
     end
 
     def top_streams
