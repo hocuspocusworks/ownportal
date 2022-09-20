@@ -1,7 +1,7 @@
 class StreamPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if user.admin?
+      if admin?
         scope.all
       else
         scope.where(id: user.id)
@@ -10,7 +10,7 @@ class StreamPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    admin?
   end
 
   def create?
@@ -36,6 +36,6 @@ class StreamPolicy < ApplicationPolicy
   private
 
   def admin_and_user_permissions
-    user.admin? || record.pluck(:user_id)[0] == user.id
+    admin? || record.pluck(:user_id)[0] == user.id
   end
 end

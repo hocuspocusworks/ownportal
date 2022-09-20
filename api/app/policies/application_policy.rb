@@ -25,4 +25,10 @@ class ApplicationPolicy
   def destroy?
     false
   end
+
+  private
+
+  def admin?
+    user.sysadmin?
+  end
 end

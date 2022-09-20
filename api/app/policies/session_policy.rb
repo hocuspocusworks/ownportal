@@ -1,7 +1,7 @@
 class SessionPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if user.admin?
+      if admin?
         scope.all
       else
         scope.where(id: user.id)

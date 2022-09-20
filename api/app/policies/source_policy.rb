@@ -1,11 +1,11 @@
 # Pundit is resource-based, not controller-based. When you call authorize and pass it a resource, Pundit cares about the action name and the resource type, but it does not care about the controller name.
 class SourcePolicy < ApplicationPolicy
   def update?
-    user.admin?
+    admin?
   end
 
   def delete?
-    user.admin?
+    admin?
   end
 
   def permitted_attributes

@@ -1,7 +1,7 @@
 class GroupPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if user.admin?
+      if admin?
         scope.all
       else
         scope.where(id: user.id)
@@ -36,6 +36,6 @@ class GroupPolicy < ApplicationPolicy
   private
 
   def admin_and_user_permissions
-    user.admin? || record.user_id == user.id
+    admin? || record.user_id == user.id
   end
 end

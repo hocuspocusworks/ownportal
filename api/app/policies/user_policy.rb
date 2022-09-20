@@ -2,7 +2,7 @@
 class UserPolicy < ApplicationPolicy
   class Scope < ApplicationScope
     def resolve
-      if user.admin?
+      if admin?
         scope.all
       else
         scope.where(id: user.id)
@@ -11,7 +11,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    user.admin?
+    admin?
   end
 
   def create?
@@ -35,13 +35,13 @@ class UserPolicy < ApplicationPolicy
 
     return basic if user.nil?
 
-    basic += [:role] if user.admin?
+    basic += [:role] if admin?
     basic - [:email] unless user.nil?
   end
 
   private
 
   def admin_and_user_permissions
-    user.admin? || record.id == user.id
+    admin? || record.id == user.id
   end
 end
