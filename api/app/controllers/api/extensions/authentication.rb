@@ -4,7 +4,7 @@ module Api
       private
 
       def current_user
-        User.where(token: authorisation_token)
+        User.where(token: authorisation_token).first
       end
 
       def authorisation_token
