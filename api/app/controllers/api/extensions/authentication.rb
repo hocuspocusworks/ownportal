@@ -4,12 +4,7 @@ module Api
       private
 
       def current_user
-        raise_error_on_invalid_header
-        User.find_by(token: authorisation_token)
-      end
-
-      def raise_error_on_invalid_header
-        raise 'Authorization header not set' if authorisation_token.nil?
+        User.where(token: authorisation_token)
       end
 
       def authorisation_token
