@@ -1,5 +1,7 @@
 module Api
   class UsersController < ApplicationController
+    include Api::Extensions::Resourceful
+
     skip_before_action :authenticate, only: :create
 
     def index
@@ -9,29 +11,14 @@ module Api
     end
 
     def create
-      authorize User
-      user = User.create(user_params)
-
-      if user.save
-        render json: user, status: :created
-      else
-        render json: { errors: user.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def update
-      authorize @user
-
-      if @user.update(user_params)
-        render json: @user, status: :ok
-      else
-        render json: { errors: @user.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def destroy
-      authorize @user
-
       @user.destroy
       render json: {}, status: :no_content
     end
