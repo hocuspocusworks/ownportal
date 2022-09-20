@@ -1,6 +1,7 @@
 module Api
   class SessionsController < ApplicationController
     include Api::Extensions::Respondable
+    include Api::Extensions::Resourceful
 
     skip_before_action :authenticate
 
@@ -17,10 +18,13 @@ module Api
     end
 
     def destroy
-      authorize nil, policy_class: SessionPolicy
-      token = request.headers['Authorization']
-      user = User.find_by(token: token)
-      user.regenerate_token
+      @session&.regenerate_token
+    end
+
+    private
+
+    def load_resource
+      @session ||= User.where(token: authorisation_token).first
     end
   end
 end
