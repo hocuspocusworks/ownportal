@@ -9,4 +9,10 @@ class ApplicationScope
   def resolve
     false
   end
+
+  private
+
+  def admin?
+    @user.sysadmin?
+  end
 end
