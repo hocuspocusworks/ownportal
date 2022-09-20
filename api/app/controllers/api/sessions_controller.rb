@@ -26,5 +26,9 @@ module Api
     def load_resource
       @session ||= User.where(token: authorisation_token).first
     end
+
+    def policy_class
+      SessionPolicy
+    end
   end
 end

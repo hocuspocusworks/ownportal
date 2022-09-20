@@ -22,12 +22,4 @@ class User < ApplicationRecord
                     format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
   validates :password, length: { minimum: 6, allow_nil: true }
-
-  def admin?
-    role == 'admin'
-  end
-
-  def sysadmin?
-    sysadmin
-  end
 end

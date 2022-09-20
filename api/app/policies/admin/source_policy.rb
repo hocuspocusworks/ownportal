@@ -1,16 +1,16 @@
 module Admin
   class SourcePolicy < ApplicationPolicy
     def index?
-      user.sysadmin?
+      admin?
     end
 
     def update?
-      user.sysadmin?
+      admin?
     end
 
     class Scope < ApplicationScope
       def resolve
-        user.sysadmin? ? scope.all : scope.none
+        admin? ? scope.all : scope.none
       end
     end
   end
