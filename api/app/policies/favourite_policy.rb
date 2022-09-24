@@ -11,6 +11,10 @@ class FavouritePolicy < ApplicationPolicy
     true
   end
 
+  def destroy?
+    admin? || current_user?
+  end
+
   def permitted_attributes
     [:description, :link, :publisher, :title, tag_list: []]
   end

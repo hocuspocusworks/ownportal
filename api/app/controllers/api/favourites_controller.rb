@@ -14,7 +14,9 @@ module Api
       save_form
     end
 
-    def destroy; end
+    def destroy
+      @favourite.destroy
+    end
 
     private
 

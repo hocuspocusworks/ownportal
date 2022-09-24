@@ -36,6 +36,6 @@ class GroupPolicy < ApplicationPolicy
   private
 
   def admin_and_user_permissions
-    admin? || record.user_id == user.id
+    admin? || current_user?
   end
 end

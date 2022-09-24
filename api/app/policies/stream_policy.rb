@@ -36,6 +36,6 @@ class StreamPolicy < ApplicationPolicy
   private
 
   def admin_and_user_permissions
-    admin? || record.pluck(:user_id)[0] == user.id
+    admin? || current_user?
   end
 end

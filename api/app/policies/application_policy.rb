@@ -31,4 +31,8 @@ class ApplicationPolicy
   def admin?
     user.sysadmin?
   end
+
+  def current_user?
+    record.user_id == user.id
+  end
 end

@@ -13,7 +13,7 @@
 #  updated_at     :datetime         not null
 #
 class Favourite < ApplicationRecord
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
   has_many :tags, through: :taggings
   belongs_to :user
 end
