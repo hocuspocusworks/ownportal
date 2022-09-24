@@ -1,9 +1,10 @@
 module Api
   class SourcesController < ApplicationController
     include Api::Extensions::Resourceful
+    include Api::Extensions::Respondable
 
     def index
-      render json: Source.first(20)
+      render_json @sources
     end
 
     def create
@@ -18,6 +19,10 @@ module Api
 
     def load_resource
       @source ||= Source.find(params[:id])
+    end
+
+    def load_collection
+      @sources ||= Source.first(20)
     end
 
     def user_params
