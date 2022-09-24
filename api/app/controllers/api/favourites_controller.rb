@@ -3,7 +3,7 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json @favourites, include: { taggings: { include: :tag } }
+      render_json @favourites
     end
 
     def create
