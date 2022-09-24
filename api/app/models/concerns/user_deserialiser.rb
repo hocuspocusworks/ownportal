@@ -3,7 +3,6 @@ class UserDeserialiser
     user = resource || User.new
     user.email = params[:email] || resource&.email
     user.password = params[:password] || resource&.password
-    user.role = params[:role] || resource&.role
     user
   end
 end
