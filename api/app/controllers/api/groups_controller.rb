@@ -7,19 +7,11 @@ module Api
     end
 
     def create
-      if @group.save
-        render_json @group, status: :created
-      else
-        render json: { errors: @group.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def update
-      if @group.update(user_params)
-        render_json @group
-      else
-        render json: { errors: @group.errors }, status: :bad_request
-      end
+      save_form
     end
 
     def destroy

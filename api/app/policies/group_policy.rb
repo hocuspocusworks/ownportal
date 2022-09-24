@@ -14,7 +14,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def create?
-    admin_and_user_permissions
+    true
   end
 
   def show?
@@ -30,7 +30,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name tags]
+    [:name, tags: []]
   end
 
   private
