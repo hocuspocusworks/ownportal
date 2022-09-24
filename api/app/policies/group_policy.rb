@@ -30,7 +30,7 @@ class GroupPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name]
+    %i[name tags]
   end
 
   private
