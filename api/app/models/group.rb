@@ -12,7 +12,7 @@
 class Group < ApplicationRecord
   belongs_to :user
 
-  has_many :streams
+  has_many :streams, dependent: :destroy
   has_many :sources, through: :streams
 
   validates :name, presence: true
