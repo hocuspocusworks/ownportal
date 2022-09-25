@@ -10,7 +10,7 @@ module Api
       user = User.find_by(email: params[:session][:email])
 
       if user.present? && user.authenticate(params[:session][:password])
-        render_json user
+        render_json user, root: :session
       else
         render json: { errors: { credentials: ['are invalid'] } },
                status: :unauthorized
