@@ -24,7 +24,7 @@ module Api
       end
 
       def encode_jwt(user)
-        payload = { token: user.token }
+        payload = { token: user.token, iss: 'ownportal' }
         JWT.encode payload, jwt_secret, 'HS512'
       end
 
