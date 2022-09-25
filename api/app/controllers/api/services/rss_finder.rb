@@ -4,7 +4,7 @@ module Api
       def self.call(url)
         source = Source.with_url(url)
 
-        return source unless source.empty?
+        return source.first unless source.empty?
 
         response = RestClient.get Rails.configuration.x.fetcher_url + "/rss/fetch?url=#{url}"
 
