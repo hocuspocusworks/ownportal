@@ -166,7 +166,7 @@ export default {
         },
         deleteFeed(id) {
             console.log(id);
-            let url = config.gateway + "/api/streams/" + id;
+            let url = config.gateway + config.getPath('streams') + '/' + id;
             let headers = {Authorization: localStorage.getItem('token')};
             axios.delete(url, {headers})
                 .then(response => {

@@ -120,7 +120,7 @@ export default {
                 });
         },
         addToGroup(grpName, name, uri) {
-            let url = config.gateway + config.getPath('stream_create');
+            let url = config.gateway + config.getPath('streams');
             let payload = { 'stream': { group: grpName, name: name, url: uri } }
             axios.post(url, payload, { headers: config.authorisationHeader() })
                 .then(response => {

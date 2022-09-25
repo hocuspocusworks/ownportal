@@ -8,7 +8,7 @@ const config = {
             'my_feed': '/api/groups',
             'login': '/api/sessions',
             'rss_sources': '/api/rss/fetchAll',
-            'stream_create': '/api/streams'
+            'streams': '/api/streams'
         },
         'gateway': {
             'explore_categories': '/portal/explore/categories',
@@ -17,7 +17,7 @@ const config = {
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
             'rss_sources': '/rss/rss/fetchAll',
-            'stream_create': '/portal/api/streams',
+            'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites'
         }
     },
