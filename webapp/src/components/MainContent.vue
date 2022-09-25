@@ -63,10 +63,9 @@ export default {
             this.content = null;
             this.loading = true;
             this.err = false;
-            let request = config.gateway + "/api/rss/fetchAll";
-            let data = {"urls": url, "sort": "asc"};
-            let headers = {Authorization: localStorage.getItem('token')};
-            axios.post(request, data, headers)
+            let request = config.gateway + config.getPath('rss_sources');
+            let payload = { "urls": url, "sort": "asc" }
+            axios.post(request, payload, { headers: config.authorisationHeader() })
                 .then(response => {
                     this.content = response.data.data.nodes;
                 })

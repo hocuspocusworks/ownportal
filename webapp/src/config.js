@@ -1,15 +1,19 @@
 const config = {
-    gateway: 'http://localhost:3000',
+    gateway: 'http://localhost:8089',
     // gateway: "https://gateway.ownportal.net"
-    path_location: 'local',
+    path_location: 'gateway',
     paths: {
         'local': {
             'explore_categories': '',
-            'my_feed': '/api/groups'
+            'my_feed': '/api/groups',
+            'login': '/api/sessions',
+            'rss_sources': '/api/rss/fetchAll'
         },
         'gateway': {
             'explore_categories': '/portal/explore/categories',
-            'my_feed': '/portal/feed/me'
+            'my_feed': '/portal/api/groups',
+            'login': '/login/api/sessions',
+            'rss_sources': '/rss/rss/fetchAll'
         }
     },
     getPath(endpoint) {

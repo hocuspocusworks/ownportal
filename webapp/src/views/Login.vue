@@ -71,8 +71,8 @@ export default {
         login() {
             this.err = false;
             this.loading = true;
-            let url = config.gateway + "/api/sessions";
-            let payload = {"session": {"email": this.username, "password": this.password }};
+            let url = config.gateway + config.getPath('login')
+            let payload = {"session": {"email": this.username, "password": this.password }}
             axios.post(url, payload)
                 .then(resp => {
                     if (resp.status === 201) {

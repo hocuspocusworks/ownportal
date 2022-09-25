@@ -102,14 +102,12 @@ export default {
         },
         fetchFeed() {
             this.loading = true;
-            let me = config.gateway + "/api/groups";
+            let me = config.gateway + config.getPath('my_feed')
             axios({
                 method: "get",
                 url: me,
                 timeout: 1000*5,
-                headers: {
-                    Authorization: localStorage.getItem('token')
-                }
+                headers: config.authorisationHeader()
                 }).then(response => {
                     this.updateView(response.data)
                 }).catch(error => {
@@ -134,7 +132,8 @@ export default {
             let url = [];
             if (item.streams !== undefined) {
                 item.streams.forEach(el => {
-                    url.push(el.source.url);
+                    let src = item.sources.find(obj => obj.id === el.source_id)
+                    url.push(src.url)
                 });
             } else {
                 url.push(item.source.url);
