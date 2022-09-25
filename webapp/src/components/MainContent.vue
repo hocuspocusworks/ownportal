@@ -93,7 +93,7 @@ export default {
         },
         like(item) {
             item.heart = true; // should replace with loading
-            let url = config.gateway + config.getPath('favourite_create')
+            let url = config.gateway + config.getPath('favourites')
             let payload = { 'favourite': {
                 'title': item.title, 'description': item.description, 'link': item.link,
                 'publisher': item.source, 'published_date': item.publishedDate } }
