@@ -6,8 +6,14 @@ module Api
       private
 
       def render_json(resource, opts = {})
-        # handle status in opts
-        render json: resource.to_json(opts)
+        response = { json: resource.to_json(opts) }
+        render response.merge(render_opts(opts))
+      end
+
+      def render_opts(opts)
+        result = {}
+        result[:status] = opts[:status] if opts[:status]
+        result
       end
     end
   end

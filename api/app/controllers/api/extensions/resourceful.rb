@@ -13,10 +13,15 @@ module Api
 
       def save_form(opts = {})
         if resource_item.save
-          render_json resource_item, opts
+          render_json resource_item, response_opts(opts)
         else
           render json: { errors: resource_item.errors }, status: :bad_request
         end
+      end
+
+      def response_opts(opts)
+        status_code = action_name == 'create' ? 201 : 200
+        opts.merge({ status: status_code })
       end
 
       def authorise_resource
