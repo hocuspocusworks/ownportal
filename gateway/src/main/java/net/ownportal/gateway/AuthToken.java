@@ -2,7 +2,6 @@ package net.ownportal.gateway;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.util.Base64;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;

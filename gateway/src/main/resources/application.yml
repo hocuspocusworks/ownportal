@@ -5,36 +5,26 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: fetcher_route_api
+        - id: fetcher_route
           uri: http://fetcher:8070
           predicates:
-          - Path=/api/**
+          - Path=/rss/**
           - Header=Authorization
           filters:
           - StripPrefix=1
           - ApiAuth
-          - Quota
-        - id: fetcher_route_web
-          uri: http://fetcher:8070
-          predicates:
-          - Path=/api/**
-          - Cookie=ownportal, .*
-          filters:
-          - StripPrefix=1
-          - WebAuth
-          - Quota
         - id: portal_route
-          uri: http://portal:8077
+          uri: http://portal:3000
           predicates:
           - Path=/portal/**
+          - Header=Authorization
           filters:
           - StripPrefix=1
-          - WebAuth
-        - id: user
-          uri: http://portal:8077
+          - ApiAuth
+        - id: login_route
+          uri: http://portal:3000
           predicates:
-          - Path=/user/**
-        - id: developer
-          uri: http://portal:8077
-          predicates:
-          - Path=/developer/**
+          - Path=/login/**
+          filters:
+          - StripPrefix=1
+
