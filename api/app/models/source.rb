@@ -22,5 +22,5 @@ class Source < ApplicationRecord
 
   scope :with_processed, -> { where(processed: true) }
   scope :with_url, ->(url) { where(url: url) }
-  scope :with_keyword, ->(keyword) { where('name like ?', "%#{keyword}%") }
+  scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end
