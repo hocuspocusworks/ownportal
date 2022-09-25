@@ -75,7 +75,7 @@ export default {
             let payload = {"session": {"email": this.username, "password": this.password }};
             axios.post(url, payload)
                 .then(resp => {
-                    if (resp.status === 200) {
+                    if (resp.status === 201) {
                         localStorage.setItem('token', resp.data.session.token);
                         router.push({name: "home"});
                     } else {
