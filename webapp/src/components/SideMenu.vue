@@ -136,7 +136,14 @@ export default {
                     url.push(src.url)
                 });
             } else {
-                url.push(item.source.url);
+                this.data.forEach(group => {
+                    if (group.id === item.group_id) {
+                        group.sources.forEach(src => {
+                            if (src.id === item.source_id)
+                            url.push(src.url)
+                        })
+                    }
+                })
             }
             this.$emit('feedChanged', url);
         },
