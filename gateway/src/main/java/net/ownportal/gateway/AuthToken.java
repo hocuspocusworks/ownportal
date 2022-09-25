@@ -26,7 +26,7 @@ public class AuthToken {
 
     static {
         try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC512("c8aP9xnmwXTWF1BMeBsHx02AnLe1eLDbZ50V9MQJPw");
             verifier = JWT.require(algorithm)
                         .withIssuer("ownportal")
                         .build();
@@ -41,9 +41,8 @@ public class AuthToken {
             .flatMap(t -> {
                 String user = "";
                 try {
-                    var decoded = new String(Base64.getDecoder().decode(t));
-                    var jwt = verifier.verify(decoded);
-                    user = jwt.getClaim("user").asString();
+                    var jwt = verifier.verify(encodedToken);
+                    user = jwt.getClaim("token").asString();
                 } catch (Exception ex) {
                     log.warn("could not validate token={}", t);
                     return Mono.just(JwtResult.builder().authorised(false).build());

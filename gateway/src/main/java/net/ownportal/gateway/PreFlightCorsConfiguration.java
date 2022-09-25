@@ -17,10 +17,9 @@ import reactor.core.publisher.Mono;
 @Configuration
 public class PreFlightCorsConfiguration {
 
-    private static final String ALLOWED_HEADERS = "content-type";
+    private static final String ALLOWED_HEADERS = "Authorization";
     private static final String ALLOWED_METHODS = "GET, PUT, POST, DELETE, OPTIONS, PATCH";
-    private static final String ALLOWED_ORIGIN = "https://ownportal.net";
-    // private static final String ALLOWED_ORIGIN = "http://webapp:3000";
+    private static final String ALLOWED_ORIGIN = "*";
     private static final String MAX_AGE = "7200";
 
     @Bean
