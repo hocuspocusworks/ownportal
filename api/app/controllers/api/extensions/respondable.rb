@@ -13,7 +13,7 @@ module Api
       def render_opts(opts)
         result = {}
         result[:status] = opts[:status] if opts[:status]
-        result
+        opts.merge(result)
       end
     end
   end

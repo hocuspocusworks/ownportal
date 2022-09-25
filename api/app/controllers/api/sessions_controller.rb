@@ -3,14 +3,17 @@ module Api
     include Api::Extensions::Respondable
     include Api::Extensions::Resourceful
 
-    skip_before_action :authenticate
+    skip_before_action :authenticate, only: [:create]
+    skip_before_action :authorise_resource, only: [:create]
+    skip_before_action :resource_from_attributes, only: [:create]
+    skip_after_action :verify_authorized, only: [:create]
 
     def create
-      authorize nil, policy_class: SessionPolicy
       user = User.find_by(email: params[:session][:email])
 
       if user.present? && user.authenticate(params[:session][:password])
-        render_json user, root: :session
+        user_token = { 'session': { 'token': encode_jwt(user) } }
+        render_json user_token, status: 201
       else
         render json: { errors: { credentials: ['are invalid'] } },
                status: :unauthorized

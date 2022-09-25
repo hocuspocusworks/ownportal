@@ -8,13 +8,32 @@ module Api
       end
 
       def authorisation_token
-        request.headers['Authorization']
+        decode_jwt[0]['token']
       end
 
       def authenticate
         return unless current_user.nil?
 
         request_invalid
+      end
+
+      def decode_jwt
+        JWT.decode header_token, jwt_secret, true, { algorithm: 'HS512' }
+      rescue JWT::VerificationError, JWT::DecodeError
+        raise Pundit::NotAuthorizedError
+      end
+
+      def encode_jwt(user)
+        payload = { token: user.token }
+        JWT.encode payload, jwt_secret, 'HS512'
+      end
+
+      def header_token
+        request.headers['Authorization']
+      end
+
+      def jwt_secret
+        Rails.configuration.x.jwt_secret
       end
 
       def request_invalid
