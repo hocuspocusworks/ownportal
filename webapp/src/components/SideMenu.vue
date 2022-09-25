@@ -155,7 +155,7 @@ export default {
             this.$emit('explore');
         },
         deleteGroup(id) {
-            let url = config.gateway + "/api/groups/" + id;
+            let url = config.gateway + config.getPath('my_feed') + '/' + id;
             let headers = {Authorization: localStorage.getItem('token')};
             axios.delete(url, {headers})
                 .then(response => {
