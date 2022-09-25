@@ -139,8 +139,9 @@ export default {
                 this.data.forEach(group => {
                     if (group.id === item.group_id) {
                         group.sources.forEach(src => {
-                            if (src.id === item.source_id)
-                            url.push(src.url)
+                            if (src.id === item.source_id) {
+                                url.push(src.url)
+                            }
                         })
                     }
                 })
