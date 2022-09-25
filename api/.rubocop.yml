@@ -9,3 +9,6 @@ Style/StringLiterals:
 
 Naming/MemoizedInstanceVariableName:
   Enabled: false
+
+Style/SymbolArray:
+  Enabled: false

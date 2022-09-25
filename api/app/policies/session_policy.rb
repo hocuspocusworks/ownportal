@@ -16,4 +16,8 @@ class SessionPolicy < ApplicationPolicy
   def destroy?
     true
   end
+
+  def permitted_attributes
+    [:email, :password]
+  end
 end
