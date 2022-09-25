@@ -62,14 +62,15 @@
                                 <div class="col-12 text-start gx-3">
                                     {{ item.description }}
                                 </div>
-                                <div class="col-12 gx-3">
+                                <!-- TODO: FIX!!! -->
+                                <!-- <div class="col-12 gx-3">
                                     <div class="input-group justify-content-end">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to a Group</button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp.name, item.name, item.url)">{{ grp.name }}</a></li>
                                         </ul>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -158,10 +159,11 @@ export default {
                         this.loading = false;
                     });
             } else if (newValue.length >= 2) {
-                let url = config.gateway + "/api/explores/search?keyword="+newValue;
-                axios.get(url, {withCredentials: true})
+                let url = config.gateway + config.getPath('explore_search') + "?keyword="+newValue;
+                axios.get(url, { headers: config.authorisationHeader() })
                     .then(response => {
                         if (response.status === 200) {
+                            console.log(response.data)
                             this.sources = response.data;
                             this.featured = false;
                             this.loadGroups();
@@ -179,8 +181,8 @@ export default {
         }
     },
     mounted() {
-        this.loadCategories();
-        this.loadGroups();
+        // this.loadCategories() // first fix
+        this.loadGroups()
     }
 }
 </script>
