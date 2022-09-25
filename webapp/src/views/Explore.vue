@@ -62,15 +62,14 @@
                                 <div class="col-12 text-start gx-3">
                                     {{ item.description }}
                                 </div>
-                                <!-- TODO: FIX!!! -->
-                                <!-- <div class="col-12 gx-3">
+                                <div class="col-12 gx-3">
                                     <div class="input-group justify-content-end">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to a Group</button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp.name, item.name, item.url)">{{ grp.name }}</a></li>
                                         </ul>
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -117,7 +116,7 @@ export default {
             let url = config.gateway + config.getPath('my_feed')
             axios.get(url, { headers: config.authorisationHeader() })
                 .then(response => {
-                    this.groups = response.data[0];
+                    this.groups = response.data;
                 });
         },
         addToGroup(grpName, name, uri) {
