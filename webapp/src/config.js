@@ -7,14 +7,16 @@ const config = {
             'explore_categories': '',
             'my_feed': '/api/groups',
             'login': '/api/sessions',
-            'rss_sources': '/api/rss/fetchAll'
+            'rss_sources': '/api/rss/fetchAll',
+            'stream_create': '/api/streams'
         },
         'gateway': {
             'explore_categories': '/portal/explore/categories',
             'explore_search': '/portal/api/explores/search',
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
-            'rss_sources': '/rss/rss/fetchAll'
+            'rss_sources': '/rss/rss/fetchAll',
+            'stream_create': '/portal/api/streams'
         }
     },
     getPath(endpoint) {

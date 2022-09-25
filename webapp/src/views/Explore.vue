@@ -120,11 +120,11 @@ export default {
                 });
         },
         addToGroup(grpName, name, uri) {
-            let url = config.gateway + "/portal/feed/newStream";
-            let payload = {group: grpName, stream: name, url: uri};
-            axios.post(url, payload, {withCredentials: true})
+            let url = config.gateway + config.getPath('stream_create');
+            let payload = { 'stream': { group: grpName, name: name, url: uri } }
+            axios.post(url, payload, { headers: config.authorisationHeader() })
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 201) {
                         this.$emit("exploreChanged", payload);
                     }
                 });
