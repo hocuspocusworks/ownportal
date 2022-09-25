@@ -93,14 +93,13 @@ export default {
         },
         like(item) {
             item.heart = true; // should replace with loading
-            let url = config.gateway + "/portal/story/favourite";
-            let data = {'username': '', 'title': item.title,
-                'description': item.description, 'link': item.link,
-                'publisher': item.source, 'publishedDate': item.publishedDate};
-            let headers = {Authorization: localStorage.getItem('token')};
-            axios.post(url, data, headers)
+            let url = config.gateway + config.getPath('favourite_create')
+            let payload = { 'favourite': {
+                'title': item.title, 'description': item.description, 'link': item.link,
+                'publisher': item.source, 'published_date': item.publishedDate } }
+            axios.post(url, payload, { headers: config.authorisationHeader() })
                 .then(response => {
-                    if (response.status === 200) {
+                    if (response.status === 201) {
                         item.heart = true;
                     }
                 }).catch(err => {

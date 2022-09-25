@@ -16,7 +16,8 @@ const config = {
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
             'rss_sources': '/rss/rss/fetchAll',
-            'stream_create': '/portal/api/streams'
+            'stream_create': '/portal/api/streams',
+            'favourite_create': '/portal/api/favourites'
         }
     },
     getPath(endpoint) {
