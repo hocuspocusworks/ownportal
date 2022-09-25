@@ -8,7 +8,7 @@ class GroupsQueries
   def with_streams(user_id)
     Group.left_outer_joins(:streams)
          .left_outer_joins(:sources)
-         .where('user_id = ?', user_id)
+         .where('groups.user_id = ?', user_id)
          .distinct
   end
 end

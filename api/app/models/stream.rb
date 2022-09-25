@@ -12,4 +12,5 @@
 class Stream < ApplicationRecord
   belongs_to :group
   belongs_to :source
+  belongs_to :user
 end

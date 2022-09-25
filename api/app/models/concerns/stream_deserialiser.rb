@@ -4,6 +4,7 @@ class StreamDeserialiser
     stream.name = params[:name] || resource&.name
     stream.group = Group.with_name(params[:group], user)&.first || resource&.group
     stream.source = Source.with_url(params[:url])&.first || resource&.source
+    stream.user = user
     stream
   end
 end
