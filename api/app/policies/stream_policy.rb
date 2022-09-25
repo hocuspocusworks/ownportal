@@ -14,7 +14,7 @@ class StreamPolicy < ApplicationPolicy
   end
 
   def create?
-    admin_and_user_permissions
+    true
   end
 
   def show?
