@@ -8,7 +8,9 @@ import router from './router/index';
 export default {
   name: 'App',
   mounted() {
-    router.push({name: "login"});
+    if (!window.location.pathname.startsWith('/admin')) {
+      router.push({name: "login"});
+    }
   },
 }
 </script>
