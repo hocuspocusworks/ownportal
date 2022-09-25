@@ -13,6 +13,8 @@ class Tag < ApplicationRecord
   belongs_to :user
 
   def self.find_or_create(tag_list, user)
+    return [] if tag_list.nil?
+
     tags = Tag.where(name: tag_list)
     result_tags = []
     tag_list.each do |tag|

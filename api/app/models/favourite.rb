@@ -11,6 +11,7 @@
 #  user_id        :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  tags_json      :jsonb
 #
 class Favourite < ApplicationRecord
   has_many :taggings, dependent: :destroy
