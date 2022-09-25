@@ -78,14 +78,9 @@ export default {
             this.createSource();
         },
         createGroup() {
-            let group = config.gateway + "/api/groups";
-            let payload = {
-                "group": {
-                    "name": this.newGroupName
-                }
-            };
-            let headers = {Authorization: localStorage.getItem('token')};
-            axios.post(group, payload, {headers})
+            let group = config.gateway + config.getPath('my_feed')
+            let payload = { 'group': { 'name': this.newGroupName } }
+            axios.post(group, payload, { headers: config.authorisationHeader() })
                 .then(response => {
                     if (response.status === 201) {
                         this.fetchFeed();
@@ -100,9 +95,8 @@ export default {
                 "stream": this.newSourceName,
                 "url": this.newRssFeedUrl
             };
-            let headers = {Authorization: localStorage.getItem('token')};
             let stream = config.gateway + "/api/streams";
-            axios.post(stream, payload, {headers});
+            axios.post(stream, payload, { headers: config.authorisationHeader() });
             this.newSourceName = "";
             this.newRssFeedUrl = "";
         },
@@ -117,7 +111,7 @@ export default {
                     Authorization: localStorage.getItem('token')
                 }
                 }).then(response => {
-                    this.updateView(response.data.groups);
+                    this.updateView(response.data)
                 }).catch(error => {
                     this.updateError();
                 });
@@ -126,9 +120,8 @@ export default {
             this.selectedGroup = number;
         },
         updateView(data) {
-            console.log(data);
-            this.data = data;
-            this.loading = false;
+            this.data = data
+            this.loading = false
         },
         updateError() {
             this.err = true;

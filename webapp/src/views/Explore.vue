@@ -105,18 +105,18 @@ export default {
     },
     methods: {
         loadCategories() {
-            let url = config.gateway + "/portal/explore/categories";
-            axios.get(url, {withCredentials: true})
+            let url = config.gateway + config.getPath('explore_categories')
+            axios.get(url, { headers: config.authorisationHeader() })
                 .then(response => {
                     this.trending = response.data.categories.slice(0, 4);
                     this.categories = response.data.categories.slice(4);
                 });
         },
         loadGroups() {
-            let url = config.gateway + "/portal/feed/me";
-            axios.get(url, {withCredentials: true})
+            let url = config.gateway + config.getPath('my_feed')
+            axios.get(url, { headers: config.authorisationHeader() })
                 .then(response => {
-                    this.groups = response.data.groups;
+                    this.groups = response.data[0];
                 });
         },
         addToGroup(grpName, name, uri) {
