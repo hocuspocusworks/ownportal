@@ -43,8 +43,8 @@ export default {
     },
     methods: {
         loadFavourites() {
-            let url = config.gateway + "/portal/story/favourite";
-            axios.get(url, {withCredentials: true})
+            let url = config.gateway + config.getPath('favourites');
+            axios.get(url, { headers: config.authorisationHeader() })
                 .then(response => {
                     if (response.status === 200) {
                         this.content = response.data;
