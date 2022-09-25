@@ -18,6 +18,7 @@ gem 'pg'
 gem 'pry'
 gem 'pundit'
 gem 'rack-cors'
+gem 'rest-client'
 gem 'rspec-rails'
 
 # Use the Puma web server [https://github.com/puma/puma]

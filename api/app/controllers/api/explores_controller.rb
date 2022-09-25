@@ -13,6 +13,10 @@ module Api
       render_json valid_url? ? search_by_url : search_by_keyword
     end
 
+    def rss
+      render_json Api::Services::RssFinder.call(params[:url])
+    end
+
     private
 
     def search_by_url
