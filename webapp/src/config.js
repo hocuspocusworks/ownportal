@@ -13,6 +13,7 @@ const config = {
         'gateway': {
             'explore_categories': '/portal/explore/categories',
             'explore_search': '/portal/api/explores/search',
+            'explore_rss': '/portal/api/explores/rss',
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
             'rss_sources': '/rss/rss/fetchAll',

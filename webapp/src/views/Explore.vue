@@ -145,8 +145,8 @@ export default {
             this.sources = [];
             this.results = true;
             if (this.isValidHttpUrl(newValue) && newValue.length > 16) {
-                let url = config.gateway + "/portal/explore/rss?url="+newValue;
-                axios.get(url, {withCredentials: true})
+                let url = config.gateway + config.getPath('explore_rss') + "?url=" + newValue;
+                axios.get(url, { headers: config.authorisationHeader() })
                     .then(response => {
                         if (response.status === 200 && response.data.id !== null) {
                             this.sources = [response.data];
