@@ -18,7 +18,7 @@
                     <div class="card full-height my-link">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title">{{ item.title }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.publishedDate }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}</h6>
                             <p>{{ processText(item.description) }}</p>
                         </div>
                     </div>
