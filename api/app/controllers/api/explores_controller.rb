@@ -2,7 +2,7 @@ require 'uri'
 
 module Api
   class ExploresController < ApplicationController
-    skip_before_action :authenticate, only: :search
+    include Api::Extensions::Resourceful
 
     # save source to db
     def create
