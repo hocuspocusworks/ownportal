@@ -20,7 +20,8 @@ const config = {
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',
             'admin_sources': '/portal/api/admin/sources',
-            'admin_categories': '/portal/api/admin/categories'
+            'admin_categories': '/portal/api/admin/categories',
+            'users': '/portal/api/users'
         }
     },
     getPath(endpoint) {

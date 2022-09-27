@@ -1,19 +1,82 @@
 <template>
-  <h4>Setting view</h4>
-
-  <div>
-    Toggle sidebar
-  </div>
-  <div>
-    Safe search
-  </div>
-  <div>
-    Dark mode
-  </div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Setting</th>
+        <th scope="col">Value</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Toggle sidebar</td>
+        <td><input type="checkbox" v-model="toggle" @click="save('toggle')" /></td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Safe search</td>
+        <td><input type="checkbox" v-model="safe" @click="save('safe')" /></td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Dark mode</td>
+        <td><input type="checkbox" v-model="dark" @click="save('dark')" /></td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
+import axios from 'axios';
+import config from '../config';
+
 export default {
-  name: 'Setting'
+  name: 'Setting',
+  data() {
+    return {
+      my_settings: [],
+      toggle: false,
+      safe: false,
+      dark: false,
+      user_id: 0
+    }
+  },
+  methods: {
+    updateSettings(my_settings) {
+      this.my_settings = my_settings
+      this.toggle = my_settings.includes('toggle') ? true : false
+      this.safe = my_settings.includes('safe') ? true : false
+      this.dark = my_settings.includes('dark') ? true : false
+    },
+    save(value) {
+      if (this.my_settings.includes(value)) {
+        let index = this.my_settings.indexOf(value)
+        if (index > -1) {
+          this.my_settings.splice(index, 1)
+        }
+      } else {
+        this.my_settings.push(value)
+      }
+      let request = config.gateway + config.getPath('users') + '/' + this.user_id
+      let payload = { 'user': {'settings': this.my_settings} }
+      axios.patch(request, payload, { headers: config.authorisationHeader() })
+        .then(response => {
+          if (response.status === 200) {
+            console.log('success')
+          }
+        })
+    }
+  },
+  mounted() {
+    let request = config.gateway + config.getPath('users')
+    axios.get(request, { headers: config.authorisationHeader() })
+      .then(response => {
+        if (response.status === 200) {
+          this.user_id = response.data.id
+          this.updateSettings(response.data.settings)
+        }
+      })
+  }
 }
 </script>
