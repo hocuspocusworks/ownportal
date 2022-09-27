@@ -19,7 +19,8 @@ const config = {
             'rss_sources': '/rss/rss/fetchAll',
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',
-            'admin_sources': '/portal/api/admin/sources'
+            'admin_sources': '/portal/api/admin/sources',
+            'admin_categories': '/portal/api/admin/categories'
         }
     },
     getPath(endpoint) {
