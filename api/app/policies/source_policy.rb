@@ -17,7 +17,7 @@ class SourcePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:name, :description, :url, :icon, :language, categories: []]
+    [:name, :description, :url, :icon, :language, :published, categories: []]
   end
 
   class Scope < ApplicationScope
