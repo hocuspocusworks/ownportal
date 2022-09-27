@@ -29,8 +29,8 @@ module Api
       @user ||= User.find(params[:id])
     end
 
-    def user_params
-      params.require(:user).permit(policy(User).permitted_attributes)
+    def policy_class
+      UserPolicy
     end
   end
 end

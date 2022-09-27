@@ -31,7 +31,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    basic = %i[email password password_confirmation]
+    basic = [:email, :password, :password_confirmation, settings: []]
 
     return basic if user.nil?
 
