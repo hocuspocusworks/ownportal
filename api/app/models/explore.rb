@@ -12,6 +12,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  processed   :boolean
+#  categories  :jsonb
 #
 class Explore < ApplicationRecord
   self.table_name = 'sources'

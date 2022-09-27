@@ -8,6 +8,7 @@
 #  source_id  :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  user_id    :bigint
 #
 class Stream < ApplicationRecord
   belongs_to :group
