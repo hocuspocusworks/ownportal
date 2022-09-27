@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex min-h-screen">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" :needRefresh="refreshMenu" />
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @setting="setting" :needRefresh="refreshMenu" />
             <div class="f-equal bg-bluegray-50">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
@@ -56,6 +56,9 @@ export default {
         favourite() {
             router.push({name: "favourite"});
             this.toggleSidebar();
+        },
+        setting() {
+            router.push({name: 'setting'})
         },
         logout() {
             localStorage.setItem('token', '');

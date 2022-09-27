@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Home from '../views/Home.vue';
 import Explore from '../views/Explore.vue';
+import Setting from '../views/Setting.vue';
 import MainContent from '../components/MainContent.vue';
 import Favourite from '../components/Favourite.vue';
 import Login from '../views/Login.vue';
@@ -19,22 +20,10 @@ const routes = [
       name: "explore"
     },
     children: [
-      {
-        name: "explore",
-        path: "explore",
-        component: Explore
-      },
-      {
-        name: "content",
-        path: "content",
-        component: MainContent,
-        props: true,
-      },
-      {
-        name: "favourite",
-        path: "favourite",
-        component: Favourite
-      }
+      { name: "explore", path: "explore", component: Explore },
+      { name: "content", path: "content", component: MainContent, props: true },
+      { name: "favourite", path: "favourite", component: Favourite },
+      { name: 'setting', path: 'setting', component: Setting }
     ]
   },
   { name: 'admin', path: '/admin', component: Admin, children: [

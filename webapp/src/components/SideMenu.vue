@@ -9,6 +9,10 @@
                 <i class="bi bi-balloon-heart me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
+            <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-balloon-heart me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSettings">Settings</button>
+            </div>
         </div>
 
         <div class="ps-3 pe-3">
@@ -153,6 +157,9 @@ export default {
         },
         toExplore() {
             this.$emit('explore');
+        },
+        toSettings() {
+            this.$emit('setting')
         },
         deleteGroup(id) {
             let url = config.gateway + config.getPath('my_feed') + '/' + id;
