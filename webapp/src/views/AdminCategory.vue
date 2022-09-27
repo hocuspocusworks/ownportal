@@ -37,9 +37,9 @@ export default {
   },
   methods: {
     add_category() {
-      console.log(this.category_name)
       let url = config.gateway + config.getPath('admin_categories')
       let payload = { 'category': { 'name': this.category_name } }
+      this.category_name = null
       axios.post(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 201) {
