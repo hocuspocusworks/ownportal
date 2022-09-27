@@ -23,6 +23,7 @@ class Source < ApplicationRecord
   validates :description, length: { maximum: 256 }
 
   scope :with_processed, -> { where(processed: true) }
+  scope :with_public, -> { where(public: true) }
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end

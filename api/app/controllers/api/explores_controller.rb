@@ -20,11 +20,11 @@ module Api
     private
 
     def search_by_url
-      Source.with_url(keyword).with_processed
+      Source.with_url(keyword).with_public
     end
 
     def search_by_keyword
-      Source.with_keyword(keyword).with_processed
+      Source.with_keyword(keyword).with_public
     end
 
     def keyword

@@ -22,7 +22,7 @@ module Api
     end
 
     def load_collection
-      @sources ||= Source.first(20)
+      @sources ||= resource_scope
     end
 
     def user_params
