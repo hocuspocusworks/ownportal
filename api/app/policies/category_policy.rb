@@ -3,12 +3,20 @@ class CategoryPolicy < ApplicationPolicy
     true
   end
 
+  def create?
+    admin?
+  end
+
   def update?
     admin?
   end
 
   def destroy?
     admin?
+  end
+
+  def permitted_attributes
+    [:name]
   end
 
   class Scope < ApplicationScope
