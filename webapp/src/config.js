@@ -18,7 +18,8 @@ const config = {
             'login': '/login/api/sessions',
             'rss_sources': '/rss/rss/fetchAll',
             'streams': '/portal/api/streams',
-            'favourites': '/portal/api/favourites'
+            'favourites': '/portal/api/favourites',
+            'admin_sources': '/portal/api/admin/sources'
         }
     },
     getPath(endpoint) {
