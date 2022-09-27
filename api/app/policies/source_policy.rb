@@ -19,4 +19,10 @@ class SourcePolicy < ApplicationPolicy
   def permitted_attributes
     [:name, :description, :url, :icon, :language, categories: []]
   end
+
+  class Scope < ApplicationScope
+    def resolve
+      scope.where(public: true)
+    end
+  end
 end
