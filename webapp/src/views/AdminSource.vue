@@ -19,7 +19,7 @@
               <option selected>Choose one or more categories</option>
               <option v-for="(category, j) in categories" :key="j">{{category.name}}</option>
             </select>
-            <p class="card-text">Public: <input type="checkbox" v-model="items[i].processed" /></p>
+            <p class="card-text">Public: <input type="checkbox" v-model="items[i].published" /></p>
             <a href="#" class="card-link" @click="save(items[i].id)">Save</a>
           </div>
         </div>
@@ -50,6 +50,7 @@ export default {
           'name': this.items[position].name,
           'description': this.items[position].description,
           'language': this.items[position].language,
+          'published': this.items[position].published === true ? '1' : '0',
           'categories': this.selected_categories[position]
         }
       }
