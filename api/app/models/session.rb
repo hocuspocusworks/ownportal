@@ -9,6 +9,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  sysadmin        :boolean
+#  settings        :jsonb
 #
 class Session < ApplicationRecord
   self.table_name = 'users'

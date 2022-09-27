@@ -9,8 +9,8 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  sysadmin        :boolean
+#  settings        :jsonb
 #
-# user_spec
 
 require 'rails_helper'
 
