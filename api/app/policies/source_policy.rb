@@ -17,6 +17,6 @@ class SourcePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    %i[name description url icon language]
+    [:name, :description, :url, :icon, :language, categories: []]
   end
 end

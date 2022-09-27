@@ -8,6 +8,7 @@ class SourceDeserialiser
     source.timestamp = params[:timestamp] || resource&.timestamp
     source.url = params[:url] || resource&.url
     source.processed = params[:processed] || resource&.processed
+    source.categories = params[:categories] || resource&.categories
     source
   end
 end
