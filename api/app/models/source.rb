@@ -13,7 +13,7 @@
 #  updated_at  :datetime         not null
 #  processed   :boolean
 #  categories  :jsonb
-#  public      :boolean
+#  published   :boolean
 #
 class Source < ApplicationRecord
   has_many :streams
@@ -23,7 +23,7 @@ class Source < ApplicationRecord
   validates :description, length: { maximum: 256 }
 
   scope :with_processed, -> { where(processed: true) }
-  scope :with_public, -> { where(public: true) }
+  scope :with_published, -> { where(published: true) }
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end

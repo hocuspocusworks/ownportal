@@ -22,7 +22,7 @@ class SourcePolicy < ApplicationPolicy
 
   class Scope < ApplicationScope
     def resolve
-      scope.where(public: true)
+      scope.where(published: true)
     end
   end
 end
