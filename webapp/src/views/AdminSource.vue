@@ -74,7 +74,6 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.items = response.data
-            console.log(response.data)
           }
         })
     },
