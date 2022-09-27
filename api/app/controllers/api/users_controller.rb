@@ -3,11 +3,14 @@ module Api
     include Api::Extensions::Resourceful
 
     skip_before_action :authenticate, only: :create
+    skip_before_action :load_collection, only: :index
 
     def index
-      authorize User
+      render_json current_user
+    end
 
-      render_json User.all
+    def show
+      render_json @user
     end
 
     def create
