@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_27_181547) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_27_195125) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -55,6 +55,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_27_181547) do
     t.datetime "updated_at", null: false
     t.boolean "processed"
     t.jsonb "categories"
+    t.boolean "public"
     t.index ["url"], name: "index_sources_on_url", unique: true
   end
 

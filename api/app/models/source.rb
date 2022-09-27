@@ -13,6 +13,7 @@
 #  updated_at  :datetime         not null
 #  processed   :boolean
 #  categories  :jsonb
+#  public      :boolean
 #
 class Source < ApplicationRecord
   has_many :streams
