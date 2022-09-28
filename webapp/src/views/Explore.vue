@@ -137,6 +137,9 @@ export default {
                 return false;  
             }
             return url.protocol === "http:" || url.protocol === "https:";
+        },
+        safeSearch() {
+            return config.isSafeSearchOn() ? '&safe=true' : '&safe=false'
         }
     },
     watch: {
@@ -158,7 +161,7 @@ export default {
                         this.loading = false;
                     });
             } else if (newValue.length >= 2) {
-                let url = config.gateway + config.getPath('explore_search') + "?keyword="+newValue;
+                let url = config.gateway + config.getPath('explore_search') + "?keyword="+newValue + this.safeSearch();
                 axios.get(url, { headers: config.authorisationHeader() })
                     .then(response => {
                         if (response.status === 200) {
