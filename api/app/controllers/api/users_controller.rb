@@ -3,6 +3,9 @@ module Api
     include Api::Extensions::Resourceful
 
     skip_before_action :authenticate, only: :create
+    skip_before_action :authorise_resource, only: :create
+    skip_before_action :resource_from_attributes, only: :create
+    skip_after_action :verify_authorized, only: :create
     skip_before_action :load_collection, only: :index
 
     def index
@@ -14,7 +17,7 @@ module Api
     end
 
     def create
-      save_form
+      render_json User.create(user_params), status: :created
     end
 
     def update
@@ -34,6 +37,10 @@ module Api
 
     def policy_class
       UserPolicy
+    end
+
+    def user_params
+      params.require(:user).permit([:email, :password])
     end
   end
 end
