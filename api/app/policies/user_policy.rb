@@ -11,7 +11,7 @@ class UserPolicy < ApplicationPolicy
   end
 
   def index?
-    admin?
+    true
   end
 
   def create?
@@ -42,6 +42,6 @@ class UserPolicy < ApplicationPolicy
   private
 
   def admin_and_user_permissions
-    admin? || current_user?
+    admin? || record.id == user.id
   end
 end

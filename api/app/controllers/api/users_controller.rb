@@ -17,7 +17,7 @@ module Api
     end
 
     def create
-      render_json User.create(user_params), status: :created
+      render_json User.create(user_params.merge(default_settings)), status: :created
     end
 
     def update
@@ -41,6 +41,10 @@ module Api
 
     def user_params
       params.require(:user).permit([:email, :password])
+    end
+
+    def default_settings
+      { settings: [:safe], sysadmin: false }
     end
   end
 end
