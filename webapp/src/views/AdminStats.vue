@@ -12,7 +12,7 @@
           <tbody>
             <tr>
               <td>Total number of users</td>
-              <td>{{ stats.total_count }}</td>
+              <td>{{ stats.users_total }}</td>
             </tr>
             <tr>
               <td>Number of regular users</td>
@@ -20,7 +20,19 @@
             </tr>
             <tr>
               <td>Number of active users</td>
-              <td>{{ stats.active_count }}</td>
+              <td>{{ stats.user_active }}</td>
+            </tr>
+            <tr>
+              <td>Total number of sources</td>
+              <td>{{ stats.sources_total }}</td>
+            </tr>
+            <tr>
+              <td>Number of restricted sources</td>
+              <td>{{ stats.sources_restricted }}</td>
+            </tr>
+            <tr>
+              <td>Number of published sources</td>
+              <td>{{ stats.sources_published }}</td>
             </tr>
           </tbody>
         </table>
