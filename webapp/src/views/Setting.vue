@@ -40,10 +40,10 @@ export default {
   },
   methods: {
     updateSettings(my_settings) {
-      this.my_settings = my_settings
-      this.toggle = my_settings.includes('toggle') ? true : false
-      this.safe = my_settings.includes('safe') ? true : false
-      this.dark = my_settings.includes('dark') ? true : false
+      this.my_settings = my_settings == null ? [] : my_settings
+      this.toggle = this.my_settings.includes('toggle') ? true : false
+      this.safe = this.my_settings.includes('safe') ? true : false
+      this.dark = this.my_settings.includes('dark') ? true : false
     },
     save(value) {
       if (this.my_settings.includes(value)) {
@@ -73,7 +73,6 @@ export default {
     axios.get(request, { headers: config.authorisationHeader() })
       .then(response => {
         if (response.status === 200) {
-          console.log(response.data)
           this.user_id = response.data.id
           this.updateSettings(response.data.settings)
         }
