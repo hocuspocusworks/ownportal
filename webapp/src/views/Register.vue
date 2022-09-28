@@ -70,11 +70,11 @@ export default {
             if (this.passwordValid()) {
                 this.err = false;
                 this.loading = true;
-                let url = config.gateway + "/user/register";
-                let payload = {'username': this.username, 'password': this.password, 'email': this.username};
+                let url = config.gateway + config.getPath('register');
+                let payload = {'user': {'password': this.password, 'email': this.username}}
                 axios.post(url, payload)
                     .then(response => {
-                        if (response.status === 200) {
+                        if (response.status === 201) {
                             router.push({name: "login"});
                         } else {
                             this.reportError();

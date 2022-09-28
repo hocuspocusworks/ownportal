@@ -16,6 +16,7 @@ const config = {
             'explore_rss': '/portal/api/explores/rss',
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
+            'register': '/login/api/users',
             'rss_sources': '/rss/rss/fetchAll',
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',

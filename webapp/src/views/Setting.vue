@@ -73,6 +73,7 @@ export default {
     axios.get(request, { headers: config.authorisationHeader() })
       .then(response => {
         if (response.status === 200) {
+          console.log(response.data)
           this.user_id = response.data.id
           this.updateSettings(response.data.settings)
         }
