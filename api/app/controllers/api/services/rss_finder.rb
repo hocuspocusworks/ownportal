@@ -1,12 +1,17 @@
 module Api
   module Services
     class RssFinder
-      def self.call(url, user)
-        source = Source.with_url(url)
+      def initialize(url, user)
+        @url = url
+        @user = user
+      end
 
-        return source.first unless source.empty?
+      def call
+        source = Source.with_url(@url)
 
-        response = RestClient.get Rails.configuration.x.fetcher_url + "/rss/fetch?url=#{url}"
+        return count(source.first) unless source.empty?
+
+        response = RestClient.get Rails.configuration.x.fetcher_url + "/rss/fetch?url=#{@url}"
 
         return unless response.code == 200
 
@@ -15,7 +20,16 @@ module Api
         language = body['data']['language']
         name = body['data']['source']
         timestamp = body['data']['lastBuildDate']
-        Source.create(description: description, language: language, name: name, url: url, timestamp: timestamp, creator: user)
+        Source.create(description: description, language: language, name: name, url: url, timestamp: timestamp, creator: @user)
+      end
+
+      private
+
+      def count(source)
+        source.counter = 0 if source.counter.nil?
+        source.counter += 1
+        source.save
+        source
       end
     end
   end

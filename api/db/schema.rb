@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_28_183205) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_28_201656) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,6 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_183205) do
     t.boolean "published"
     t.boolean "restricted", default: true, null: false
     t.bigint "creator_id"
+    t.integer "counter"
     t.index ["creator_id"], name: "index_sources_on_creator_id"
     t.index ["url"], name: "index_sources_on_url", unique: true
   end

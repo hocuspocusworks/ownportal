@@ -10,20 +10,14 @@ module Api
     end
 
     def search
-      render_json valid_url? ? search_by_url : search_by_keyword
+      render_json search_by_keyword
     end
 
     def rss
-      render_json Api::Services::RssFinder.call(params[:url], current_user)
+      render_json Api::Services::RssFinder.new(params[:url], current_user).call
     end
 
     private
-
-    def search_by_url
-      return Source.with_url(keyword).with_safe if true?(safe)
-
-      Source.with_url(keyword).with_published
-    end
 
     def search_by_keyword
       return Source.with_keyword(keyword).with_safe if true?(safe)
