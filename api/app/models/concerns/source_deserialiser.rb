@@ -11,7 +11,7 @@ class SourceDeserialiser
     source.published = params[:published] || resource&.published || true
     source.restricted = params[:restricted] || resource&.restricted || true
     source.categories = params[:categories] || resource&.categories
-    source.creator = user
+    source.creator = resource&.creator || user
     source
   end
 end
