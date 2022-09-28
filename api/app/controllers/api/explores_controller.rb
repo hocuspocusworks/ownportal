@@ -20,11 +20,19 @@ module Api
     private
 
     def search_by_url
+      return Source.with_url(keyword).with_safe if true?(safe)
+
       Source.with_url(keyword).with_published
     end
 
     def search_by_keyword
+      return Source.with_keyword(keyword).with_safe if true?(safe)
+
       Source.with_keyword(keyword).with_published
+    end
+
+    def safe
+      @safe ||= user_params[:safe]
     end
 
     def keyword
@@ -36,7 +44,11 @@ module Api
     end
 
     def user_params
-      params.permit(:keyword)
+      params.permit([:keyword, :safe])
+    end
+
+    def true?(value)
+      ActiveModel::Type::Boolean.new.cast(value) == true
     end
   end
 end
