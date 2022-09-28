@@ -13,6 +13,9 @@
         <li class="nav-item active">
           <a class="nav-link" href="#" @click="sources('contributor')">Contributor Sources</a>
         </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#" @click="stats()">Stats</a>
+        </li>
       </ul>
     </div>
   </nav>
@@ -30,6 +33,9 @@ export default {
     },
     sources(kind) {
       router.push({name: 'sources', params: {kind: kind}})
+    },
+    stats() {
+      router.push({name: 'stats'})
     }
   }
 }

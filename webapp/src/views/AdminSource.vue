@@ -82,7 +82,6 @@ export default {
     },
     getSources() {
       let request = config.gateway + config.getPath('admin_sources') + '?kind=' + this.kind
-      console.log(request)
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {

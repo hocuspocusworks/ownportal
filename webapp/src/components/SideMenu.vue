@@ -172,7 +172,6 @@ export default {
                 });
         },
         deleteFeed(id) {
-            console.log(id);
             let url = config.gateway + config.getPath('streams') + '/' + id;
             let headers = {Authorization: localStorage.getItem('token')};
             axios.delete(url, {headers})
@@ -184,7 +183,6 @@ export default {
         },
         swapDropdownIcon(el) {
             this.icon[el] = this.icon[el] ? false : true;
-            console.log(this.icon);
         }
     },
     mounted() {

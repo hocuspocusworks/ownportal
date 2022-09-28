@@ -21,6 +21,7 @@ const config = {
             'favourites': '/portal/api/favourites',
             'admin_sources': '/portal/api/admin/sources',
             'admin_categories': '/portal/api/admin/categories',
+            'admin_stats': '/portal/api/admin/stats',
             'users': '/portal/api/users'
         }
     },

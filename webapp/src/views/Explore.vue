@@ -165,7 +165,6 @@ export default {
                 axios.get(url, { headers: config.authorisationHeader() })
                     .then(response => {
                         if (response.status === 200) {
-                            console.log(response.data)
                             this.sources = response.data;
                             this.featured = false;
                             this.loadGroups();
