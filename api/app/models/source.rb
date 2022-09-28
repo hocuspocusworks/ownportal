@@ -14,6 +14,9 @@
 #  processed   :boolean
 #  categories  :jsonb
 #  published   :boolean
+#  restricted  :boolean          default(TRUE), not null
+#  creator_id  :bigint
+#  counter     :integer
 #
 class Source < ApplicationRecord
   has_many :streams

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_09_28_201656) do
+ActiveRecord::Schema[7.0].define(version: 2022_09_28_204853) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -110,4 +110,19 @@ ActiveRecord::Schema[7.0].define(version: 2022_09_28_201656) do
   add_foreign_key "groups", "users"
   add_foreign_key "streams", "groups"
   add_foreign_key "streams", "sources"
+
+  create_view "stats", sql_definition: <<-SQL
+      SELECT count(*) AS total_count,
+      sum(
+          CASE
+              WHEN (users.sysadmin = false) THEN 1
+              ELSE 0
+          END) AS user_count,
+      sum(
+          CASE
+              WHEN (users.updated_at > ( SELECT '2022-09-27 00:00:00'::timestamp without time zone AS "timestamp")) THEN 1
+              ELSE 0
+          END) AS active_count
+     FROM users;
+  SQL
 end

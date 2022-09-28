@@ -12,6 +12,7 @@ Rails.application.routes.draw do
 
     namespace :admin do
       resources :sources, :categories
+      resources :stats, only: [:index]
     end
   end
 end
