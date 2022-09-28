@@ -20,7 +20,15 @@ module Api
         language = body['data']['language']
         name = body['data']['source']
         timestamp = body['data']['lastBuildDate']
-        Source.create(description: description, language: language, name: name, url: url, timestamp: timestamp, creator: @user)
+        Source.create(
+          description: description,
+          language: language,
+          name: name,
+          url: @url,
+          timestamp: timestamp,
+          creator: @user,
+          counter: 0
+        )
       end
 
       private

@@ -24,8 +24,12 @@ class Source < ApplicationRecord
   validates :description, length: { maximum: 256 }
 
   scope :with_processed, -> { where(processed: true) }
-  scope :with_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }) }
-  scope :with_non_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }) }
+  scope :with_admin, (lambda do
+    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }).order(counter: :desc)
+  end)
+  scope :with_non_admin, (lambda do
+    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }).order(counter: :desc)
+  end)
   scope :with_safe, -> { where(published: true).where(restricted: false) }
   scope :with_published, -> { where(published: true) }
   scope :with_url, ->(url) { where(url: url) }
