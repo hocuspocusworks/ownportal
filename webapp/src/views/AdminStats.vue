@@ -37,7 +37,7 @@ export default {
   name: 'AdminStats',
   data() {
     return {
-      stats: null
+      stats: {}
     }
   },
   mounted() {
