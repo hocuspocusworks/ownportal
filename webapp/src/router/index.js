@@ -28,7 +28,7 @@ const routes = [
   },
   { name: 'admin', path: '/admin', component: Admin, children: [
     { name: 'categories', path: 'categories', component: AdminCategory },
-    { name: 'sources', path: 'sources', component: AdminSource }
+    { name: 'sources', path: 'sources', component: AdminSource, props: true }
   ] },
   { name: "login", path: "/login", component: Login },
   { name: "register", path: "/register", component: Register },

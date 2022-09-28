@@ -34,11 +34,21 @@ import config from '../config';
 
 export default {
   name: "AdminSource",
+  props: ['kind'],
   data() {
     return {
-      items: null,
+      items: [],
       categories: [],
       selected_categories: []
+    }
+  },
+  watch: {
+    kind: {
+      handler: function(_kind) {
+        if (_kind !== undefined) {
+          this.getSources()
+        }
+      }
     }
   },
   methods: {
@@ -69,7 +79,8 @@ export default {
       }
     },
     getSources() {
-      let request = config.gateway + config.getPath('admin_sources')
+      let request = config.gateway + config.getPath('admin_sources') + '?kind=' + this.kind
+      console.log(request)
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {

@@ -8,7 +8,10 @@
           <a class="nav-link" href="#" @click="categories">Categories</a>
         </li>
         <li class="nav-item active">
-          <a class="nav-link" href="#" @click="sources">Sources</a>
+          <a class="nav-link" href="#" @click="sources('admin')">Admin Sources</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#" @click="sources('contributor')">Contributor Sources</a>
         </li>
       </ul>
     </div>
@@ -25,8 +28,8 @@ export default {
     categories() {
       router.push({name: 'categories'})
     },
-    sources() {
-      router.push({name: 'sources'})
+    sources(kind) {
+      router.push({name: 'sources', params: {kind: kind}})
     }
   }
 }
