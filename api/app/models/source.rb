@@ -18,12 +18,15 @@
 class Source < ApplicationRecord
   has_many :streams
 
-  validates :name, presence: true, length: { minimum: 3, maximum: 64 }
+  belongs_to :creator, class_name: 'User'
 
+  validates :name, presence: true, length: { minimum: 3, maximum: 64 }
   validates :description, length: { maximum: 256 }
 
   scope :with_processed, -> { where(processed: true) }
-  scope :with_published, -> { where(published: true) }
+  scope :with_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }) }
+  scope :with_non_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }) }
+  scope :with_non_restricted, -> { where(restricted: false) }
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end

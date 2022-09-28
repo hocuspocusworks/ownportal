@@ -4,7 +4,7 @@ module Api
       include Api::Extensions::Resourceful
 
       def index
-        render_json @sources
+        render_json Api::Services::SourceHandler.new(@sources, params).results
       end
 
       def update

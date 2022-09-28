@@ -1,7 +1,7 @@
 module Api
   module Services
     class RssFinder
-      def self.call(url)
+      def self.call(url, user)
         source = Source.with_url(url)
 
         return source.first unless source.empty?
@@ -15,7 +15,7 @@ module Api
         language = body['data']['language']
         name = body['data']['source']
         timestamp = body['data']['lastBuildDate']
-        Source.create(description: description, language: language, name: name, url: url, timestamp: timestamp)
+        Source.create(description: description, language: language, name: name, url: url, timestamp: timestamp, creator: user)
       end
     end
   end

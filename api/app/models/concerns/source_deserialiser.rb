@@ -9,7 +9,9 @@ class SourceDeserialiser
     source.url = params[:url] || resource&.url
     source.processed = params[:processed] || resource&.processed
     source.published = params[:published] || resource&.published
+    source.restricted = params[:restricted] || resource&.restricted || true
     source.categories = params[:categories] || resource&.categories
+    source.creator = user
     source
   end
 end

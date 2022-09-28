@@ -14,7 +14,7 @@ module Api
     end
 
     def rss
-      render_json Api::Services::RssFinder.call(params[:url])
+      render_json Api::Services::RssFinder.call(params[:url], current_user)
     end
 
     private
