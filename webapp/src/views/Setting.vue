@@ -2,24 +2,20 @@
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">#</th>
         <th scope="col">Setting</th>
         <th scope="col">Value</th>
       </tr>
     </thead>
     <tbody>
       <tr>
-        <th scope="row">1</th>
         <td>Toggle sidebar</td>
         <td><input type="checkbox" v-model="toggle" @click="save('toggle')" /></td>
       </tr>
       <tr>
-        <th scope="row">2</th>
         <td>Safe search</td>
         <td><input type="checkbox" v-model="safe" @click="save('safe')" /></td>
       </tr>
       <tr>
-        <th scope="row">3</th>
         <td>Dark mode</td>
         <td><input type="checkbox" v-model="dark" @click="save('dark')" /></td>
       </tr>
