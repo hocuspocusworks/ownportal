@@ -2,9 +2,12 @@
 #
 # Table name: stats
 #
-#  total_count  :bigint
-#  user_count   :bigint
-#  active_count :bigint
+#  users_total        :bigint
+#  user_count         :bigint
+#  user_active        :bigint
+#  sources_total      :bigint
+#  sources_restricted :bigint
+#  sources_published  :bigint
 #
 class Stat < ApplicationRecord
 end
