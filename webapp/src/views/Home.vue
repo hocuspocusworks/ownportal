@@ -71,7 +71,9 @@ export default {
             axios.delete(url, {headers});
         },
         toggleSidebar() {
-            sidebar.toggleSidebar();
+            if (config.isToggleOn()) {
+                sidebar.toggleSidebar();
+            }
         }
     }
 }

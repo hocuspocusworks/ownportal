@@ -59,9 +59,13 @@ export default {
       axios.patch(request, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
+            this.saveLocal()
             console.log('success')
           }
         })
+    },
+    saveLocal() {
+      localStorage.setItem('settings', this.my_settings);
     }
   },
   mounted() {

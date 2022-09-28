@@ -29,6 +29,18 @@ const config = {
     },
     authorisationHeader() {
         return {'Authorization': localStorage.getItem('token')}
+    },
+    settings() {
+        return localStorage.getItem('settings') ? localStorage.getItem('settings').split(',') : []
+    },
+    isToggleOn() {
+        return this.settings().includes('toggle')
+    },
+    isSafeSearchOn() {
+        return this.settings().includes('safe')
+    },
+    isDarkModeOn() {
+        return this.settings().includes('dark')
     }
 };
 
