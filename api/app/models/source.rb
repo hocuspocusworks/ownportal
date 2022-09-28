@@ -26,7 +26,8 @@ class Source < ApplicationRecord
   scope :with_processed, -> { where(processed: true) }
   scope :with_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }) }
   scope :with_non_admin, -> { select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }) }
-  scope :with_non_restricted, -> { where(restricted: false) }
+  scope :with_safe, -> { where(published: true).where(restricted: false) }
+  scope :with_published, -> { where(published: true) }
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end
