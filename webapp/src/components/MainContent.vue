@@ -15,14 +15,14 @@
 
             <div class="row">
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
-                    <div class="card full-height my-link">
+                    <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title">{{ item.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ item.source }} | {{ item.publishedDate }}</h6>
                             <p>{{ processText(item.description) }}</p>
                         </div>
                         <div class="pb-3">
-                            <button class="btn shadow-none" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
                         </div>
                     </div>
                 </div>
@@ -50,6 +50,20 @@ export default {
             content: null,
         }
     },
+    computed: {
+        themeCard() {
+            return {
+                'bg-dark-middle': this.dark(),
+                'bg-bluegray-50': !this.dark()
+            }
+        },
+        themeText() {
+            return {
+                'text-light': this.dark(),
+                'text-light-black': !this.dark()
+            }
+        }
+    },
     watch: {
         contentUrl: {
             handler: function(newUrl) {
@@ -59,6 +73,9 @@ export default {
         }
     },
     methods: {
+        dark() {
+            return config.isDarkModeOn()
+        },
         updateView(url) {
             this.content = null;
             this.loading = true;

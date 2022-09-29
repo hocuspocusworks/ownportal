@@ -1,5 +1,5 @@
 <template>
-    <div id="mySidebar" class="text-white bg-bluegray-600" style="min-width: 320px;">
+    <div id="mySidebar" class="text-white" :class="themeMenu" style="min-width: 320px;">
         <div class="p-3">
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-globe me-2"></i>
@@ -64,6 +64,14 @@ export default {
             default: ""
         }
     },
+    computed: {
+        themeMenu() {
+            return {
+                'bg-dark-strong': this.dark(),
+                'bg-bluegray-600': !this.dark()
+            }
+        }
+    },
     data() {
         return {
             err: false,
@@ -75,6 +83,9 @@ export default {
         }
     },
     methods: {
+        dark() {
+            return config.isDarkModeOn()
+        },
         createGroupCallback() {
             this.createGroup();
         },

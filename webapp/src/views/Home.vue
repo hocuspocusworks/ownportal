@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="d-flex bg-bluegray-400" style="height: 3.5rem;">
+        <div class="d-flex" :class="themeHeader" style="height: 3.5rem;">
             <div class="flex-grow-1 text-start">
                 <a href="javascript:;"><i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i></a>
             </div>
@@ -8,9 +8,9 @@
                 <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
             </div>
         </div>
-        <div class="d-flex min-h-screen">
+        <div class="d-flex min-h-screen" :class="themeText">
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @setting="setting" :needRefresh="refreshMenu" />
-            <div class="f-equal bg-bluegray-50">
+            <div class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
@@ -40,7 +40,30 @@ export default {
             ]
         }
     },
+    computed: {
+        themeHeader() {
+            return {
+                'bg-dark-light': this.dark(),
+                'bg-bluegray-400': !this.dark()
+            }
+        },
+        themeContent() {
+            return {
+                'bg-dark-middle': this.dark(),
+                'bg-bluegray-50': !this.dark()
+            }
+        },
+        themeText() {
+            return {
+                'text-light': this.dark(),
+                'text-light-black': !this.dark()
+            }
+        }
+    },
     methods: {
+        dark() {
+            return config.isDarkModeOn()
+        },
         feedCallback(url) {
             this.url = url;
             router.push({name: "content", params: {contentUrl: url}});

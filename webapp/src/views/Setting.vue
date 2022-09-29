@@ -1,26 +1,38 @@
 <template>
-  <table class="table">
-    <thead>
-      <tr>
-        <th scope="col">Setting</th>
-        <th scope="col">Value</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Toggle sidebar</td>
-        <td><input type="checkbox" v-model="toggle" @click="save('toggle')" /></td>
-      </tr>
-      <tr>
-        <td>Safe search</td>
-        <td><input type="checkbox" v-model="safe" @click="save('safe')" /></td>
-      </tr>
-      <tr>
-        <td>Dark mode</td>
-        <td><input type="checkbox" v-model="dark" @click="save('dark')" /></td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="container">
+    <div class="row">
+      <div class="col-4">
+        <h5>Setting</h5>
+      </div>
+      <div class="col-4">
+        <h5>Value</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <p>Toggle sidebar</p>
+      </div>
+      <div class="col-4">
+        <input type="checkbox" v-model="toggle" @click="save('toggle')" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <p>Safe search</p>
+      </div>
+      <div class="col-4">
+        <input type="checkbox" v-model="safe" @click="save('safe')" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4">
+        <p>Dark mode</p>
+      </div>
+      <div class="col-4">
+        <input type="checkbox" v-model="dark" @click="save('dark')" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -60,7 +72,7 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.saveLocal()
-            console.log('success')
+            config.reload()
           }
         })
     },

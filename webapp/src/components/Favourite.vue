@@ -15,7 +15,7 @@
 
             <div class="row">
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
-                    <div class="card full-height my-link">
+                    <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title">{{ item.title }}</h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}</h6>
@@ -41,7 +41,24 @@ export default {
             content: null
         }
     },
+    computed: {
+        themeCard() {
+            return {
+                'bg-dark-middle': this.dark(),
+                'bg-bluegray-50': !this.dark()
+            }
+        },
+        themeText() {
+            return {
+                'text-light': this.dark(),
+                'text-light-black': !this.dark()
+            }
+        }
+    },
     methods: {
+        dark() {
+            return config.isDarkModeOn()
+        },
         loadFavourites() {
             let url = config.gateway + config.getPath('favourites');
             axios.get(url, { headers: config.authorisationHeader() })

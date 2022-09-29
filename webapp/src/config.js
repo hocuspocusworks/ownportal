@@ -43,6 +43,9 @@ const config = {
     },
     isDarkModeOn() {
         return this.settings().includes('dark')
+    },
+    reload() {
+        location.reload()
     }
 };
 

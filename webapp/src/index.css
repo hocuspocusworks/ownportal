@@ -11,7 +11,11 @@
 .bg-bluegray-50 {background-color: #f7f9f9 !important;}
 .bg-bluegray-400 {background-color: #7e96a1 !important;}
 .bg-bluegray-600 {background-color: #526a76 !important;}
+.bg-dark-light {background-color: #1c1a1a !important;}
+.bg-dark-strong {background-color: #1a1616 !important;}
+.bg-dark-middle {background-color: #2e2b2b !important;}
 .bg-gray-200 {background-color: var(--gray-200) !important;}
+.text-light-black {color: #404040 !important;}
 .min-h-screen {min-height: 100vh;}
 .f-basis-0 {flex-basis: 0;}
 .f-equal {flex: 1 1 0;}
