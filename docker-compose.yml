@@ -1,24 +1,9 @@
 version: '3.9'
 services:
-  mongodb:
-    image: mongo:5.0.6
-    container_name: mongodb
-    volumes:
-      - /root/ownportal-data:/data/db
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: admin
-      MONGO_INITDB_ROOT_PASSWORD: E70nd3HGyXthxtbwU1DBpiDHQblvd5J3zNLghdm91dk
-      MONGO_INITDB_DATABASE: ownportal
   fetcher:
     container_name: fetcher
     build:
       context: ./fetcher
-  portal:
-    container_name: portal
-    build:
-      context: ./portal
-    depends_on:
-      - mongodb
   gateway:
     container_name: gateway
     build:
@@ -31,3 +16,4 @@ services:
       context: ./webapp
     ports:
       - "3000:80"
+
