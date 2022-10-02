@@ -27,4 +27,3 @@ spring:
           - Path=/login/**
           filters:
           - StripPrefix=1
-

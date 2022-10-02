@@ -3,22 +3,13 @@ services:
   fetcher:
     container_name: fetcher
     restart: always
-    ports:
-      - "8070:8070"
+    network_mode: "host"
     build:
       context: ./fetcher
   gateway:
     container_name: gateway
     restart: always
+    network_mode: "host"
     build:
       context: ./gateway
-    ports:
-      - "8089:8089"
-  webapp:
-    container_name: webapp
-    restart: always
-    build:
-      context: ./webapp
-    ports:
-      - "3000:80"
 
