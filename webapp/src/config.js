@@ -1,6 +1,6 @@
 const config = {
     gateway: 'http://localhost:8089',
-    // gateway: "https://gateway.ownportal.net"
+    // gateway: "https://gateway.ownportal.net",
     path_location: 'gateway',
     paths: {
         'local': {
