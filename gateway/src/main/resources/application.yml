@@ -6,7 +6,7 @@ spring:
     gateway:
       routes:
         - id: fetcher_route
-          uri: http://fetcher:8070
+          uri: http://localhost:8070
           predicates:
           - Path=/rss/**
           - Header=Authorization
@@ -14,7 +14,7 @@ spring:
           - StripPrefix=1
           - ApiAuth
         - id: portal_route
-          uri: http://portal:3000
+          uri: http://localhost:3000
           predicates:
           - Path=/portal/**
           - Header=Authorization
@@ -22,7 +22,7 @@ spring:
           - StripPrefix=1
           - ApiAuth
         - id: login_route
-          uri: http://portal:3000
+          uri: http://localhost:3000
           predicates:
           - Path=/login/**
           filters:
