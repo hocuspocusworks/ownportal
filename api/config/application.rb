@@ -23,6 +23,6 @@ module Api
     config.generators.test_framework :rspec
 
     config.x.jwt_secret = 'c8aP9xnmwXTWF1BMeBsHx02AnLe1eLDbZ50V9MQJPw'
-    config.x.fetcher_url = 'http://fetcher:8070'
+    config.x.fetcher_url = 'http://localhost:8070'
   end
 end
