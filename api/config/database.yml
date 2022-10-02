@@ -23,3 +23,5 @@ test:
 
 production:
   <<: *default
+  port: 6789
+  encoding: utf8
