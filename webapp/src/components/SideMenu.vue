@@ -168,6 +168,9 @@ export default {
             }
             this.$emit('feedChanged', url);
         },
+        toAdmin() {
+            this.$emit('admin')
+        },
         toFavourites() {
             this.$emit('favourite');
         },

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex min-h-screen" :class="themeText">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @setting="setting" :needRefresh="refreshMenu" />
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
@@ -71,6 +71,10 @@ export default {
         },
         informMenu() {
             this.refreshMenu = (Math.random() + 1).toString(36).substring(7);
+        },
+        admin() {
+            router.push({name: 'admin'})
+            this.toggleSidebar()
         },
         explore() {
             router.push({name: "explore"});
