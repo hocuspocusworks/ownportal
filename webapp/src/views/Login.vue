@@ -76,8 +76,9 @@ export default {
             axios.post(url, payload)
                 .then(resp => {
                     if (resp.status === 201) {
-                        localStorage.setItem('token', resp.data.session.token);
-                        router.push({name: "home"});
+                        localStorage.setItem('sysadmin', resp.data.session.sysadmin)
+                        localStorage.setItem('token', resp.data.session.token)
+                        router.push({name: "home"})
                     } else {
                         this.reportError(resp);
                     }

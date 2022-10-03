@@ -33,6 +33,9 @@ const config = {
     authorisationHeader() {
         return {'Authorization': localStorage.getItem('token')}
     },
+    isAdmin() {
+        return localStorage.getItem('sysadmin') === 'true' ? true : false
+    },
     settings() {
         return localStorage.getItem('settings') ? localStorage.getItem('settings').split(',') : []
     },

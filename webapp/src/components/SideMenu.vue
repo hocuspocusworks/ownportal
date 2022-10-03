@@ -13,6 +13,10 @@
                 <i class="bi bi-gear me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSettings">Settings</button>
             </div>
+            <div class="d-flex p-2 align-items-center" :class="{ 'd-none': !isAdmin }">
+                <i class="bi bi-person me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toAdmin">Admin</button>
+            </div>
         </div>
 
         <div class="ps-3 pe-3">
@@ -76,6 +80,7 @@ export default {
         return {
             err: false,
             loading: true,
+            isAdmin: config.isAdmin(),
             data: [],
             icon: [],
             selectedKey: "",
