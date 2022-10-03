@@ -88,14 +88,15 @@ export default {
             router.push({name: 'setting'})
         },
         logout() {
-            localStorage.setItem('token', '');
             this.sendLogoutToServer();
+            localStorage.setItem('token', '');
+            localStorage.setItem('sysadmin', '')
+            localStorage.setItem('userId', '')
             router.push({name: "login"});
         },
         sendLogoutToServer() {
-            let url = config.gateway + '/api/sessions';
-            let headers = {Authorization: localStorage.getItem('token')};
-            axios.delete(url, {headers});
+            let url = config.gateway + config.getPath('login') + '/' + config.userId();
+            axios.delete(url, { headers: config.authorisationHeader() })
         },
         toggleSidebar() {
             if (config.isToggleOn()) {

@@ -78,6 +78,7 @@ export default {
                     if (resp.status === 201) {
                         localStorage.setItem('sysadmin', resp.data.session.sysadmin)
                         localStorage.setItem('token', resp.data.session.token)
+                        localStorage.setItem('userId', resp.data.session.id)
                         router.push({name: "home"})
                     } else {
                         this.reportError(resp);
