@@ -8,14 +8,32 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item active">
+            <a class="nav-link" href="#" @click="portal()">Portal</a>
+          </li>
           <li class="nav-item">
             <a class="nav-link" href="#" @click="categories">Categories</a>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#" @click="sources('admin')">Admin Sources</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Admin Sources
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- <li><a class="dropdown-item" href="#">New</a></li>
+              <li><a class="dropdown-item" href="#">Restricted</a></li> -->
+              <li><a class="dropdown-item" href="#" @click="sources('admin')">All</a></li>
+            </ul>
           </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#" @click="sources('contributor')">Contributor Sources</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+              aria-expanded="false">
+              Contributor Sources
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <!-- <li><a class="dropdown-item" href="#">Pending</a></li> -->
+              <li><a class="dropdown-item" href="#" @click="sources('contributor')">All</a></li>
+            </ul>
           </li>
           <li class="nav-item active">
             <a class="nav-link" href="#" @click="stats()">Stats</a>
@@ -41,6 +59,9 @@ export default {
     },
     stats() {
       router.push({ name: 'stats' })
+    },
+    portal() {
+      router.push({ name: 'home' })
     }
   }
 }
