@@ -3,6 +3,11 @@
     <div class="text-left">
       Categories
     </div>
+    <div v-if="loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <div class="col-4">
       <div class="input-group mb-3">
         <input type="text" class="form-control" placeholder="New category name" aria-label="New category name"
@@ -32,7 +37,8 @@ export default {
   data() {
     return {
       items: null,
-      category_name: null
+      category_name: null,
+      loading: false
     }
   },
   methods: {
@@ -48,11 +54,13 @@ export default {
         })
     },
     reload() {
+      this.loading = true
       let request = config.gateway + config.getPath('admin_categories')
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
             this.items = response.data
+            this.loading = false
           }
         })
     }

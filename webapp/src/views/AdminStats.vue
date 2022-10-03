@@ -3,6 +3,12 @@
     Stats
   </div>
 
+  <div v-if="loading">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
   <div class="container">
     <div class="row">
       <div class="col-6">
@@ -49,15 +55,18 @@ export default {
   name: 'AdminStats',
   data() {
     return {
-      stats: {}
+      stats: {},
+      loading: false
     }
   },
   mounted() {
+    this.loading = true
     let request = config.gateway + config.getPath('admin_stats')
     axios.get(request, { headers: config.authorisationHeader() })
       .then(response => {
         if (response.status === 200) {
           this.stats = response.data[0]
+          this.loading = false
         }
       })
   }

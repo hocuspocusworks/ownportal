@@ -3,6 +3,12 @@
     List of sources
   </div>
 
+  <div v-if="loading">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-3 mb-4" v-for="(item,i) in items" :key="i">
@@ -40,12 +46,13 @@ export default {
     return {
       items: [],
       categories: [],
-      selected_categories: []
+      selected_categories: [],
+      loading: false
     }
   },
   watch: {
     kind: {
-      handler: function(_kind) {
+      handler: function (_kind) {
         if (_kind !== undefined) {
           this.getSources()
         }
@@ -81,20 +88,24 @@ export default {
       }
     },
     getSources() {
+      this.loading = true
       let request = config.gateway + config.getPath('admin_sources') + '?kind=' + this.kind
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
             this.items = response.data
+            this.loading = false
           }
         })
     },
     getCategories() {
+      this.loading = true
       let request = config.gateway + config.getPath('admin_categories')
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
             this.categories = response.data
+            this.loading = false
           }
         })
     }
