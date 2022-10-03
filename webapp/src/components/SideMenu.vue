@@ -10,7 +10,7 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
             <div class="d-flex p-2 align-items-center">
-                <i class="bi bi-balloon-heart me-2"></i>
+                <i class="bi bi-gear me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSettings">Settings</button>
             </div>
         </div>
