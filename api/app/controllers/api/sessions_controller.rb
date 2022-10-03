@@ -12,7 +12,7 @@ module Api
       user = User.find_by(email: params[:session][:email])
 
       if user.present? && user.authenticate(params[:session][:password])
-        user_token = { 'session': { 'token': encode_jwt(user) } }
+        user_token = { 'session': { 'token': encode_jwt(user), 'sysadmin': user.sysadmin, 'id': user.id } }
         render_json user_token, status: 201
       else
         render json: { errors: { credentials: ['are invalid'] } },

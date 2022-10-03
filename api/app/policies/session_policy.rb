@@ -14,10 +14,10 @@ class SessionPolicy < ApplicationPolicy
   end
 
   def destroy?
-    true
+    admin? || current_user?
   end
 
   def permitted_attributes
-    [:email, :password]
+    [:email, :password, :id]
   end
 end
