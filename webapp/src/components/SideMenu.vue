@@ -25,7 +25,16 @@
                 <button class="btn shadow-none text-white" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group">New group</button>
             </div>
             <div class="collapse" id="new-group">
-                <input type="text" class="form-control" id="new-group-name" v-model="newGroupName" placeholder="type name followed by enter" @keyup.enter="createGroupCallback">
+                <div class="container pb-4 ps-0 pe-0">
+                    <div class="row">
+                        <div class="col-9">
+                            <input type="text" class="form-control" id="new-group-name" v-model="newGroupName" placeholder="New group name" @keyup.enter="createGroupCallback">
+                        </div>
+                        <div class="col-2 ps-0">
+                            <button type="button" class="btn btn-dark bg-header" @click="createGroupCallback">OK</button>
+                        </div>
+                    </div>    
+                </div>
             </div>
         </div>
 
@@ -92,7 +101,9 @@ export default {
             return config.isDarkModeOn()
         },
         createGroupCallback() {
-            this.createGroup();
+            if (this.newGroupName.length > 2) {
+                this.createGroup();
+            }
         },
         createSourceCallback() {
             this.createSource();

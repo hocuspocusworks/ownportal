@@ -8,6 +8,7 @@
 
 #mySidebar {transition: 0.5s;}
 
+.bg-header {background-color: #2c3e50 !important;}
 .bg-bluegray-50 {background-color: #f7f9f9 !important;}
 .bg-bluegray-400 {background-color: #7e96a1 !important;}
 .bg-bluegray-600 {background-color: #526a76 !important;}
