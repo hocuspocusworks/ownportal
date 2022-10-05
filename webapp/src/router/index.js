@@ -11,6 +11,7 @@ import Admin from '../views/Admin.vue';
 import AdminSource from '../views/AdminSource.vue';
 import AdminCategory from '../views/AdminCategory.vue';
 import AdminStats from '../views/AdminStats.vue';
+import Creator from '../views/Creator.vue';
 
 const routes = [
   {
@@ -27,11 +28,16 @@ const routes = [
       { name: 'setting', path: 'setting', component: Setting }
     ]
   },
-  { name: 'admin', path: '/admin', component: Admin, children: [
-    { name: 'categories', path: 'categories', component: AdminCategory },
-    { name: 'sources', path: 'sources', component: AdminSource, props: true },
-    { name: 'stats', path: 'stats', component: AdminStats}
-  ] },
+  {
+    name: 'admin', path: '/admin', component: Admin, children: [
+      { name: 'categories', path: 'categories', component: AdminCategory },
+      { name: 'sources', path: 'sources', component: AdminSource, props: true },
+      { name: 'stats', path: 'stats', component: AdminStats }
+    ]
+  },
+  {
+    name: 'creator', path: '/creator', component: Creator
+  },
   { name: "login", path: "/login", component: Login },
   { name: "register", path: "/register", component: Register },
   { name: "about", path: "/about", component: About }
