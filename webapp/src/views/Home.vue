@@ -78,14 +78,15 @@ export default {
         },
         explore() {
             router.push({name: "explore"});
-            this.toggleSidebar();
+            this.toggleSidebar()
         },
         favourite() {
             router.push({name: "favourite"});
-            this.toggleSidebar();
+            this.toggleSidebar()
         },
         setting() {
             router.push({name: 'setting'})
+            this.toggleSidebar()
         },
         logout() {
             this.sendLogoutToServer();

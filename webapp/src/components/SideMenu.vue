@@ -1,5 +1,5 @@
 <template>
-    <div id="mySidebar" class="text-white" :class="themeMenu" style="min-width: 320px;">
+    <div id="mySidebar" class="text-white" :class="themeMenu" :style="sidebarWidth">
         <div class="p-3">
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-globe me-2"></i>
@@ -94,6 +94,7 @@ export default {
             icon: [],
             selectedKey: "",
             newGroupName: "",
+            sidebarWidth: 'min-width: 320px'
         }
     },
     methods: {
@@ -213,10 +214,18 @@ export default {
         },
         swapDropdownIcon(el) {
             this.icon[el] = this.icon[el] ? false : true;
+        },
+        resizeSidebar() {
+            window.onresize = () => {
+            if (window.innerWidth < 720) {
+                this.sidebarWidth = 'min-width: ' + window.innerWidth + 'px'
+            }
+        }
         }
     },
     mounted() {
-        this.fetchFeed();
+        this.fetchFeed()
+        this.resizeSidebar()
     },
     watch: {
         needRefresh: {

@@ -14,8 +14,13 @@ const sidebar = {
         document.getElementById("mySidebar").style.maxWidth = "0";
     },
     openNav: function() {
-        document.getElementById("mySidebar").style.minWidth = "320px";
-        document.getElementById("mySidebar").style.maxWidth = "320px";
+        if (window.innerWidth < 720) {
+            document.getElementById("mySidebar").style.minWidth = window.innerWidth + 'px'
+            document.getElementById("mySidebar").style.maxWidth = window.innerWidth + 'px'
+        } else {
+            document.getElementById("mySidebar").style.minWidth = "320px";
+            document.getElementById("mySidebar").style.maxWidth = "320px";
+        }
     }
 };
 
