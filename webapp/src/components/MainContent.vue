@@ -23,6 +23,7 @@
                         </div>
                         <div class="pb-3">
                             <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
+                            <button class="btn shadow-none" @click="clipboard(item)"><i class="bi bi-link-45deg"></i></button>
                         </div>
                     </div>
                 </div>
@@ -122,6 +123,9 @@ export default {
                 }).catch(err => {
                     console.log(err);
                 });
+        },
+        clipboard(item) {
+            navigator.clipboard.writeText(item.link)
         }
     }
 }
