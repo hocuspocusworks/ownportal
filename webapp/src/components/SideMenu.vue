@@ -21,7 +21,7 @@
 
         <div class="ps-3 pe-3">
             <div class="d-flex p-2 align-items-center">
-                <i class="bi bi-plus-circle me-2"></i>
+                <i class="bi bi-plus-circle me-2" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group"></i>
                 <button class="btn shadow-none text-white" type="button" data-bs-toggle="collapse" data-bs-target="#new-group" aria-expanded="false" aria-controls="new-group">New group</button>
             </div>
             <div class="collapse" id="new-group">
