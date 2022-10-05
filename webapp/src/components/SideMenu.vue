@@ -94,7 +94,8 @@ export default {
             icon: [],
             selectedKey: "",
             newGroupName: "",
-            sidebarWidth: 'min-width: 320px'
+            sidebarWidth: 'min-width: 320px',
+            drawableWidth: 320
         }
     },
     methods: {
@@ -217,14 +218,18 @@ export default {
         },
         resizeSidebar() {
             window.onresize = () => {
-            if (window.innerWidth < 720) {
-                this.sidebarWidth = 'min-width: ' + window.innerWidth + 'px'
+                if (window.innerWidth < 720) {
+                    this.sidebarWidth = 'min-width: ' + this.drawableWidth + 'px'
+                }
             }
-        }
+        },
+        setDrawableWidth() {
+            this.drawableWidth = localStorage.getItem('screenWidth')
         }
     },
     mounted() {
         this.fetchFeed()
+        this.setDrawableWidth()
         this.resizeSidebar()
     },
     watch: {

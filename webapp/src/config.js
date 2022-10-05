@@ -53,6 +53,10 @@ const config = {
     },
     reload() {
         location.reload()
+    },
+    setScreenSize() {
+        localStorage.setItem('screenWidth', window.innerWidth)
+        localStorage.setItem('screenHeigth', window.innerHeight)
     }
 };
 
