@@ -8,13 +8,19 @@ module Api
       end
 
       def authorisation_token
-        decode_jwt[0]['token']
+        simple_token || decode_jwt[0]['token']
       end
 
       def authenticate
         return unless current_user.nil?
 
         request_invalid
+      end
+
+      def simple_token
+        return nil unless User.find_by(token: header_token)
+
+        header_token
       end
 
       def decode_jwt
