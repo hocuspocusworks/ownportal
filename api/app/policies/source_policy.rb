@@ -12,7 +12,7 @@ class SourcePolicy < ApplicationPolicy
     admin?
   end
 
-  def delete?
+  def destroy?
     admin?
   end
 

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     get 'explores/rss'
     resources :users, :sources, :groups, :streams, :sessions
     resources :favourites
+    resources :highlights
 
     namespace :admin do
       resources :sources, :categories

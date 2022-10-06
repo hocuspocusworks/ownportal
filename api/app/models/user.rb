@@ -16,6 +16,7 @@ class User < ApplicationRecord
   has_secure_token
 
   has_many :streams, through: :groups
+  has_many :highlights
 
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
