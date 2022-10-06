@@ -12,6 +12,10 @@ module Api
       render_json current_user
     end
 
+    def all_users
+      render_json policy_scope(User)
+    end
+
     def show
       render_json @user
     end

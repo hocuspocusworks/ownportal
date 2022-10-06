@@ -14,6 +14,10 @@ class UserPolicy < ApplicationPolicy
     true
   end
 
+  def all_users?
+    admin?
+  end
+
   def create?
     true
   end
@@ -35,7 +39,7 @@ class UserPolicy < ApplicationPolicy
 
     return basic if user.nil?
 
-    basic += [:role] if admin?
+    basic += [:sysadmin] if admin?
     basic - [:email] unless user.nil?
   end
 
