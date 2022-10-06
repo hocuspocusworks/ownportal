@@ -17,9 +17,9 @@
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
                     <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
-                            <h5 class="card-title">{{ item.title }}</h5>
+                            <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
                             <h6 class="card-subtitle mb-2 text-muted">{{ item.source }} | {{ item.publishedDate }}</h6>
-                            <p>{{ processText(item.description) }}</p>
+                            <p><span v-html="processText(item.description)"></span></p>
                         </div>
                         <div class="pb-3">
                             <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
@@ -49,6 +49,7 @@ export default {
             loading: false,
             err: false,
             content: null,
+            highlights: []
         }
     },
     computed: {
@@ -94,6 +95,14 @@ export default {
                     this.loading = false;
                     this.err = err;
                 });
+            let highlight = config.gateway + config.getPath('highlights')
+            axios.get(highlight, { headers: config.authorisationHeader() })
+                .then(response => {
+                    if (response.status === 200) {
+                        this.highlights = response.data
+                        console.log(this.highlights)
+                    }
+                })
         },
         baseUrl(url) {
             var pathArray = url.split('/');
@@ -102,9 +111,23 @@ export default {
             return protocol + '//' + host;
         },
         processText(text) {
+            this.loading = true
+            let shortenText = this.shortenText(text)
+            let highlightedText = this.highlightedText(shortenText)
+            this.loading = false
+            return highlightedText
+        },
+        shortenText(text) {
             return text.length > 200 ?
                 text.substring(0, 200) + "..." :
                 text;
+        },
+        highlightedText(text) {
+            this.highlights.forEach(highlight => {
+                text = text.replace(new RegExp('(\\b' + highlight.keyword + '\\b)', 'gi'),
+                    `<span style="background-color: ${highlight.colour}">$1</span>`)
+            })
+            return text
         },
         openFeed(url) {
             window.open(url, '_blank').focus();
