@@ -12,6 +12,7 @@ import Admin from '../views/Admin.vue';
 import AdminSource from '../views/AdminSource.vue';
 import AdminCategory from '../views/AdminCategory.vue';
 import AdminStats from '../views/AdminStats.vue';
+import AdminUser from '../views/AdminUser.vue';
 import Creator from '../views/Creator.vue';
 
 const routes = [
@@ -34,7 +35,8 @@ const routes = [
     name: 'admin', path: '/admin', component: Admin, children: [
       { name: 'categories', path: 'categories', component: AdminCategory },
       { name: 'sources', path: 'sources', component: AdminSource, props: true },
-      { name: 'stats', path: 'stats', component: AdminStats }
+      { name: 'stats', path: 'stats', component: AdminStats },
+      { name: 'users', path: 'users', component: AdminUser }
     ]
   },
   {

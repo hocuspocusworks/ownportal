@@ -38,6 +38,9 @@
           <li class="nav-item active">
             <a class="nav-link" href="#" @click="stats()">Stats</a>
           </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="#" @click="users()">Users</a>
+          </li>
         </ul>
       </div>
     </div>
@@ -59,6 +62,9 @@ export default {
     },
     stats() {
       router.push({ name: 'stats' })
+    },
+    users() {
+      router.push({ name: 'users' })
     },
     portal() {
       router.push({ name: 'home' })
