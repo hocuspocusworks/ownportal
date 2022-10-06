@@ -86,6 +86,7 @@ export default {
         },
         highlight() {
             router.push({name: 'highlight'})
+            this.toggleSidebar()
         },
         setting() {
             router.push({name: 'setting'})
