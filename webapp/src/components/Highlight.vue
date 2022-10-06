@@ -11,7 +11,14 @@
 
     <ul class="list-group">
       <li class="list-group-item" v-for="(item, i) in highlights" :key="i" :style="{ 'background-color': item.colour }">
-        <b>{{ item.keyword }}</b>
+        <div class="d-flex">
+          <div class="justify-content-start flex-fill">
+            <b class="pe-4">{{ item.keyword }}</b>
+          </div>
+          <div class="justify-content-end">
+            <button class="btn btn-dark" type="button" aria-label="delete" @click="deleteHighlight(item)"><i class="bi bi-trash me-2"></i></button>
+          </div>
+        </div>
       </li>
     </ul>
   </div>
@@ -40,6 +47,15 @@ export default {
         .then(response => {
           if (response.status === 201) {
             this.keyword = ''
+            this.fetchHighlights()
+          }
+        })
+    },
+    deleteHighlight(item) {
+      let resource = this.url + '/' + item.id
+      axios.delete(resource, { headers: config.authorisationHeader() })
+        .then(response => {
+          if (response.status === 204) {
             this.fetchHighlights()
           }
         })
