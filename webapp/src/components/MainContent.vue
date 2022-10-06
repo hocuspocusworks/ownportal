@@ -111,10 +111,8 @@ export default {
             return protocol + '//' + host;
         },
         processText(text) {
-            this.loading = true
             let shortenText = this.shortenText(text)
             let highlightedText = this.highlightedText(shortenText)
-            this.loading = false
             return highlightedText
         },
         shortenText(text) {
