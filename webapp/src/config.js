@@ -21,6 +21,7 @@ const config = {
             'rss_sources': '/rss/rss/fetchAll',
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',
+            'highlights': '/portal/api/highlights',
             'admin_sources': '/portal/api/admin/sources',
             'admin_categories': '/portal/api/admin/categories',
             'admin_stats': '/portal/api/admin/stats',

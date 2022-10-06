@@ -10,6 +10,10 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
             <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-pen me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toHighlights">Highlights</button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-gear me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSettings">Settings</button>
             </div>
@@ -185,10 +189,13 @@ export default {
             this.$emit('admin')
         },
         toFavourites() {
-            this.$emit('favourite');
+            this.$emit('favourite')
+        },
+        toHighlights() {
+            this.$emit('highlight')
         },
         toExplore() {
-            this.$emit('explore');
+            this.$emit('explore')
         },
         toSettings() {
             this.$emit('setting')
