@@ -15,17 +15,13 @@ module Api
 
         return unless response.code == 200
 
-        body = JSON.parse(response.body.as_json)
-        description = body['data']['description'][0..511]
-        language = body['data']['language']
-        name = body['data']['source'].empty? ? random_name : body['data']['source']
-        timestamp = body['data']['lastBuildDate']
+        @body = JSON.parse(response.body.as_json)
         saved_source = Source.create(
-          description: description,
-          language: language,
-          name: name,
+          description: source_description,
+          language: source_language,
+          name: source_name,
           url: @url,
-          timestamp: timestamp,
+          timestamp: source_timestamp,
           creator: @user,
           counter: 0
         )
@@ -45,8 +41,24 @@ module Api
       end
 
       def random_name
-        "FIX_NAME_#{(0...8).map { ('A'..'Z').to_a[rand(26)] }.join}"
+        "NO_TEXT_#{(0...8).map { ('A'..'Z').to_a[rand(26)] }.join}"
       end
+
+      def source_name
+        @body['data']['source'].nil? || @body['data']['source'].empty? ? random_name : @body['data']['source']
+      end
+
+      def source_description
+        @body['data']['description'].nil? ? random_name : @body['data']['description'][0..511]
+      end
+
+      def source_language
+        @body['data']['language']
+      end
+
+      def source_timestamp
+        @body['data']['lastBuildDate']
+      end 
     end
   end
 end
