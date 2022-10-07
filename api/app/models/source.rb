@@ -19,6 +19,8 @@
 #  counter     :integer
 #
 class Source < ApplicationRecord
+  enum :visibility, { nobody: 0, restricted: 1, safe: 2 }
+
   has_many :streams
 
   belongs_to :creator, class_name: 'User'
