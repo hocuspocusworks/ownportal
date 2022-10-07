@@ -28,6 +28,7 @@
             <p class="card-text">Public: <input type="checkbox" v-model="items[i].published" /></p>
             <p class="card-text">Restricted: <input type="checkbox" v-model="items[i].restricted" /></p>
             <a href="#" class="card-link" @click="save(items[i].id)">Save</a>
+            <a href="#" class="card-link" @click="remove(items[i].id)">Delete</a>
           </div>
         </div>
       </div>
@@ -77,6 +78,15 @@ export default {
         .then(response => {
           if (response.status === 200) {
             console.log('success')
+          }
+        })
+    },
+    remove(index) {
+      let request = config.gateway + config.getPath('admin_sources') + '/' + index
+      axios.delete(request, { headers: config.authorisationHeader() })
+        .then(response => {
+          if (response.status === 204) {
+            this.getSources()
           }
         })
     },
