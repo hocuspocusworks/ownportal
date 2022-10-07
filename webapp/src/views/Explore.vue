@@ -151,15 +151,20 @@ export default {
                 let url = config.gateway + config.getPath('explore_rss') + "?url=" + newValue;
                 axios.get(url, { headers: config.authorisationHeader() })
                     .then(response => {
-                        if (response.status === 200 && response.data.id !== null) {
+                        if (response.status === 200 && response.data !== null) {
                             this.sources = [response.data];
                             this.featured = false;
                             this.loadGroups(); // should be watched separetly and invoked only when new group created
                         } else {
-                            this.featured = true;
+                            this.results = false
+                            this.featured = true
                         }
-                        this.loading = false;
-                    });
+                        this.loading = false
+                    })
+                    .catch(_exception => {
+                        this.results = false
+                        this.loading = false
+                    })
             } else if (newValue.length >= 2) {
                 let url = config.gateway + config.getPath('explore_search') + "?keyword="+newValue + this.safeSearch();
                 axios.get(url, { headers: config.authorisationHeader() })
