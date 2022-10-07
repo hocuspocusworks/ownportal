@@ -24,7 +24,7 @@ class Source < ApplicationRecord
   belongs_to :creator, class_name: 'User'
 
   validates :name, presence: true, length: { minimum: 3, maximum: 64 }
-  validates :description, length: { maximum: 256 }
+  validates :description, length: { maximum: 512 }
 
   scope :with_processed, -> { where(processed: true) }
   scope :with_admin, (lambda do
