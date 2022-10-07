@@ -20,9 +20,9 @@
               Admin Sources
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <!-- <li><a class="dropdown-item" href="#">New</a></li>
-              <li><a class="dropdown-item" href="#">Restricted</a></li> -->
-              <li><a class="dropdown-item" href="#" @click="sources('admin')">All</a></li>
+              <li><a class="dropdown-item" href="#" @click="sources('admin', 'new')">New</a></li>
+              <!-- <li><a class="dropdown-item" href="#">Restricted</a></li> -->
+              <li><a class="dropdown-item" href="#" @click="sources('admin', 'all')">All</a></li>
             </ul>
           </li>
           <li class="nav-item dropdown">
@@ -32,7 +32,7 @@
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
               <!-- <li><a class="dropdown-item" href="#">Pending</a></li> -->
-              <li><a class="dropdown-item" href="#" @click="sources('contributor')">All</a></li>
+              <li><a class="dropdown-item" href="#" @click="sources('contributor', 'all')">All</a></li>
             </ul>
           </li>
           <li class="nav-item active">
@@ -57,8 +57,8 @@ export default {
     categories() {
       router.push({ name: 'categories' })
     },
-    sources(kind) {
-      router.push({ name: 'sources', params: { kind: kind } })
+    sources(kind, status) {
+      router.push({ name: 'sources', params: { kind: kind, status: status } })
     },
     stats() {
       router.push({ name: 'stats' })

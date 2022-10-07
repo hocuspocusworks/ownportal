@@ -49,7 +49,7 @@ import config from '../config';
 
 export default {
   name: "AdminSource",
-  props: ['kind'],
+  props: ['kind', 'status'],
   data() {
     return {
       items: [],
@@ -57,6 +57,8 @@ export default {
       selected_categories: [],
       loading: false,
       success: false,
+      last_kind: '',
+      last_status: '',
       visibility: [],
       visibility_types: [
         { text: 'Nobody', value: 0 },
@@ -67,8 +69,17 @@ export default {
   },
   watch: {
     kind: {
-      handler: function (_kind) {
-        if (_kind !== undefined) {
+      handler: function (new_kind) {
+        if (new_kind !== undefined && this.last_kind !== new_kind) {
+          this.last_kind = new_kind
+          this.getSources()
+        }
+      }
+    },
+    status: {
+      handler: function(new_status) {
+        if (new_status !== undefined && this.new_status !== new_status) {
+          this.last_status = new_status
           this.getSources()
         }
       }
@@ -116,7 +127,7 @@ export default {
     },
     getSources() {
       this.loading = true
-      let request = config.gateway + config.getPath('admin_sources') + '?kind=' + this.kind
+      let request = config.gateway + config.getPath('admin_sources') + '?kind=' + this.last_kind + '&status=' + this.last_status
       axios.get(request, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
@@ -145,6 +156,8 @@ export default {
     }
   },
   mounted() {
+    this.last_kind = this.kind
+    this.last_status = this.status
     this.getCategories()
     this.getSources()
   }
