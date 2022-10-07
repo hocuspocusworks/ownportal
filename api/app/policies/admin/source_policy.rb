@@ -8,6 +8,10 @@ module Admin
       admin?
     end
 
+    def destroy?
+      admin?
+    end
+
     class Scope < ApplicationScope
       def resolve
         admin? ? scope.all : scope.none

@@ -15,6 +15,8 @@ module Api
 
       def destroy
         @source.destroy
+
+        head :no_content
       end
 
       private
