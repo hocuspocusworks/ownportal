@@ -16,6 +16,9 @@ module Api
         return unless response.code == 200
 
         @body = JSON.parse(response.body.as_json)
+
+        return if @body['data']['size'].zero?
+
         saved_source = Source.create(
           description: source_description,
           language: source_language,
