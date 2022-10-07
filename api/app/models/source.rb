@@ -29,6 +29,7 @@ class Source < ApplicationRecord
   validates :description, length: { maximum: 512 }
 
   scope :with_processed, -> { where(processed: true) }
+  scope :with_non_processed, -> { where(processed: false) }
   scope :with_admin, (lambda do
     select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }).order(counter: :desc)
   end)
