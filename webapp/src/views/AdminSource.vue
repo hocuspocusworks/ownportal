@@ -9,6 +9,10 @@
     </div>
   </div>
 
+  <div v-if="success" class="alert alert-success" role="alert">
+    Saved successfully.
+  </div>
+
   <div class="container-fluid">
     <div class="row">
       <div class="col-sm-12 col-lg-3 mb-4" v-for="(item,i) in items" :key="i">
@@ -25,8 +29,11 @@
               <option selected>Choose one or more categories</option>
               <option v-for="(category, j) in categories" :key="j">{{category.name}}</option>
             </select>
-            <p class="card-text">Public: <input type="checkbox" v-model="items[i].published" /></p>
-            <p class="card-text">Restricted: <input type="checkbox" v-model="items[i].restricted" /></p>
+            <p class="card-text">Visibility (current: <b>{{ items[i].visibility }}</b>)</p>
+            <select class="form-select" v-model="visibility[i]" aria-label="Select visibility">
+              <option v-for="visibility_type in visibility_types" :key="visibility_type.value">{{ visibility_type.text
+              }}</option>
+            </select>
             <a href="#" class="card-link" @click="save(items[i].id)">Save</a>
             <a href="#" class="card-link" @click="remove(items[i].id)">Delete</a>
           </div>
@@ -48,7 +55,14 @@ export default {
       items: [],
       categories: [],
       selected_categories: [],
-      loading: false
+      loading: false,
+      success: false,
+      visibility: [],
+      visibility_types: [
+        { text: 'Nobody', value: 0 },
+        { text: 'Restricted', value: 1 },
+        { text: 'Safe', value: 2 }
+      ]
     }
   },
   watch: {
@@ -69,15 +83,18 @@ export default {
           'name': this.items[position].name,
           'description': this.items[position].description,
           'language': this.items[position].language,
-          'published': this.items[position].published === true ? '1' : '0',
-          'restricted': this.items[position].restricted === true ? '1' : '0',
+          'visibility': this.processVisibility(this.visibility[position]),
           'categories': this.selected_categories[position]
         }
       }
       axios.patch(request, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
-            console.log('success')
+            this.success = true
+            setTimeout(() => {
+              this.success = false
+              this.getSources()
+            }, 1000)
           }
         })
     },
@@ -104,6 +121,7 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.items = response.data
+            this.visibility = []
             this.loading = false
           }
         })
@@ -118,6 +136,12 @@ export default {
             this.loading = false
           }
         })
+    },
+    processVisibility(raw) {
+      if (raw === undefined) {
+        return 'nobody'
+      }
+      return raw.toLowerCase()
     }
   },
   mounted() {
