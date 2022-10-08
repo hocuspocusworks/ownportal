@@ -89,15 +89,7 @@ export default {
     save(index) {
       let position = this.dbToInternalIndex(index)
       let request = config.gateway + config.getPath('admin_sources') + '/' + index
-      let payload = {
-        'source': {
-          'name': this.items[position].name,
-          'description': this.items[position].description,
-          'language': this.items[position].language,
-          'visibility': this.processVisibility(this.visibility[position]),
-          'categories': this.selected_categories[position]
-        }
-      }
+      let payload = { 'source': { ...this.basicSettings(position), ...this.visible(position) } }
       axios.patch(request, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
@@ -148,12 +140,20 @@ export default {
           }
         })
     },
-    processVisibility(raw) {
-      if (raw === undefined) {
-        return 'nobody'
+    basicSettings(position) {
+      return {
+        'name': this.items[position].name,
+        'description': this.items[position].description,
+        'language': this.items[position].language,
+        'categories': this.selected_categories[position]
       }
-      return raw.toLowerCase()
-    }
+    },
+    visible(position) {
+      if (this.visibility[position] === undefined) {
+        return {}
+      }
+      return { 'visibility': this.visibility[position].toLowerCase() }
+    },
   },
   mounted() {
     this.last_kind = this.kind
