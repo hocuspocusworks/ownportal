@@ -22,7 +22,7 @@ module Api
     def search_by_keyword
       return Source.with_keyword(keyword).with_safe if true?(safe)
 
-      Source.with_keyword(keyword).with_published
+      Source.with_keyword(keyword).with_allowed
     end
 
     def safe

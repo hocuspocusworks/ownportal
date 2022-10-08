@@ -32,13 +32,15 @@ class Source < ApplicationRecord
   scope :with_processed, -> { where(processed: true) }
   scope :with_non_processed, -> { where(processed: false) }
   scope :with_admin, (lambda do
-    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }).order(counter: :desc)
+    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: true }).order(updated_at: :desc)
   end)
   scope :with_non_admin, (lambda do
-    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }).order(counter: :desc)
+    select('sources.*,users.sysadmin').joins(:creator).where(users: { sysadmin: false }).order(updated_at: :desc)
   end)
-  scope :with_safe, -> { where(published: true).where(restricted: false) }
-  scope :with_published, -> { where(published: true) }
+  scope :with_safe, -> { where(visibility: Source.visibilities[:safe]) }
+  scope :with_allowed, (lambda do
+    where('visibility=? OR visibility=?', Source.visibilities[:restricted], Source.visibilities[:safe])
+  end)
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
 end
