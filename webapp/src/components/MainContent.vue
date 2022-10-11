@@ -49,7 +49,8 @@ export default {
             loading: false,
             err: false,
             content: null,
-            highlights: []
+            highlights: [],
+            regexCache: {}
         }
     },
     computed: {
@@ -122,10 +123,16 @@ export default {
         },
         highlightedText(text) {
             this.highlights.forEach(highlight => {
-                text = text.replace(new RegExp('(\\b' + highlight.keyword + '\\b)', 'gi'),
+                text = text.replace(this.regex(highlight.keyword),
                     `<span style="background-color: ${highlight.colour}">$1</span>`)
             })
             return text
+        },
+        regex(word) {
+            if (this.regexCache[word] === undefined) {
+                this.regexCache[word] = new RegExp('(\\b' + word + '\\b)', 'gi')
+            }
+            return this.regexCache[word]
         },
         openFeed(url) {
             window.open(url, '_blank').focus();
