@@ -57,7 +57,7 @@
                     <button class="btn shadow-none text-white" @click="deleteGroup(item.id)"><i class="bi bi-folder-x"></i></button>
                 </div>
                 <div class="collapse" :id="'i-'+i">
-                    <div class="d-flex" v-for="(subitem, j) in item.streams" :key="subitem.name">
+                    <div class="d-flex" v-for="(subitem, j) in item.stream_list" :key="subitem.name">
                         <button type="button" class="btn my-li-text shadow-none ps-5 flex-grow-1" @click="onItemSelect(subitem)">
                             {{ subitem.name }}
                         </button>
@@ -167,15 +167,15 @@ export default {
         },
         onItemSelect(item) {
             let url = [];
-            if (item.streams !== undefined) {
-                item.streams.forEach(el => {
-                    let src = item.sources.find(obj => obj.id === el.source_id)
+            if (item.stream_list !== undefined) {
+                item.stream_list.forEach(el => {
+                    let src = item.source_list.find(obj => obj.id === el.source_id)
                     url.push(src.url)
                 });
             } else {
                 this.data.forEach(group => {
                     if (group.id === item.group_id) {
-                        group.sources.forEach(src => {
+                        group.source_list.forEach(src => {
                             if (src.id === item.source_id) {
                                 url.push(src.url)
                             }
