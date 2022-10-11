@@ -23,4 +23,10 @@ class User < ApplicationRecord
                     format: /\A[^@\s]+@([^@\s]+\.)+[^@\s]+\z/
 
   validates :password, length: { minimum: 6, allow_nil: true }
+
+  def safe_search?
+    return true if settings.include? 'safe'
+
+    false
+  end
 end

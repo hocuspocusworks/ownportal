@@ -3,7 +3,7 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json @groups, include: [:user, :streams, :sources]
+      render_json @groups, include: [:user, :stream_list, :source_list]
     end
 
     def create
@@ -26,7 +26,7 @@ module Api
     end
 
     def load_collection
-      @groups ||= GroupsQueries.new.with_streams(current_user.id)
+      @groups ||= Group.where(user_id: current_user.id)
     end
 
     def user_params
