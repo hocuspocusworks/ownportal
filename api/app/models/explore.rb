@@ -17,7 +17,7 @@
 #  restricted  :boolean          default(TRUE), not null
 #  creator_id  :bigint
 #  counter     :integer
-#  visibility  :integer          default(0)
+#  visibility  :integer          default(1)
 #
 class Explore < ApplicationRecord
   self.table_name = 'sources'

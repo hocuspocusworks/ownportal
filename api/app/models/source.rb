@@ -17,7 +17,7 @@
 #  restricted  :boolean          default(TRUE), not null
 #  creator_id  :bigint
 #  counter     :integer
-#  visibility  :integer          default("nobody")
+#  visibility  :integer          default("restricted")
 #
 class Source < ApplicationRecord
   enum :visibility, { nobody: 0, restricted: 1, safe: 2 }
