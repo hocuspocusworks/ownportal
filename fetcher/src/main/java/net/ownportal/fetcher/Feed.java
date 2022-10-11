@@ -11,19 +11,23 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import net.ownportal.RssPage;
+import net.ownportal.RssPage.RssNode;
 
 @ToString
 @Getter
 @Setter
 @Slf4j
 public class Feed {
-    private long size;
+    private long size = 0;
     private List<FeedItem> nodes = new ArrayList<>();
 
     public Feed(List<RssPage> pages, String sort) {
         for (var page : pages) {
-            size += page.getSize();
             for (var item : page.getNodes()) {
+                if (!validItem(item)) continue;
+
+                setValidPublishedDate(item);
+
                 var feedItem = new FeedItem.Builder()
                     .source(page.getSource())
                     .title(item.getTitle())
@@ -32,6 +36,7 @@ public class Feed {
                     .publishedDate(item.getPublishedDate())
                     .build();
                 nodes.add(feedItem);
+                size++;
             }
         }
         if (sort.equals("asc")) {
@@ -39,6 +44,21 @@ public class Feed {
         } else {
             Collections.shuffle(nodes);
         }
+    }
+
+    private void setValidPublishedDate(RssNode item) {
+        if (item.getPublishedDate() == null) {
+            item.setPublishedDate("Thu, 1 Jan 1970 00:00:00 GMT");
+        }
+    }
+
+    private boolean validItem(RssNode item) {
+        if (item.getDescription() == null ||
+            item.getTitle() == null ||
+            item.getLink() == null) {
+            return false;
+        }
+        return true;
     }
 
     @ToString
