@@ -61,7 +61,7 @@ module Api
 
       def source_timestamp
         @body['data']['lastBuildDate']
-      end 
+      end
     end
   end
 end
