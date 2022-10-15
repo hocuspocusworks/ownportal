@@ -106,6 +106,9 @@ export default {
         toggleSidebar() {
             sidebar.toggleSidebar();
         }
+    },
+    mounted() {
+        this.toggleSidebar()
     }
 }
 </script>
