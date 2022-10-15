@@ -3,6 +3,8 @@ package net.ownportal;
 import java.io.ByteArrayInputStream;
 import java.util.Optional;
 
+import org.jsoup.Jsoup;
+
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
@@ -33,10 +35,15 @@ public class AtomReader {
         }
         final var rssPage = new RssPage();
         for (var item : feed.getValue().getAuthorOrCategoryOrContributor()) {
-            JAXBElement element = (JAXBElement) item;
-            setTitle(element, rssPage);
-            setLastBuildDate(element, rssPage);
-            setEntries(element, rssPage);
+            if (item instanceof JAXBElement) {
+                JAXBElement element = (JAXBElement) item;
+                setTitle(element, rssPage);
+                setLastBuildDate(element, rssPage);
+                setEntries(element, rssPage);
+            } else {
+                // e.g. creativeCommons:license
+                System.out.println();
+            }
         }
         rssPage.setSize(feedEntries);
         return rssPage;
@@ -80,7 +87,11 @@ public class AtomReader {
     private void setEntryDescription(JAXBElement element, RssNode rssNode) {
         if (element.getName().getLocalPart().equals("content")) {
             ContentType item = (ContentType) element.getValue(); // TODO: check content type and convert
-            rssNode.setDescription(item.getContent().get(0).toString());
+            rssNode.setDescription(processedText(item.getContent().get(0).toString()));
+        }
+        if (element.getName().getLocalPart().equals("summary")) {
+            TextType item = (TextType) element.getValue();
+            rssNode.setDescription(processedText(item.getContent().get(0).toString()));
         }
     }
 
@@ -120,5 +131,13 @@ public class AtomReader {
             return Optional.empty();
         }
         return Optional.of(feed);
+    }
+
+    private String processedText(String html) {
+        return htmlToText(html).trim();
+    }
+
+    private String htmlToText(String html) {
+        return Jsoup.parse(html).text();
     }
 }
