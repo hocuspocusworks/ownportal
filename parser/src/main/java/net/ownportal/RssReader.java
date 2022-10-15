@@ -11,34 +11,25 @@ import jakarta.xml.bind.UnmarshalException;
 import net.ownportal.rssjax.Rss;
 import net.ownportal.rssjax.RssChannel;
 
-public class OriginalRssResolver {
-    public static boolean isValid(final byte[] rss) {
-        try {
-            var context = JAXBContext.newInstance(Rss.class);
-            var unmarshaller = context.createUnmarshaller();
-            unmarshaller.unmarshal(new ByteArrayInputStream(rss));
-        } catch (UnmarshalException e) {
-            // incorrect format
-            // e.printStackTrace();
-            return false;
-        } catch (JAXBException e) {
-            // general problem
-            // e.printStackTrace();
-            return false;
-        }
-        return true;
+public class RssReader {
+    private Rss feed;
+
+    public RssReader(final byte[] rss) {
+        feed = load(rss).orElse(null);
     }
 
-    public static RssPage rssToJson(final byte[] rssBytes) {
-        final var rssOpt = rssFromBytes(rssBytes);
-        if (rssOpt.isEmpty()) {
+    public boolean isValid() {
+        return feed != null ? true : false;
+    }
+
+    public RssPage rssToJson() {
+        if (!isValid()) {
             return new RssPage();
         }
-        final var rss = rssOpt.get();
-        final var channel = rss.getChannel();
+        final var rssPage = new RssPage();
+        final var channel = feed.getChannel();
         final var items = channel.getItem();
 
-        final var rssPage = new RssPage();
         rssPage.setSource(getChannelItemValue(channel, "title"));
         rssPage.setLink(getChannelItemValue(channel, "link"));
         rssPage.setDescription(getChannelItemValue(channel, "description"));
@@ -80,7 +71,7 @@ public class OriginalRssResolver {
         return rssPage;
     }
 
-    private static String getChannelItemValue(final RssChannel channel, final String field) {
+    private String getChannelItemValue(final RssChannel channel, final String field) {
         final var item = channel
             .getTitleOrLinkOrDescription()
             .stream()
@@ -92,23 +83,27 @@ public class OriginalRssResolver {
         return "";
     }
 
-    private static boolean isField(final Object el, final String field) {
+    private boolean isField(final Object el, final String field) {
         if (el instanceof JAXBElement) {
             return ((JAXBElement) el).getName().toString().toLowerCase().equals(field) ? true : false;
         }
         return false;
     }
 
-    static Optional<Rss> rssFromBytes(final byte[] rss) {
-        if (!isValid(rss)) {
-            return Optional.empty();
-        }
+    private Optional<Rss> load(byte[] rss) {
         try {
             var context = JAXBContext.newInstance(Rss.class);
             var unmarshaller = context.createUnmarshaller();
-            return Optional.of((Rss) unmarshaller.unmarshal(new ByteArrayInputStream(rss)));
+            feed = (Rss) unmarshaller.unmarshal(new ByteArrayInputStream(rss));
+        } catch (UnmarshalException e) {
+            // incorrect format
+            // e.printStackTrace();
+            return Optional.empty();
         } catch (JAXBException e) {
+            // general problem
+            // e.printStackTrace();
             return Optional.empty();
         }
+        return Optional.of(feed);
     }
 }

@@ -15,11 +15,11 @@ import net.ownportal.atomjax.FeedType;
 import net.ownportal.atomjax.LinkType;
 import net.ownportal.atomjax.TextType;
 
-public class AtomResolver {
+public class AtomReader {
     private JAXBElement<FeedType> feed;
     private int feedEntries = 0;
 
-    public AtomResolver(final byte[] rss) {
+    public AtomReader(final byte[] rss) {
         feed = load(rss).orElse(null);
     }
 

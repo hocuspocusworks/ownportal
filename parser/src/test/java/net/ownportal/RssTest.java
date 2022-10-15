@@ -11,12 +11,12 @@ import java.net.URL;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class AtomTest {
+public class RssTest {
     private ByteArrayOutputStream baos;
 
     @BeforeEach
     void setUp() throws Exception {
-        URL url = App.class.getClassLoader().getResource("atom.xml");
+        URL url = App.class.getClassLoader().getResource("rss.xml");
         File atomFile = new File(url.toURI().getPath());
         InputStream is = new FileInputStream(atomFile);
         baos = new ByteArrayOutputStream();
@@ -26,9 +26,9 @@ public class AtomTest {
 
     @Test
     void testParsingValidXml() {
-        var atom = new AtomReader(baos.toByteArray());
-        var page = atom.rssToJson();
-        assertEquals("Atom Feed", page.getSource());
-        assertEquals(25L, page.getSize());
+        var rss = new RssReader(baos.toByteArray());
+        var page = rss.rssToJson();
+        assertEquals("Zimbabwe | The Guardian", page.getSource());
+        assertEquals(20, page.getSize());
     }
 }
