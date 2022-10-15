@@ -10,14 +10,6 @@
     </div>
     <div class="row">
       <div class="col-4">
-        <p>Toggle sidebar</p>
-      </div>
-      <div class="col-4">
-        <input type="checkbox" v-model="toggle" @click="save('toggle')" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
         <p>Safe search</p>
       </div>
       <div class="col-4">

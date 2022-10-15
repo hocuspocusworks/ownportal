@@ -10,7 +10,7 @@
         </div>
         <div class="d-flex min-h-screen" :class="themeText">
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @highlight="highlight" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
-            <div class="f-equal" :class="themeContent">
+            <div id="myContent" class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
@@ -104,9 +104,7 @@ export default {
             axios.delete(url, { headers: config.authorisationHeader() })
         },
         toggleSidebar() {
-            if (config.isToggleOn()) {
-                sidebar.toggleSidebar();
-            }
+            sidebar.toggleSidebar();
         }
     }
 }

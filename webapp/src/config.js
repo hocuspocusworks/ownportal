@@ -44,7 +44,7 @@ const config = {
         return localStorage.getItem('settings') ? localStorage.getItem('settings').split(',') : []
     },
     isToggleOn() {
-        return this.settings().includes('toggle')
+        return false
     },
     isSafeSearchOn() {
         return this.settings().includes('safe')
