@@ -21,6 +21,8 @@ module Api
     end
 
     def create
+      render json: user_limit_error, status: :forbidden and return if user_limit_reached?
+
       user = User.create(user_params.merge(default_settings))
       if user.errors.empty?
         render_json user, status: :created
@@ -54,6 +56,22 @@ module Api
 
     def default_settings
       { settings: [:safe], sysadmin: false }
+    end
+
+    def user_limit_error
+      { 'errors': { 'user': ['registration limit reached'] } }
+    end
+
+    def user_limit_reached?
+      true if user_count > registration_limit
+    end
+
+    def user_count
+      Rails.cache.fetch('user_count', expires_in: 1.minute) { User.all.count }
+    end
+
+    def registration_limit
+      Rails.cache.fetch('registration_limit') { 100 }
     end
   end
 end
