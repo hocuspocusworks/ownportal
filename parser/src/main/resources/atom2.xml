@@ -1,0 +1,551 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xmlns:creativeCommons="http://backend.userland.com/creativeCommonsRssModule" xmlns:re="http://purl.org/atompub/rank/1.0">
+    <title type="text">Newest questions tagged ruby-on-rails - Stack Overflow</title>
+    <link rel="self" href="https://stackoverflow.com/feeds/tag?tagnames=ruby-on-rails&amp;sort=newest" type="application/atom+xml" />
+    <link rel="alternate" href="https://stackoverflow.com/questions/tagged/?tagnames=ruby-on-rails&amp;sort=newest" type="text/html" />
+    <subtitle>most recent 30 from stackoverflow.com</subtitle>
+    <updated>2022-10-15T22:05:07Z</updated>
+    <id>https://stackoverflow.com/feeds/tag?tagnames=ruby-on-rails&amp;sort=newest</id>
+    <creativeCommons:license>https://creativecommons.org/licenses/by-sa/4.0/rdf</creativeCommons:license> 
+    <entry>
+        <id>https://stackoverflow.com/q/74082620</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails post method ArgumentError</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="integration-testing" />
+        <author>
+            <name>testing09</name>
+            <uri>https://stackoverflow.com/users/14726417</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74082620/rails-post-method-argumenterror" />
+        <published>2022-10-15T20:03:09Z</published>
+        <updated>2022-10-15T21:18:40Z</updated>
+        <summary type="html">
+            &lt;p&gt;I have the following code as part of an integration test that issues a &lt;code&gt;post&lt;/code&gt; request.&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;assert_no_difference &#x27;User.count&#x27; do&#xA;      post users_path, params: { user: {&#xA;        name: &#x27;&#x27;,&#xA;        email: &#x27;user@invalid&#x27;,&#xA;        password: &#x27;foo&#x27;,&#xA;        password_confirmation: &#x27;bar&#x27;&#xA;      }} &#xA;    end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;However, when running the tests, I keep getting the error:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;ArgumentError: wrong number of arguments (given 2, expected 1)&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Upon inspecting the stack trace, I have realised that this error stems from the following &lt;code&gt;post&lt;/code&gt; method in the following &lt;code&gt;integration.rb&lt;/code&gt; file, which can be found at &lt;a href=&quot;https://github.com/rails/rails/blob/8015c2c2cf5c8718449677570f372ceb01318a32/actionpack/lib/action_dispatch/testing/integration.rb&quot; rel=&quot;nofollow noreferrer&quot;&gt;https://github.com/rails/rails/blob/8015c2c2cf5c8718449677570f372ceb01318a32/actionpack/lib/action_dispatch/testing/integration.rb&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;This method is defined as:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;# Performs a POST request with the given parameters. See ActionDispatch::Integration::Session#process&#xA;      # for more details.&#xA;      def post(path, **args)&#xA;        process(:post, path, **args)&#xA;      end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;As shown above, the &lt;code&gt;integration.rb&lt;/code&gt; &lt;code&gt;post&lt;/code&gt; method expects the &lt;code&gt;params&lt;/code&gt; argument as a keyword argument, where the double-splat operator is used to transform the keyword argument into a hash. However, although I specify &lt;code&gt;params&lt;/code&gt; as a keyword argument i.e.&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;post users_path, params: { user: {&#xA;        name: &#x27;&#x27;,&#xA;        email: &#x27;user@invalid&#x27;,&#xA;        password: &#x27;foo&#x27;,&#xA;        password_confirmation: &#x27;bar&#x27;&#xA;      }} &#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;it seems that it is implicitly converted into a hash, thus causing the above error to be raised.&lt;/p&gt;&#xA;&lt;p&gt;To confirm this, I modified the &lt;code&gt;integration.rb&lt;/code&gt; &lt;code&gt;post&lt;/code&gt; method to the following:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;# Performs a POST request with the given parameters. See ActionDispatch::Integration::Session#process&#xA;      # for more details.&#xA;      def post(path, args)&#xA;        process(:post, path, **args)&#xA;      end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;After making this change, the code runs perfectly.&lt;/p&gt;&#xA;&lt;p&gt;My question is what am I missing? Is Rails performing some sort of implicit conversion of the &lt;code&gt;params&lt;/code&gt; keyword argument to a hash?&lt;/p&gt;&#xA;&lt;p&gt;Any help is greatly appreciated.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74082541</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Why is Rails trying to autoload this file in a production environment?</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-5" />
+            <category scheme="https://stackoverflow.com/tags" term="require" />
+            <category scheme="https://stackoverflow.com/tags" term="autoload" />
+            <category scheme="https://stackoverflow.com/tags" term="eager-loading" />
+        <author>
+            <name>RubyRedGrapefruit</name>
+            <uri>https://stackoverflow.com/users/465986</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74082541/why-is-rails-trying-to-autoload-this-file-in-a-production-environment" />
+        <published>2022-10-15T19:52:19Z</published>
+        <updated>2022-10-15T19:52:19Z</updated>
+        <summary type="html">
+            &lt;p&gt;This is Rails v5.2.3. I have a particular Sidekiq job where many instances of the job seem to hang for 20&#x2B; minutes. In the same machine the queue resides on, while this is happening, I can run the same code in a Rails console and it finishes in 5 seconds.&lt;/p&gt;&#xA;&lt;p&gt;I determined the offending PID from the Sidekiq screen, and ran:&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;kill -TTIN &amp;lt;pid&amp;gt;&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;The following lines appeared twice in the file, which I guess means that two threads from the same process were trying to load the same file:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;Oct 13 17:04:08 myapp-production sidekiq[1217886]: /myapp/shared/bundle/ruby/2.6.0/gems/activesupport-5.2.3/lib/active_support/core_ext/module/introspection.rb:35:in `parent&#x27;&#xA;Oct 13 17:04:08 myapp-production sidekiq[1217886]: /myapp/shared/bundle/ruby/2.6.0/gems/activesupport-5.2.3/lib/active_support/dependencies.rb:516:in `load_missing_constant&#x27;&#xA;Oct 13 17:04:08 myapp-production sidekiq[1217886]: /myapp/shared/bundle/ruby/2.6.0/gems/activesupport-5.2.3/lib/active_support/dependencies.rb:195:in `const_missing&#x27;&#xA;Oct 13 17:04:08 myapp-production sidekiq[1217886]: /myapp/releases/20221013144458/lib/mixins/query_builder.rb:294:in `generate_sql&#x27;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I do have some &lt;code&gt;require&lt;/code&gt;s in my code in different places, which I just determined is bad apparently. However, I&#x27;m not &lt;code&gt;require&lt;/code&gt;ing the file listed above: &lt;code&gt;lib/mixins/query_builder.rb&lt;/code&gt;. It is a module that is &lt;code&gt;extend&lt;/code&gt;ed from a few different classes in &lt;code&gt;lib/classes&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;In my &lt;code&gt;config/application.rb&lt;/code&gt; file, I have:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;    config.enable_dependency_loading = true&#xA;    config.eager_load_paths &#x2B;= %W[&#xA;      #{config.root}/app/actions&#xA;      #{config.root}/app/organizers&#xA;      #{config.root}/lib/my_fitment&#xA;      #{config.root}/lib/mixins&#xA;      #{config.root}/lib/classes&#xA;    ]&#xA;&#xA;    config.autoload_paths &#x2B;= %W[&#xA;      #{config.root}/app/actions&#xA;      #{config.root}/app/organizers&#xA;      #{config.root}/lib&#xA;      #{config.root}/lib/my_fitment&#xA;      #{config.root}/lib/mixins&#xA;      #{config.root}/lib/classes&#xA;      #{config.root}/lib/*&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I admit that this is a mess, and I&#x27;m not sure what is going on here. I do have &lt;code&gt;config.eager_load&lt;/code&gt; set to true in production and false in development.&lt;/p&gt;&#xA;&lt;p&gt;So, if &lt;code&gt;lib/mixins&lt;/code&gt; is present in both &lt;code&gt;eager_load_paths&lt;/code&gt; and &lt;code&gt;autoload_paths&lt;/code&gt;, why is the ActiveSupport&#x27;s &lt;code&gt;const_missing&lt;/code&gt; being triggered? And what should I do to remedy this situation?&lt;/p&gt;&#xA;&lt;p&gt;Also, would I be better served by making this &lt;code&gt;QueryBuilder&lt;/code&gt; an object that I can create an instance of to avoid two threads using the same program. In other words, is &lt;code&gt;extend&lt;/code&gt; the wrong approach to lending the features within &lt;code&gt;QueryBuilder&lt;/code&gt; to multiple classes?&lt;/p&gt;&#xA;&lt;p&gt;As a second request, if anyone can point me in the right direction on the correct way to configure my &lt;code&gt;eager_load_paths&lt;/code&gt; and &lt;code&gt;autoload_paths&lt;/code&gt;, that will help a great deal prior to upgrading this app.&lt;/p&gt;&#xA;&lt;p&gt;Thanks very kindly in advance for your help.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74080873</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">What does &quot;add&quot; keyword do in a Ruby Class</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+        <author>
+            <name>albertski</name>
+            <uri>https://stackoverflow.com/users/2258038</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74080873/what-does-add-keyword-do-in-a-ruby-class" />
+        <published>2022-10-15T15:48:35Z</published>
+        <updated>2022-10-15T15:48:35Z</updated>
+        <summary type="html">
+            &lt;p&gt;I was looking over &lt;a href=&quot;https://github.com/rails/rails/blob/d54f0c52fa35565d2290638c706b6864bf097e00/actionpack/lib/action_controller/metal/renderers.rb#L155&quot; rel=&quot;nofollow noreferrer&quot;&gt;ActionController::Renderers&lt;/a&gt; and didn&#x27;t understand the &lt;code&gt;add&lt;/code&gt; in the following code:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;    add :json do |json, options|&#xA;      json = json.to_json(options) unless json.kind_of?(String)&#xA;&#xA;      if options[:callback].present?&#xA;        if media_type.nil? || media_type == Mime[:json]&#xA;          self.content_type = Mime[:js]&#xA;        end&#xA;&#xA;        &amp;quot;/**/#{options[:callback]}(#{json})&amp;quot;&#xA;      else&#xA;        self.content_type = Mime[:json] if media_type.nil?&#xA;        json&#xA;      end&#xA;    end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Why do they use &lt;code&gt;add&lt;/code&gt; in this context and what does it do?&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74079761</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Can&#x27;t drop database using db:drop:_unsafe</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="windows" />
+            <category scheme="https://stackoverflow.com/tags" term="sqlite" />
+            <category scheme="https://stackoverflow.com/tags" term="rake-task" />
+        <author>
+            <name>Gabriel G. Mitraud</name>
+            <uri>https://stackoverflow.com/users/20248849</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74079761/cant-drop-database-using-dbdrop-unsafe" />
+        <published>2022-10-15T13:12:58Z</published>
+        <updated>2022-10-15T15:00:54Z</updated>
+        <summary type="html">
+            &lt;p&gt;I created a Rake test:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;namespace :dev do&#xA;  DEFAULT_PASSWORD = 123456&#xA;&#xA;  desc &amp;quot;Sets up dev environment!&amp;quot;&#xA;  task setup: :environment do&#xA;    if Rails.env.development?&#xA;      show_spinner(&amp;quot;Deleting database...&amp;quot;) { %x(rails db:drop) }&#xA;      show_spinner(&amp;quot;Creating database...&amp;quot;) { %x(rails db:create) }&#xA;      show_spinner(&amp;quot;Migrating database...&amp;quot;) { %x(rails db:migrate) }&#xA;      show_spinner(&amp;quot;Creating default admin...&amp;quot;) { %x(rails dev:add_default_admin) }&#xA;      show_spinner(&amp;quot;Creating default user...&amp;quot;) { %x(rails dev:add_default_user) }&#xA;      # show_spinner(&amp;quot;xxxxxxxx...&amp;quot;) { %x(rails dev:xxxxxxx) }&#xA;    else&#xA;      puts &amp;quot;You are not in the dev enviroment!&amp;quot;&#xA;    end&#xA;  end&#xA;&#xA;  private&#xA;&#xA;  def show_spinner(msg_start, msg_end = &amp;quot;Completed!&amp;quot;)&#xA;    spinner = TTY::Spinner.new(&amp;quot;[:spinner] #{msg_start}&amp;quot;)&#xA;    spinner.auto_spin&#xA;    yield&#xA;    spinner.success(&amp;quot;(#{msg_end})&amp;quot;)&#xA;  end&#xA;&#xA;  desc &amp;quot;Adding default admin&amp;quot;&#xA;  task add_default_admin: :environment do&#xA;    Admin.create!(&#xA;      email: &amp;quot;admin@admin.com&amp;quot;,&#xA;      password: DEFAULT_PASSWORD,&#xA;      password_confirmation: DEFAULT_PASSWORD,&#xA;    )&#xA;  end&#xA;&#xA;  desc &amp;quot;Adding default user&amp;quot;&#xA;  task add_default_user: :environment do&#xA;    User.create!(&#xA;      email: &amp;quot;user@user.com&amp;quot;,&#xA;      password: DEFAULT_PASSWORD,&#xA;      password_confirmation: DEFAULT_PASSWORD,&#xA;    )&#xA;  end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Every time I run &lt;code&gt;rails dev:setup&lt;/code&gt; on GitBash or CMD (both having ADMIN permissions) I get :&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;Errno::EACCES: Permission denied @ apply2files&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;&lt;pre&gt;&lt;code&gt;gmitr@DESKTOP-O6F1I8H MINGW64 ~/Documents/ProjectOne/Library (master)&#xA;$ rails dev:setup&#xA;Permission denied @ apply2files - C:/Users/gmitr/Documents/ProjectOne/Library/db/development.sqlite3&#xA;Couldn&#x27;t drop database &#x27;db/development.sqlite3&#x27;&#xA;rails aborted!&#xA;Errno::EACCES: Permission denied @ apply2files - C:/Users/gmitr/Documents/ProjectOne/Library/db/development.sqlite3&#xA;&#xA;Tasks: TOP =&amp;gt; db:drop:_unsafe&#xA;(See full trace by running task with --trace)&#xA;Database &#x27;db/development.sqlite3&#x27; already exists&#xA;Database &#x27;db/test.sqlite3&#x27; already exists&#xA;rails aborted!&#xA;ActiveRecord::RecordInvalid: A valida&#xE7;&#xE3;o falhou: Email j&#xE1; est&#xE1; em uso&#xA;C:/Users/gmitr/Documents/ProjectOne/Library/lib/tasks/dev.rake:29:in `block (2 levels) in &amp;lt;main&amp;gt;&#x27;&#xA;Tasks: TOP =&amp;gt; dev:add_default_admin&#xA;(See full trace by running task with --trace)&#xA;rails aborted!&#xA;ActiveRecord::RecordInvalid: A valida&#xE7;&#xE3;o falhou: Email j&#xE1; est&#xE1; em uso&#xA;C:/Users/gmitr/Documents/ProjectOne/Library/lib/tasks/dev.rake:38:in `block (2 levels) in &amp;lt;main&amp;gt;&#x27;&#xA;Tasks: TOP =&amp;gt; dev:add_default_user&#xA;(See full trace by running task with --trace)&#xA;&#xA;gmitr@DESKTOP-O6F1I8H MINGW64 ~/Documents/ProjectOne/Library (master)&#xA;$&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I know about &lt;code&gt;rails db:drop:_unsafe&lt;/code&gt;. When I input this code into CMD it does drop the databases, but every time I run &lt;code&gt;rails dev:setup&lt;/code&gt; same error occurs even &lt;em&gt;after&lt;/em&gt; I drop the databases:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;gmitr@DESKTOP-O6F1I8H MINGW64 ~/Documents/ProjectOne/Library (master)&#xA;$ rails db:drop:_unsafe&#xA;Dropped database &#x27;db/development.sqlite3&#x27;&#xA;Dropped database &#x27;db/test.sqlite3&#x27;&#xA;&#xA;gmitr@DESKTOP-O6F1I8H MINGW64 ~/Documents/ProjectOne/Library (master)&#xA;$ rails dev:setup&#xA;Permission denied @ apply2files - C:/Users/gmitr/Documents/ProjectOne/Library/db/development.sqlite3&#xA;Couldn&#x27;t drop database &#x27;db/development.sqlite3&#x27;&#xA;rails aborted!&#xA;Errno::EACCES: Permission denied @ apply2files - C:/Users/gmitr/Documents/ProjectOne/Library/db/development.sqlite3&#xA;&#xA;Tasks: TOP =&amp;gt; db:drop:_unsafe&#xA;(See full trace by running task with --trace)&#xA;Database &#x27;db/development.sqlite3&#x27; already exists&#xA;&#xA;gmitr@DESKTOP-O6F1I8H MINGW64 ~/Documents/ProjectOne/Library (master)&#xA;$&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Is my code wrong? I do have &lt;code&gt;gem tty-spinner&lt;/code&gt; installed. I&#x27;m using Windows 10, Ruby 3.1.2p20 and Rails 7.0.4.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74077423</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Saving records with has_many-belongs_to (many-to-many) association with a single nested form</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="parameters" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-7" />
+        <author>
+            <name>Juzer Shakir</name>
+            <uri>https://stackoverflow.com/users/16958765</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74077423/saving-records-with-has-many-belongs-to-many-to-many-association-with-a-single" />
+        <published>2022-10-15T07:09:35Z</published>
+        <updated>2022-10-15T17:22:09Z</updated>
+        <summary type="html">
+            &lt;h2&gt; Issue &lt;/h2&gt;&#xA;I am receiving the wrong parameters in the POST request for the `product_properties` hash.&#xA;&lt;hr /&gt;&#xA;&lt;h2&gt;Product Form&lt;/h2&gt;&#xA;&lt;p&gt;&lt;a href=&quot;https://i.stack.imgur.com/6C1Qb.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;img src=&quot;https://i.stack.imgur.com/6C1Qb.png&quot; alt=&quot;Product Form&quot; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;hr /&gt;&#xA;&lt;h2&gt; The Story &lt;/h2&gt;&#xA;&lt;p&gt;I have 4 models, User, Products, Property &amp;amp; ProductProperty. Here&#x27;s how they relate:&#xA;&lt;a href=&quot;https://i.stack.imgur.com/s8V7s.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;img src=&quot;https://i.stack.imgur.com/s8V7s.png&quot; alt=&quot;enter image description here&quot; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;All attributes in these models, such as &lt;code&gt;name&lt;/code&gt;, &lt;code&gt;value&lt;/code&gt;, &lt;code&gt;upc&lt;/code&gt;, &lt;code&gt;available_on&lt;/code&gt;, must have a presence of value!&lt;/p&gt;&#xA;&lt;p&gt;Once a user is created successfully, they can create products (with the Products model) that can have many properties (with the Property model) and a corresponding value (with the ProductProperty model). And I have to create all of these in a single form.&lt;/p&gt;&#xA;&lt;p&gt;To implement that I referred to &lt;a href=&quot;http://railscasts.com/episodes/196-nested-model-form-part-1?autoplay=true&quot; rel=&quot;nofollow noreferrer&quot;&gt;this&lt;/a&gt; &amp;amp; &lt;a href=&quot;https://stackoverflow.com/questions/32884412/how-to-handle-multiple-models-in-one-rails-form&quot;&gt;this&lt;/a&gt; tutorials and with the help of it I was able to successfully create a product with a new property instance. &lt;em&gt;It&#x27;s important to note at this point in time I had not created any validations or database constraints on the ProductProperty model being specific on the &lt;code&gt;value&lt;/code&gt; attribute&lt;/em&gt;, even though it should be.&lt;/p&gt;&#xA;&lt;p&gt;And the POST request I receive:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-bash prettyprint-override&quot;&gt;&lt;code&gt;Started POST &amp;quot;/products&amp;quot; for 127.0.0.1 at 2022-10-15 10:52:04 &#x2B;0530&#xA;Processing by ProductsController#create as TURBO_STREAM&#xA;  Parameters: {&amp;quot;authenticity_token&amp;quot;=&amp;gt;&amp;quot;[FILTERED]&amp;quot;, &amp;quot;product&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;Galaxy 10&amp;quot;, &amp;quot;upc&amp;quot;=&amp;gt;&amp;quot;012344321012&amp;quot;, &amp;quot;available_on&amp;quot;=&amp;gt;&amp;quot;2022-10-16T10:51&amp;quot;, &amp;quot;properties_attributes&amp;quot;=&amp;gt;{&amp;quot;0&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;size&amp;quot;}}}, &amp;quot;commit&amp;quot;=&amp;gt;&amp;quot;Create Product&amp;quot;}&#xA;  User Load (0.4ms)  SELECT &amp;quot;users&amp;quot;.* FROM &amp;quot;users&amp;quot; WHERE &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; = $1 ORDER BY &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; ASC LIMIT $2  [[&amp;quot;id&amp;quot;, 1], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:21:in `create&#x27;&#xA;  Property Exists? (0.6ms)  SELECT 1 AS one FROM &amp;quot;properties&amp;quot; WHERE &amp;quot;properties&amp;quot;.&amp;quot;name&amp;quot; = $1 LIMIT $2  [[&amp;quot;name&amp;quot;, &amp;quot;size&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:22:in `create&#x27;&#xA;  Product Exists? (0.5ms)  SELECT 1 AS one FROM &amp;quot;products&amp;quot; WHERE &amp;quot;products&amp;quot;.&amp;quot;name&amp;quot; = $1 LIMIT $2  [[&amp;quot;name&amp;quot;, &amp;quot;Galaxy 10&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:22:in `create&#x27;&#xA;  Product Exists? (0.3ms)  SELECT 1 AS one FROM &amp;quot;products&amp;quot; WHERE &amp;quot;products&amp;quot;.&amp;quot;upc&amp;quot; = $1 LIMIT $2  [[&amp;quot;upc&amp;quot;, &amp;quot;012344321012&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:22:in `create&#x27;&#xA;  CACHE Property Exists? (0.0ms)  SELECT 1 AS one FROM &amp;quot;properties&amp;quot; WHERE &amp;quot;properties&amp;quot;.&amp;quot;name&amp;quot; = $1 LIMIT $2  [[&amp;quot;name&amp;quot;, &amp;quot;size&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  CACHE Product Exists? (0.0ms)  SELECT 1 AS one FROM &amp;quot;products&amp;quot; WHERE &amp;quot;products&amp;quot;.&amp;quot;name&amp;quot; = $1 LIMIT $2  [[&amp;quot;name&amp;quot;, &amp;quot;Galaxy 10&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  CACHE Product Exists? (0.0ms)  SELECT 1 AS one FROM &amp;quot;products&amp;quot; WHERE &amp;quot;products&amp;quot;.&amp;quot;upc&amp;quot; = $1 LIMIT $2  [[&amp;quot;upc&amp;quot;, &amp;quot;012344321012&amp;quot;], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  TRANSACTION (0.4ms)  BEGIN&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  Product Create (0.5ms)  INSERT INTO &amp;quot;products&amp;quot; (&amp;quot;name&amp;quot;, &amp;quot;upc&amp;quot;, &amp;quot;available_on&amp;quot;, &amp;quot;user_id&amp;quot;, &amp;quot;created_at&amp;quot;, &amp;quot;updated_at&amp;quot;) VALUES ($1, $2, $3, $4, $5, $6) RETURNING &amp;quot;id&amp;quot;  [[&amp;quot;name&amp;quot;, &amp;quot;Galaxy 10&amp;quot;], [&amp;quot;upc&amp;quot;, &amp;quot;012344321012&amp;quot;], [&amp;quot;available_on&amp;quot;, &amp;quot;2022-10-16 10:51:00&amp;quot;], [&amp;quot;user_id&amp;quot;, 1], [&amp;quot;created_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.063841&amp;quot;], [&amp;quot;updated_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.063841&amp;quot;]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  Property Create (0.6ms)  INSERT INTO &amp;quot;properties&amp;quot; (&amp;quot;name&amp;quot;, &amp;quot;created_at&amp;quot;, &amp;quot;updated_at&amp;quot;) VALUES ($1, $2, $3) RETURNING &amp;quot;id&amp;quot;  [[&amp;quot;name&amp;quot;, &amp;quot;size&amp;quot;], [&amp;quot;created_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.068908&amp;quot;], [&amp;quot;updated_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.068908&amp;quot;]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  ProductProperty Create (0.9ms)  INSERT INTO &amp;quot;product_properties&amp;quot; (&amp;quot;value&amp;quot;, &amp;quot;product_id&amp;quot;, &amp;quot;property_id&amp;quot;, &amp;quot;created_at&amp;quot;, &amp;quot;updated_at&amp;quot;) VALUES ($1, $2, $3, $4, $5) RETURNING &amp;quot;id&amp;quot;  [[&amp;quot;value&amp;quot;, nil], [&amp;quot;product_id&amp;quot;, 24], [&amp;quot;property_id&amp;quot;, 13], [&amp;quot;created_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.074301&amp;quot;], [&amp;quot;updated_at&amp;quot;, &amp;quot;2022-10-15 05:22:04.074301&amp;quot;]]&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;  TRANSACTION (0.8ms)  COMMIT&#xA;  &#x21B3; app/controllers/products_controller.rb:23:in `create&#x27;&#xA;Redirected to http://0.0.0.0:3000/products&#xA;Completed 302 Found in 37ms (ActiveRecord: 5.0ms | Allocations: 10899)&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;After creating some tests here are the instances of the ProductProperty Model:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;$ ProductProperty.all&#xA;&#xA;[#&amp;lt;ProductProperty:0x00007febc8b55cc8                         &#xA;  id: 1,&#xA;  value: nil,&#xA;  product_id: 23,&#xA;  property_id: 12,&#xA;  ....,&#xA; #&amp;lt;ProductProperty:0x00007febc8b55bb0&#xA;  id: 2,&#xA;  value: nil,&#xA;  product_id: 24,&#xA;  property_id: 13,&#xA;  ....,&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Great! We&#x27;re receiving the ids from both of the models and it&#x27;s being saved. Now all I have to do is give a field in the form that takes the &lt;code&gt;value&lt;/code&gt; attribute, passes in the params correctly, and saves it to the database.&lt;/p&gt;&#xA;&lt;p&gt;So I followed similar steps from the tutorials that I mentioned above, but unfortunately, I receive the wrong params hash:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-bash prettyprint-override&quot;&gt;&lt;code&gt;Parameters: {&amp;quot;authenticity_token&amp;quot;=&amp;gt;&amp;quot;[FILTERED]&amp;quot;, &amp;quot;product&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;Galaxy -4&amp;quot;, &amp;quot;upc&amp;quot;=&amp;gt;&amp;quot;0987654321555&amp;quot;, &amp;quot;available_on&amp;quot;=&amp;gt;&amp;quot;2022-10-20T11:39&amp;quot;, &amp;quot;properties_attributes&amp;quot;=&amp;gt;{&amp;quot;0&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;d&amp;quot;, &amp;quot;product_properties&amp;quot;=&amp;gt;{&amp;quot;value&amp;quot;=&amp;gt;&amp;quot;4&amp;quot;}}}}, &amp;quot;commit&amp;quot;=&amp;gt;&amp;quot;Create Product&amp;quot;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;And the strong params that I have given:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;params.require(:product).permit(:name, :upc, :available_on, properties_attributes: [:name], product_properties_attributes: [:value] )&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The &lt;code&gt;product_properties&lt;/code&gt; hash received in the params hash should be in the same structure as it did for the &lt;code&gt;property_attributes&lt;/code&gt;. It should be named &lt;code&gt;product_properties_attributes&lt;/code&gt; instead. Keeping this in mind and not modifying the strong params hash, I think the solution is in the controller or view or both.&lt;/p&gt;&#xA;&lt;hr /&gt;&#xA;&lt;h2&gt; Attempts &lt;/h2&gt;&#xA;&lt;p&gt;So I have made countless attempts to configure both in the controller and in the views just so I can receive params in the right order but unfortunately, I have received no success. Here are snaps of my Product model, controller, and view:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Model&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;class Product &amp;lt; ApplicationRecord&#xA;  has_many :product_properties&#xA;  accepts_nested_attributes_for :product_properties, allow_destroy: true&#xA;&#xA;  has_many :properties, through: :product_properties&#xA;  accepts_nested_attributes_for :properties, allow_destroy: true&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;Strong Params&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;params.require(:product).permit(:name, :upc, :available_on,&#xA;                               properties_attributes: [:name], &#xA;                               product_properties_attributes: [:value] )&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;1. First Attempt&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Controller&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;    def new&#xA;        @product = Product.new&#xA;        @product.properties.build.product_properties.build&#xA;    end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;View&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-html prettyprint-override&quot;&gt;&lt;code&gt;&amp;lt;%= form_with model: @product do | prod | %&amp;gt;&#xA;    &amp;lt;%= prod.label :name %&amp;gt;&#xA;    &amp;lt;%= prod.text_field :name %&amp;gt;&#xA;&#xA;    &amp;lt;br&amp;gt;&#xA;&#xA;    &amp;lt;%= prod.label :upc, &amp;quot;UPC&amp;quot; %&amp;gt;&#xA;    &amp;lt;%= prod.text_field :upc %&amp;gt;&#xA;&#xA;    &amp;lt;br&amp;gt;&#xA;&#xA;    &amp;lt;%= prod.label :available_on %&amp;gt;&#xA;    &amp;lt;%= prod.datetime_local_field :available_on %&amp;gt;&#xA;&#xA;    &amp;lt;br&amp;gt;&#xA;&#xA;    &amp;lt;h3&amp;gt;Properties&amp;lt;/h3&amp;gt;&#xA;    &amp;lt;%= prod.fields_for :properties do | prop | %&amp;gt;&#xA;        &amp;lt;%= prop.label :name, &amp;quot;Property Name&amp;quot; %&amp;gt;&#xA;        &amp;lt;%= prop.text_field :name %&amp;gt;&#xA;&#xA;        &amp;lt;%= prop.fields_for :product_properties do | prod_prop | %&amp;gt;&#xA;            &amp;lt;%= prod_prop.label :value, &amp;quot;Property Value&amp;quot; %&amp;gt;&#xA;            &amp;lt;%= prod_prop.text_field :value %&amp;gt;&#xA;        &amp;lt;% end %&amp;gt;&#xA;    &amp;lt;% end %&amp;gt;&#xA;&#xA;    &amp;lt;br&amp;gt;&#xA;&#xA;    &amp;lt;%= prod.submit %&amp;gt;&#xA;&amp;lt;% end %&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;Response&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Now when I submit the form it successfully saves the instances in the Product and Property models but not in the ProductProperty model. Here&#x27;s the console output of the POST request:&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-bash prettyprint-override&quot;&gt;&lt;code&gt;Started POST &amp;quot;/products&amp;quot; for 127.0.0.1 at 2022-10-15 12:10:34 &#x2B;0530&#xA;Processing by ProductsController#create as TURBO_STREAM&#xA;  Parameters: {&amp;quot;authenticity_token&amp;quot;=&amp;gt;&amp;quot;[FILTERED]&amp;quot;, &amp;quot;product&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;Galaxy -5&amp;quot;, &amp;quot;upc&amp;quot;=&amp;gt;&amp;quot;0987654321333&amp;quot;, &amp;quot;available_on&amp;quot;=&amp;gt;&amp;quot;2022-10-20T12:10&amp;quot;, &amp;quot;properties_attributes&amp;quot;=&amp;gt;{&amp;quot;0&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;e&amp;quot;, &amp;quot;product_properties&amp;quot;=&amp;gt;{&amp;quot;value&amp;quot;=&amp;gt;&amp;quot;5&amp;quot;}}}}, &amp;quot;commit&amp;quot;=&amp;gt;&amp;quot;Create Product&amp;quot;}&#xA;  User Load (0.3ms)  SELECT &amp;quot;users&amp;quot;.* FROM &amp;quot;users&amp;quot; WHERE &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; = $1 ORDER BY &amp;quot;users&amp;quot;.&amp;quot;id&amp;quot; ASC LIMIT $2  [[&amp;quot;id&amp;quot;, 1], [&amp;quot;LIMIT&amp;quot;, 1]]&#xA;  &#x21B3; app/controllers/products_controller.rb:21:in `create&#x27;&#xA;Unpermitted parameter: :product_properties. Context: { controller: ProductsController, action: create, request: #&amp;lt;ActionDispatch::Request:0x00007f108e56db00&amp;gt;, params: {&amp;quot;authenticity_token&amp;quot;=&amp;gt;&amp;quot;[FILTERED]&amp;quot;, &amp;quot;product&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;Galaxy -5&amp;quot;, &amp;quot;upc&amp;quot;=&amp;gt;&amp;quot;0987654321333&amp;quot;, &amp;quot;available_on&amp;quot;=&amp;gt;&amp;quot;2022-10-20T12:10&amp;quot;, &amp;quot;properties_attributes&amp;quot;=&amp;gt;{&amp;quot;0&amp;quot;=&amp;gt;{&amp;quot;name&amp;quot;=&amp;gt;&amp;quot;e&amp;quot;, &amp;quot;product_properties&amp;quot;=&amp;gt;{&amp;quot;value&amp;quot;=&amp;gt;&amp;quot;5&amp;quot;}}}}, &amp;quot;commit&amp;quot;=&amp;gt;&amp;quot;Create Product&amp;quot;, &amp;quot;controller&amp;quot;=&amp;gt;&amp;quot;products&amp;quot;, &amp;quot;action&amp;quot;=&amp;gt;&amp;quot;create&amp;quot;} }&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;2. Second Attempt&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Controller&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-rb prettyprint-override&quot;&gt;&lt;code&gt;    def new&#xA;        @product = Product.new&#xA;        @product_property =  @product.properties.build&#xA;        @product_property.product_properties.build&#xA;    end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;View&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;pre class=&quot;lang-html prettyprint-override&quot;&gt;&lt;code&gt;    &amp;lt;h3&amp;gt;Properties&amp;lt;/h3&amp;gt;&#xA;    &amp;lt;%= prod.fields_for :properties do | prop | %&amp;gt;&#xA;        &amp;lt;%= prop.label :name, &amp;quot;Property Name&amp;quot; %&amp;gt;&#xA;        &amp;lt;%= prop.text_field :name %&amp;gt;&#xA;    &amp;lt;% end %&amp;gt;&#xA;&#xA;    &amp;lt;%= prod.fields_for :product_property do | prod_prop | %&amp;gt;&#xA;        &amp;lt;%= prod_prop.label :value, &amp;quot;Property Value&amp;quot; %&amp;gt;&#xA;        &amp;lt;%= prod_prop.text_field :value %&amp;gt;&#xA;    &amp;lt;% end %&amp;gt;&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;&lt;strong&gt;Response&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;p&gt;Similar to the response on the 1st Try.&lt;/p&gt;&#xA;&lt;hr /&gt;&#xA;&lt;h2&gt; Thoughts &lt;/h2&gt;&#xA;All that said and proved, what wrong am I doing here? I know the solution is simple, I figured the hard part out by watching tutorials but couldn&#x27;t figure out the easy part. What am I missing? What is the solution? I have been trying to solve this for the last 12 hours, referred to a couple of StackOverflow posts similar to this but I am unable to figure it out.&#xA;&lt;p&gt;Just a side note: &lt;strong&gt;I am using Rails v7.0.4.&lt;/strong&gt;&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74076195</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">can&#x27;t get my show page displayed (redirecting error)</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="parameters" />
+            <category scheme="https://stackoverflow.com/tags" term="sinatra" />
+            <category scheme="https://stackoverflow.com/tags" term="erb" />
+        <author>
+            <name>Adesuyi Fisola</name>
+            <uri>https://stackoverflow.com/users/19259680</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74076195/cant-get-my-show-page-displayed-redirecting-error" />
+        <published>2022-10-15T02:07:17Z</published>
+        <updated>2022-10-15T20:16:36Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am working on a mini-project and I am new to Sinatra. I can&#x27;t figure out what is wrong exactly. I am trying to get my recipe information on my show page, but getting HTTP/1.1&amp;quot; 303 - probably the redirection is not going through. I am using CSV as my repo.&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;get &amp;quot;/&amp;quot; do&#xA;  cookbook = Cookbook.new(File.join(__dir__, &amp;quot;recipes.csv&amp;quot;))&#xA;  @recipes = cookbook.all&#xA;  erb :index&#xA;end&#xA;get &amp;quot;/new&amp;quot; do&#xA;  erb :new&#xA;end&#xA;&#xA;post &amp;quot;/recipes&amp;quot; do&#xA;  cookbook = Cookbook.new(File.join(__dir__, &amp;quot;recipes.csv&amp;quot;))&#xA;  recipe = Recipe.new(params[:name], params[:description])&#xA;  recipes = cookbook.add_recipe(recipe)&#xA;  index = cookbook.find(params[:recipe].to_i)&#xA;  redirect to(&amp;quot;recipes/#{index}&amp;quot;)&#xA;end&#xA;&#xA;get &amp;quot;recipes/:index&amp;quot; do&#xA;  cookbook = Cookbook.new(File.join(__dir__, &amp;quot;recipes.csv&amp;quot;))&#xA;  @recipe = cookbook.find(params[:index].to_i)&#xA;  erb :show&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Below is the code in my repository&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;class Cookbook&#xA;&#xA;  def initialize(csv_file)&#xA;    @csv_file = csv_file&#xA;    @recipes = []&#xA;    load_csv if File.exist?(@csv_file)&#xA;  end&#xA;&#xA;  def all&#xA;    @recipes&#xA;  end&#xA;&#xA;  def add_recipe(recipe)&#xA;    @recipes &amp;lt;&amp;lt; recipe&#xA;    save&#xA;  end&#xA;&#xA;  def find(recipe_index)&#xA;    @recipes[recipe_index]&#xA;  end&#xA;&#xA;  def mark_recipe_as_done(recipe_index)&#xA;    recipe = @recipes[recipe_index]&#xA;    recipe.mark_as_done!&#xA;    save&#xA;  end&#xA;&#xA;&#xA;  def delete(recipe)&#xA;    @recipes.delete(recipe)&#xA;    save&#xA;  end&#xA;&#xA;  private&#xA;&#xA;  def load_csv&#xA;    CSV.foreach(@csv_file, headers: :first_row, header_converters: :symbol) do |row|&#xA;      @recipes &amp;lt;&amp;lt; Recipe.new(row[0], row[1])&#xA;    end&#xA;  end&#xA;&#xA;  def save&#xA;    CSV.open(@csv_file, &amp;quot;wb&amp;quot;) do |csv|&#xA;      csv &amp;lt;&amp;lt; [&amp;quot;name&amp;quot;, &amp;quot;description&amp;quot;]&#xA;      @recipes.each do |recipe|&#xA;        csv &amp;lt;&amp;lt; [recipe.name, recipe.description, recipe.done?]&#xA;      end&#xA;    end&#xA;  end&#xA; end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Below is the code in my recipe file&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;class Recipe&#xA;  attr_reader :name, :description&#xA;&#xA;  def initialize(name, description)&#xA;    @name = name&#xA;    @description = description&#xA;    @done = false&#xA;  end&#xA;&#xA;&#xA;  def done?&#xA;    @done&#xA;  end&#xA;&#xA;  def mark_as_done!&#xA;    @done = true&#xA;  end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I&#x27;ll really appreciate your response.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74075277</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails using wrong ruby version</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="homebrew" />
+            <category scheme="https://stackoverflow.com/tags" term="apple-m1" />
+        <author>
+            <name>Vicente</name>
+            <uri>https://stackoverflow.com/users/15554474</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74075277/rails-using-wrong-ruby-version" />
+        <published>2022-10-14T22:11:31Z</published>
+        <updated>2022-10-15T13:08:21Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am on a Mac M1, I installed ruby with rosetta and it worked fine for a long time. I had to reinstall Brew because of other reason and took the opportunity to install it just in ARM.&#xA;I installed ruby 3.1.2 to run an external proyect using rbenv but rails doesen&#x27;t recognize it.&lt;/p&gt;&#xA;&lt;p&gt;When I run rbenv:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; rbenv version&#xA;&#xA;3.1.2 (set by /Users/vicente/.rbenv/version)&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;If I run ruby:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; ruby -v&#xA;ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [arm64-darwin21]&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;But when I run rails:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; rails s&#xA;Ignoring nokogiri-1.13.8 because its extensions are not built. Try: gem pristine nokogiri --version 1.13.8&#xA;Ignoring nokogiri-1.13.8 because its extensions are not built. Try: gem pristine nokogiri --version 1.13.8&#xA;Ignoring racc-1.6.0 because its extensions are not built. Try: gem pristine racc --version 1.6.0&#xA;Ignoring racc-1.5.2 because its extensions are not built. Try: gem pristine racc --version 1.5.2&#xA;.... It repeats similar warnings A LOT ...&#xA;&#xA;Your Ruby version is 2.6.8, but your Gemfile specified 3.1.2&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;This also fails with new proyects, if I run &lt;code&gt;rails new app&lt;/code&gt; it shows the same message&lt;/p&gt;&#xA;&lt;p&gt;When I run rails outside of the proyect it throws the same warnings and this:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; rails&#xA;&#xA;Rails 7 requires Ruby 2.7.0 or newer.&#xA;&#xA;You&#x27;re running&#xA;  ruby 2.6.8p205 (2021-07-07 revision 67951) [universal.arm64e-darwin21]&#xA;&#xA;Please upgrade to Ruby 2.7.0 or newer to continue.&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I already tried with &lt;code&gt;sudo gem pristine &#x2014; all&lt;/code&gt; and reinstalling rails&lt;/p&gt;&#xA;&lt;p&gt;EDIT:&lt;/p&gt;&#xA;&lt;p&gt;If I run which rails:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; which rails&#xA;/usr/local/bin/rails&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Also, when I run bundle install in the proyect folder it seems to work fine:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;gt; bundle install&#xA;Using rake 13.0.6&#xA;Using concurrent-ruby 1.1.10&#xA;... Bunch of other gems ...&#xA;Bundle complete! 22 Gemfile dependencies, 105 gems now installed.&#xA;Use `bundle info [gemname]` to see where a bundled gem is installed.&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74075251</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Validation in ActiveInteraction not working</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="rubygems" />
+            <category scheme="https://stackoverflow.com/tags" term="interaction" />
+        <author>
+            <name>Mr.Zeliboba</name>
+            <uri>https://stackoverflow.com/users/12451712</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74075251/validation-in-activeinteraction-not-working" />
+        <published>2022-10-14T22:08:13Z</published>
+        <updated>2022-10-15T11:20:09Z</updated>
+        <summary type="html">
+            &lt;p&gt;My code(for debug):&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;require &#x27;active_interaction&#x27;&#xA;&#xA;class Sleep &amp;lt; ActiveInteraction::Base&#xA;&#xA;  validate :validate_u&#xA;&#xA;  def execute&#xA;    puts 1&#xA;    1&#xA;  end&#xA;&#xA;  private&#xA;&#xA;  def validate_u&#xA;    false&#xA;  end&#xA;end&#xA;&#xA;res = Sleep.run&#xA;res.result&#xA;res.valid?&#xA;res.errors.messages&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;My result:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;2&lt;/li&gt;&#xA;&lt;li&gt;1&lt;/li&gt;&#xA;&lt;li&gt;true&lt;/li&gt;&#xA;&lt;li&gt;{}&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;Why is it? I was hoping the result would be:&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;nil&lt;/li&gt;&#xA;&lt;li&gt;false&lt;/li&gt;&#xA;&lt;li&gt;{there are message about faild becous invalid}&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74075163</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">What is the proper way to use Graphql JSON Scalar in Rails?</title>
+            <category scheme="https://stackoverflow.com/tags" term="json" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="graphql" />
+            <category scheme="https://stackoverflow.com/tags" term="graphql-ruby" />
+        <author>
+            <name>theKid</name>
+            <uri>https://stackoverflow.com/users/13495668</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74075163/what-is-the-proper-way-to-use-graphql-json-scalar-in-rails" />
+        <published>2022-10-14T21:52:28Z</published>
+        <updated>2022-10-15T01:31:41Z</updated>
+        <summary type="html">
+            &lt;p&gt;I have a type that looks like this:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;module Types&#xA;  class LeadType &amp;lt; Types::BaseObject&#xA;    graphql_name &#x27;Lead&#x27;&#xA;    description &#x27;A lead data query selection&#x27;&#xA;    field :first_name, String, null: true&#xA;    field :last_name, String, null: true&#xA;    field :email, String, null: true&#xA;    field :gender, String, null: true&#xA;    field :errors, [String], null: true&#xA;    field :success, String, null: true&#xA;    field :lead, Types::LeadType, null: true&#xA;&#xA;    field :home_data, GraphQL::Types::JSON, null: false&#xA;  end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Note how I have &lt;code&gt;field :home_data, GraphQL::Types::JSON, null: false&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;Now, when pulling my query data, it&#x27;s a raw JSON like so:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;{&#xA;  &amp;quot;success&amp;quot;=&amp;gt;true,&#xA;  &amp;quot;lead&amp;quot;=&amp;gt;&#xA;  {&#xA;    &amp;quot;home&amp;quot;=&amp;gt;&#xA;    {&#xA;      &amp;quot;1&amp;quot;=&amp;gt;&#xA;        {&#xA;          &amp;quot;roof&amp;quot;=&amp;gt;&amp;quot;GRAVEL&amp;quot;,&#xA;          &amp;quot;garage&amp;quot;=&amp;gt;&amp;quot;Yes&amp;quot;,&#xA;          &amp;quot;dead_bolt&amp;quot;=&amp;gt;&amp;quot;No&amp;quot;,&#xA;          &amp;quot;effective&amp;quot;=&amp;gt;&amp;quot;2022-08-25&amp;quot;,&#xA;          &amp;quot;sprinkler&amp;quot;=&amp;gt;&amp;quot;No&amp;quot;&#xA;        }&#xA;    },&#xA;    &amp;quot;first_name&amp;quot;=&amp;gt;&amp;quot;John&amp;quot;,&#xA;    &amp;quot;last_name&amp;quot;=&amp;gt;&amp;quot;Doe&amp;quot;,&#xA;    &amp;quot;email&amp;quot;=&amp;gt;&amp;quot;john@doe.com&amp;quot;,&#xA;    &amp;quot;phone&amp;quot;=&amp;gt;&amp;quot;5599999777&amp;quot;,&#xA;    &amp;quot;gender&amp;quot;=&amp;gt;&amp;quot;Male&amp;quot;&#xA;  }&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Now I am able to query my data without the &lt;code&gt;field:home_data, GraphQL::Types::JSON&lt;/code&gt;&#xA;&lt;a href=&quot;https://i.stack.imgur.com/ltjPV.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;img src=&quot;https://i.stack.imgur.com/ltjPV.png&quot; alt=&quot;enter image description here&quot; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;But when I add the &lt;code&gt;homeData&lt;/code&gt; to playground I have this error:&lt;/p&gt;&#xA;&lt;p&gt;&lt;a href=&quot;https://i.stack.imgur.com/i1g80.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;&lt;img src=&quot;https://i.stack.imgur.com/i1g80.png&quot; alt=&quot;enter image description here&quot; /&gt;&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;Now, I need the &lt;code&gt;field :home_data, GraphQL::Types::JSON, null: false&lt;/code&gt; to display the:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;quot;home&amp;quot;=&amp;gt;&#xA;        {&#xA;          &amp;quot;1&amp;quot;=&amp;gt;&#xA;            {&#xA;              &amp;quot;roof&amp;quot;=&amp;gt;&amp;quot;GRAVEL&amp;quot;,&#xA;              &amp;quot;garage&amp;quot;=&amp;gt;&amp;quot;Yes&amp;quot;,&#xA;              &amp;quot;dead_bolt&amp;quot;=&amp;gt;&amp;quot;No&amp;quot;,&#xA;              &amp;quot;effective&amp;quot;=&amp;gt;&amp;quot;2022-08-25&amp;quot;,&#xA;              &amp;quot;sprinkler&amp;quot;=&amp;gt;&amp;quot;No&amp;quot;&#xA;            }&#xA;        }&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;How I am able to achieve this using &lt;code&gt;GraphQL::Types::JSON&lt;/code&gt;?&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74074910</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">How to create a websocket with a socket.io client and a rails server?</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="vue.js" />
+        <author>
+            <name>Akese315</name>
+            <uri>https://stackoverflow.com/users/16346506</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74074910/how-to-create-a-websocket-with-a-socket-io-client-and-a-rails-server" />
+        <published>2022-10-14T21:12:04Z</published>
+        <updated>2022-10-14T22:08:42Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am trying to create an app with ruby on rails.  I use vue-js as a client and rails as a Server (they are seperate) and I would like to create a websocket but I am struggling really hard... I use socket-io to do that, but I am completely lost to the point of creating a subscription to a channel. Do you have any way to use a rails server (cross origins) with vue-js ?&lt;/p&gt;&#xA;&lt;p&gt;client-side :&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;this.ws = new io(&amp;quot;ws://localhost:3000&amp;quot;,&#xA;    {&#xA;        path: &amp;quot;/cable&amp;quot;,&#xA;        transports: [&amp;quot;websocket&amp;quot;],&#xA;        upgrade: true&#xA;    });&#xA;    this.ws.on(&amp;quot;error&amp;quot;, (error) =&amp;gt; {&#xA;        console.log(error)&#xA;      });&#xA;    this.ws.on(&amp;quot;connect&amp;quot;, () =&amp;gt; {&#xA;        this.connected()&#xA;      });&#xA;&#xA;    this.ws.on(&amp;quot;disconnect&amp;quot;, () =&amp;gt; {&#xA;        this.disconnected()&#xA;      });&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;server-side:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;#config/environments/development.rb&#xA;&#xA;config.action_cable.allowed_request_origins = [&#x27;/(\.dev$)|^localhost$/&#x27;]&#xA;config.action_cable.url = &amp;quot;ws://localhost:3000/cable&amp;quot;&#xA;&#xA;#routes.rb&#xA;&#xA;Rails.application.routes.draw do&#xA;  mount ActionCable.server =&amp;gt; &#x27;/cable&#x27;&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;My channel :&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;class TheChannel &amp;lt; ApplicationCable::Channel&#xA;  def subscribed&#xA;    stream_from &amp;quot;Thechannel&amp;quot;&#xA;    puts &amp;quot;A user is subscribed &amp;quot;&#xA;  end&#xA;&#xA; def unsubscribed&#xA;   # Any cleanup needed when channel is unsubscribed&#xA; end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;what I get on my server&#x27;s console:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;Started GET &amp;quot;/cable/?EIO=4&amp;amp;transport=websocket&amp;quot; for ::1 at 2022- &#xA;10-15 00:07:28 &#x2B;0200&#xA;Started GET &amp;quot;/cable?EIO=4&amp;amp;transport=websocket&amp;quot; [WebSocket] for &#xA;::1 at 2022-10-15 00:07:28 &#x2B;0200&#xA;Successfully upgraded to WebSocket (REQUEST_METHOD: GET, &#xA;HTTP_CONNECTION: Upgrade, HTTP_UPGRADE: websocket)&#xA;Finished &amp;quot;/cable?EIO=4&amp;amp;transport=websocket&amp;quot; [WebSocket] for ::1 &#xA;at 2022-10-15 00:07:28 &#x2B;0200&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;The connection is finished right after it created&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74074746</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails API hide certain attributes from return</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+        <author>
+            <name>Ashbury</name>
+            <uri>https://stackoverflow.com/users/1751977</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74074746/rails-api-hide-certain-attributes-from-return" />
+        <published>2022-10-14T20:50:52Z</published>
+        <updated>2022-10-14T20:50:52Z</updated>
+        <summary type="html">
+            &lt;p&gt;For example I want to hide &lt;strong&gt;id&lt;/strong&gt; in my json responses.&lt;/p&gt;&#xA;&lt;p&gt;I found I can do: &lt;code&gt;@user.posts.map{|p| p.attributes.except(&amp;quot;id&amp;quot;)}&lt;/code&gt; but it&#x27;s a bit long and clunky.&lt;/p&gt;&#xA;&lt;p&gt;I&#x27;d like to formalize it so when we&#x27;re passing back posts to the frontend we aren&#x27;t accidentally exposing the &lt;strong&gt;id&lt;/strong&gt;.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74074182</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">How to search with Ransack with multiple items from an array</title>
+            <category scheme="https://stackoverflow.com/tags" term="arrays" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ransack" />
+        <author>
+            <name>Ogarocious</name>
+            <uri>https://stackoverflow.com/users/17563524</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74074182/how-to-search-with-ransack-with-multiple-items-from-an-array" />
+        <published>2022-10-14T19:45:30Z</published>
+        <updated>2022-10-14T22:07:41Z</updated>
+        <summary type="html">
+            &lt;p&gt;On my events index page, I have a search form that filters the records on the index page based on those search parameters through Ransack.&lt;/p&gt;&#xA;&lt;p&gt;The search form currently works only when the dance styles and/or event types (both of which are arrays) have one value each, however I would like to be able to search by multiple values of both.&lt;/p&gt;&#xA;&lt;p&gt;Here&#x27;s my search form for the dance style and event types fields:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt; &amp;lt;div class=&amp;quot;dancestyle&amp;quot;&amp;gt;&#xA;                &amp;lt;%= f.label &amp;quot;Dance style&amp;quot;, class: &amp;quot;form-label&amp;quot; %&amp;gt;&#xA;                &amp;lt;%= f.select(:dance_styles_id_eq, DanceStyle.all.pluck(:name, :id), { :include_blank =&amp;gt; &amp;quot;All dance styles&amp;quot; }, { class: &amp;quot;form-select&amp;quot;, id: &amp;quot;select-dancestyle&amp;quot;, multiple: true, placeholder: &amp;quot;Any dance style&amp;quot; }) %&amp;gt;&#xA;            &amp;lt;/div&amp;gt;&#xA;            &amp;lt;div class=&amp;quot;eventtype&amp;quot;&amp;gt;&#xA;                &amp;lt;%= f.label &amp;quot;Event Type&amp;quot;, class: &amp;quot;form-label&amp;quot; %&amp;gt;&#xA;                &amp;lt;%= f.select :event_type_id_eq, EventType.all.pluck(:name, :id), { :include_blank =&amp;gt; &amp;quot;All event types&amp;quot; }, { id: &amp;quot;select-artist&amp;quot;, placeholder: &amp;quot;Any event type&amp;quot;, class: &amp;quot;form-select&amp;quot; } %&amp;gt;&#xA;            &amp;lt;/div&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Here&#x27;s my Event controller index:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;  def index&#xA;    if params[:q]&#xA;      params[:q][:combinator] = &amp;quot;and&amp;quot;&#xA;      params[:q][:groupings] = []&#xA;      split_geo = params[:q][:address_or_city_or_state_or_country_or_continent_cont_all].split(/(,\s)&#x2B;/)&#xA;      split_geo.map! do |a|&#xA;        I18n.transliterate a&#xA;      end&#xA;      split_geo.each_with_index do |word, index|&#xA;        params[:q][:groupings][index] = { address_or_city_or_state_or_country_or_continent_cont_all: word }&#xA;      end&#xA;    end&#xA;    @q = Event.ransack(params[:q])&#xA;    @events = @q.result(distinct: true)&#xA;      .where(event_status_id: 1)&#xA;  end&#xA;  end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Here&#x27;s the full stack error I&#x27;m getting when I set the input fields to allow multiple and search multiple dance styles:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;14:35:32 web.1  | Started GET &amp;quot;/events?q%5Bname_cont%5D=&amp;amp;q%5Baddress_or_city_or_state_or_country_or_continent_cont_all%5D=&amp;amp;q%5Bdance_styles_id_eq%5D%5B%5D=&amp;amp;q%5Bdance_styles_id_eq%5D%5B%5D=5&amp;amp;q%5Bdance_styles_id_eq%5D%5B%5D=6&amp;amp;q%5Bevent_type_id_eq%5D=&amp;amp;q%5Bevent_month_eq%5D=&amp;amp;q%5Bevent_year_eq%5D=&amp;amp;commit=Search%21&amp;quot; for ::1 at 2022-10-14 14:35:32 -0500&#xA;14:35:32 web.1  | Processing by EventsController#index as HTML&#xA;14:35:32 web.1  |   Parameters: {&amp;quot;q&amp;quot;=&amp;gt;{&amp;quot;name_cont&amp;quot;=&amp;gt;&amp;quot;&amp;quot;, &amp;quot;address_or_city_or_state_or_country_or_continent_cont_all&amp;quot;=&amp;gt;&amp;quot;&amp;quot;, &amp;quot;dance_styles_id_eq&amp;quot;=&amp;gt;[&amp;quot;&amp;quot;, &amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;], &amp;quot;event_type_id_eq&amp;quot;=&amp;gt;&amp;quot;&amp;quot;, &amp;quot;event_month_eq&amp;quot;=&amp;gt;&amp;quot;&amp;quot;, &amp;quot;event_year_eq&amp;quot;=&amp;gt;&amp;quot;&amp;quot;}, &amp;quot;commit&amp;quot;=&amp;gt;&amp;quot;Search!&amp;quot;}&#xA;14:35:32 web.1  | Completed 500 Internal Server Error in 3ms (ActiveRecord: 0.0ms | Allocations: 2335)&#xA;14:35:32 web.1  |&#xA;14:35:32 web.1  |&#xA;14:35:32 web.1  |&#xA;14:35:32 web.1  | NoMethodError (undefined method `to_i&#x27; for [&amp;quot;&amp;quot;, &amp;quot;5&amp;quot;, &amp;quot;6&amp;quot;]:Array&#xA;14:35:32 web.1  | Did you mean?  to_s&#xA;14:35:32 web.1  |                to_a&#xA;14:35:32 web.1  |                to_h):&#xA;14:35:32 web.1  |&#xA;14:35:32 web.1  | app/controllers/events_controller.rb:38:in `index&#x27;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;How does the &lt;code&gt;to_i&lt;/code&gt; tie into this? I&#x27;m assuming this fix will need to be handled in my events controller.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74073018</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails 7 &#x2B; esbuild &#x2B; React flicker when changing pages</title>
+            <category scheme="https://stackoverflow.com/tags" term="reactjs" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="esbuild" />
+        <author>
+            <name>MB.</name>
+            <uri>https://stackoverflow.com/users/247707</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74073018/rails-7-esbuild-react-flicker-when-changing-pages" />
+        <published>2022-10-14T17:44:10Z</published>
+        <updated>2022-10-14T17:44:10Z</updated>
+        <summary type="html">
+            &lt;p&gt;I have a new Rails project using esbuild with React. The setup is pretty standard:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;lt;div&#xA;  id=&amp;quot;user_edit_page&amp;quot;&#xA;  data-controller=&amp;quot;user-edit-page&amp;quot;&#xA;&amp;gt;&#xA;&amp;lt;/div&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;And then a:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;import { Controller } from &amp;quot;@hotwired/stimulus&amp;quot;&#xA;import React from &amp;quot;react&amp;quot;;&#xA;import { createRoot } from &amp;quot;react-dom/client&amp;quot;;&#xA;import UserEditPage from &amp;quot;../components/UserEditPage&amp;quot;;&#xA;&#xA;// Connects to data-controller=&amp;quot;user-edit-page&amp;quot;&#xA;export default class extends Controller {&#xA;  connect() {&#xA;    const app = document.getElementById(&amp;quot;user_edit_page&amp;quot;);&#xA;    createRoot(app).render(&amp;lt;UserEditPage /&amp;gt;)&#xA;  }&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;When I navigate between pages there is a really annoying flicker. It feels that Rails is serving a cached response, then re-initializes the React component, which then re-renders.&lt;/p&gt;&#xA;&lt;p&gt;I&#x27;m assuming I can disable turbolinks and have this go away, but I was wondering if there&#x27;s a nice Rails way to have things working as intended.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74072476</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">How to check status with a rake task</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-6" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-6.1" />
+        <author>
+            <name>Arturo Gabriel</name>
+            <uri>https://stackoverflow.com/users/15053316</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74072476/how-to-check-status-with-a-rake-task" />
+        <published>2022-10-14T16:59:01Z</published>
+        <updated>2022-10-14T17:02:39Z</updated>
+        <summary type="html">
+            &lt;p&gt;i&#x27;m trying to make a rake task to run it with scheduler on heroku, but first im testing locally so i have a method where i check the status of polls like this&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;def check_status&#xA;    if Date.today.between?(self.start_date, self.expiration_date)&#xA;        self.poll_active = true&#xA;    else&#xA;        self.poll_active = false &#xA;    end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;and its working great but now i want this exact method to run it with a task.&lt;/p&gt;&#xA;&lt;p&gt;i create my task file&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;namespace :change_poll_status do&#xA;    task :poll_status =&amp;gt; :environment do &#xA;        if Date.today.between?(Poll.start_date, Poll.expiration_date)&#xA;            Poll.poll_active = true&#xA;            puts &amp;quot;It works&amp;quot;&#xA;        else&#xA;            Poll.poll_active = false &#xA;            puts &amp;quot;no&amp;quot;&#xA;        end&#xA;    end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;but when i run &lt;code&gt;rake change_poll_status:poll_status&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;nothing happens it just skip like there is nothing to run, no errors, nothing.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74071448</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Cannot find module &#x27;typescript/bin/tsc&#x27; when running tsc-watch</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="typescript" />
+            <category scheme="https://stackoverflow.com/tags" term="tsc" />
+        <author>
+            <name>Jason FB</name>
+            <uri>https://stackoverflow.com/users/3163663</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74071448/cannot-find-module-typescript-bin-tsc-when-running-tsc-watch" />
+        <published>2022-10-14T15:20:51Z</published>
+        <updated>2022-10-14T15:24:31Z</updated>
+        <summary type="html">
+            &lt;p&gt;Getting &amp;quot;Cannot find module &#x27;typescript/bin/tsc&#x27;&amp;quot; when I try to run tsc-watch&lt;/p&gt;&#xA;&lt;p&gt;&lt;code&gt;yarn tsc-watch --noClear -p tsconfig.json&lt;/code&gt;&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;yarn run v1.22.19&#xA;$ /Users/jason/Work/VDQ/VDQApp/node_modules/.bin/tsc-watch --noClear -p tsconfig.json&#xA;Cannot find module &#x27;typescript/bin/tsc&#x27;&#xA;Require stack:&#xA;- /Users/jason/Work/VDQ/VDQApp/node_modules/tsc-watch/lib/tsc-watch.js&#xA;- /Users/jason/Work/VDQ/VDQApp/node_modules/tsc-watch/index.js&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;the error is reproducible simply without the JSBundling/package.json /Yarn setup&lt;/p&gt;&#xA;&lt;p&gt;My package.json file is:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;{&#xA;  &amp;quot;name&amp;quot;: &amp;quot;app&amp;quot;,&#xA;  &amp;quot;private&amp;quot;: &amp;quot;true&amp;quot;,&#xA;  &amp;quot;dependencies&amp;quot;: {&#xA;    &amp;quot;@hotwired/stimulus&amp;quot;: &amp;quot;^3.1.0&amp;quot;,&#xA;    &amp;quot;@hotwired/turbo-rails&amp;quot;: &amp;quot;^7.2.0&amp;quot;,&#xA;    &amp;quot;@popperjs/core&amp;quot;: &amp;quot;^2.11.6&amp;quot;,&#xA;    &amp;quot;bootstrap&amp;quot;: &amp;quot;^5.2.2&amp;quot;,&#xA;    &amp;quot;bootstrap-icons&amp;quot;: &amp;quot;^1.9.1&amp;quot;,&#xA;    &amp;quot;esbuild&amp;quot;: &amp;quot;^0.15.10&amp;quot;,&#xA;    &amp;quot;sass&amp;quot;: &amp;quot;^1.55.0&amp;quot;,&#xA;    &amp;quot;tsc&amp;quot;: &amp;quot;^2.0.4&amp;quot;&#xA;  },&#xA;  &amp;quot;scripts&amp;quot;: {&#xA;    &amp;quot;build&amp;quot;: &amp;quot;esbuild app/javascript/*.* --bundle --sourcemap --outdir=app/assets/builds --public-path=assets&amp;quot;,&#xA;    &amp;quot;build:css&amp;quot;: &amp;quot;sass ./app/assets/stylesheets/application.scss:./app/assets/builds/application.css --no-source-map --load-path=node_modules&amp;quot;,&#xA;    &amp;quot;failure:js&amp;quot;: &amp;quot;rm ./app/assets/builds/application.js &amp;amp;&amp;amp; rm ./app/assets/builds/application.js.map&amp;quot;,&#xA;    &amp;quot;compile:typescript&amp;quot;: &amp;quot;tsc-watch --noClear -p tsconfig.json --onSuccess \&amp;quot;yarn build\&amp;quot; --onFailure \&amp;quot;yarn failure:js\&amp;quot;&amp;quot;&#xA;  },&#xA;  &amp;quot;devDependencies&amp;quot;: {&#xA;    &amp;quot;tsc-watch&amp;quot;: &amp;quot;^5.0.3&amp;quot;&#xA;  }&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;my tsconfig.json file is:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;{&#xA;  &amp;quot;compilerOptions&amp;quot;: {&#xA;    &amp;quot;target&amp;quot;: &amp;quot;es5&amp;quot;,&#xA;    &amp;quot;module&amp;quot;: &amp;quot;commonjs&amp;quot;,&#xA;    &amp;quot;strict&amp;quot;: true,&#xA;    &amp;quot;esModuleInterop&amp;quot;: true,&#xA;    &amp;quot;skipLibCheck&amp;quot;: true,&#xA;    &amp;quot;forceConsistentCasingInFileNames&amp;quot;: true,&#xA;    &amp;quot;noImplicitAny&amp;quot;: true&#xA;  }&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74071260</id>
+        <re:rank scheme="https://stackoverflow.com">1</re:rank>
+        <title type="text">Print the names of all assets in the Asset Pipeline?</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="webpacker" />
+        <author>
+            <name>stevec</name>
+            <uri>https://stackoverflow.com/users/5783745</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74071260/print-the-names-of-all-assets-in-the-asset-pipeline" />
+        <published>2022-10-14T15:06:29Z</published>
+        <updated>2022-10-15T04:29:45Z</updated>
+        <summary type="html">
+            &lt;p&gt;I&#x27;m trying to debug why some assets are found and others not in the Asset Pipeline. i&#x27;ve tried a lot of obvious things (like typos, clearing tmp, clean/clobber).&lt;/p&gt;&#xA;&lt;p&gt;Now I placed &lt;code&gt;binding.pry&lt;/code&gt; right before where the image path is generated, and I&#x27;d like to view (print to the rails console / debugger) the name of every asset rails thinks is available.&lt;/p&gt;&#xA;&lt;p&gt;How can I do that?&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74071155</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">artillery not reporting request latency</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="websocket" />
+            <category scheme="https://stackoverflow.com/tags" term="actioncable" />
+            <category scheme="https://stackoverflow.com/tags" term="artillery" />
+        <author>
+            <name>guero64</name>
+            <uri>https://stackoverflow.com/users/4038302</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74071155/artillery-not-reporting-request-latency" />
+        <published>2022-10-14T14:58:14Z</published>
+        <updated>2022-10-14T14:58:14Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am running an artillery load test on a simple Rails ActiveCable app:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;config:&#xA;  target: &amp;quot;ws://localhost:3000/cable&amp;quot;&#xA;  phases:&#xA;    - duration: 10 # seconds&#xA;      arrivalRate: 1 # virtual users per second&#xA;      name: &amp;quot;Ramping up the load&amp;quot;&#xA;&#xA;scenarios:&#xA;  - engine: &amp;quot;ws&amp;quot;&#xA;    flow:&#xA;      - send:&#xA;          {&#xA;            command: &amp;quot;subscribe&amp;quot;,&#xA;            identifier: &#x27;{&amp;quot;channel&amp;quot;:&amp;quot;RoomChannel&amp;quot;,&amp;quot;room_id&amp;quot;:&amp;quot;4&amp;quot;}&#x27;,&#xA;          }&#xA;      - think: 60&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I was expecting artillery to report something like what I have seen in examples like this:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;All virtual users finished&#xA;Summary report @ 12:20:49(-0700) 2019-09-11&#xA;  Scenarios launched:  5&#xA;  Scenarios completed: 5&#xA;  Requests completed:  15&#xA;  RPS sent: 2.01&#xA;  Request latency:&#xA;    min: 1001&#xA;    max: 3009.7&#xA;    median: 2005.8&#xA;    p95: 3009.3&#xA;    p99: 3009.7&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;but instead I am getting something like&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;vusers.completed: .............................................................. 10&#xA;vusers.created: ................................................................ 10&#xA;vusers.created_by_name.0: ...................................................... 10&#xA;vusers.failed: ................................................................. 0&#xA;vusers.session_length:&#xA;  min: ......................................................................... 60009.2&#xA;  max: ......................................................................... 60028.2&#xA;  median: ...................................................................... 60495.1&#xA;  p95: ......................................................................... 60495.1&#xA;  p99: ......................................................................... 60495.1&#xA;websocket.messages_sent: ....................................................... 10&#xA;websocket.send_rate: ........................................................... 1/sec&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;What do I need to do to get artillery to report latency?&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74070757</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">How to validate range dates with rails 6</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-6" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-6.1" />
+        <author>
+            <name>Arturo Gabriel</name>
+            <uri>https://stackoverflow.com/users/15053316</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74070757/how-to-validate-range-dates-with-rails-6" />
+        <published>2022-10-14T14:28:13Z</published>
+        <updated>2022-10-14T16:39:49Z</updated>
+        <summary type="html">
+            &lt;p&gt;hello i have a post module where the user can select the dates for publishing his posts, i have 2 fields&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;start_date:date and expiration_date:date &#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;i want to make a validation like this&lt;/p&gt;&#xA;&lt;p&gt;if user selects start_date = 2022-10-14 and expiration_date = 2022-10-22, he can&#x27;t create another post that is between that range.&lt;/p&gt;&#xA;&lt;p&gt;because i can have only 1 post published at a time, so with this validation i will force the user to select any other date that is not in between this selected range dates.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74070564</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">can&#x27;t connect date_select to the target stimulusjs</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="stimulusjs" />
+        <author>
+            <name>Alex</name>
+            <uri>https://stackoverflow.com/users/9682577</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74070564/cant-connect-date-select-to-the-target-stimulusjs" />
+        <published>2022-10-14T14:11:51Z</published>
+        <updated>2022-10-14T14:12:38Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am trying to connect my form.date_select to my stimulusjs controller but I can&#x27;t do it.&#xA;I have the following code&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;        = f.date_select :date_of_birth, :order =&amp;gt; [:day, :month, :year], selected: Date.today, prompt: { day: &#x27;Select day&#x27;, month: &#x27;Select month&#x27;, year: &#x27;Select year&#x27; }, start_year: Date.current.year, end_year:Date.current.year - 100, data: {signupform_target: &#x27;dateOfBirth&#x27;, action: &#x27;signupform#isValidDob&#x27; }&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I am trying to connect this to dateOfBirth target. my controller:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;export default class extends Controller {&#xA;static targets = [&#x27;firstName&#x27;, &#x27;firstNameInput&#x27;, &#x27;lastName&#x27;, &#x27;lastNameInput&#x27;, &#x27;email&#x27;, &#x27;emailInput&#x27;,&#xA;                &#x27;password&#x27;, &#x27;passwordInput&#x27;, &#x27;dateOfBirth&#x27;, &#x27;dateOfBirthInput&#x27;, &#x27;button&#x27;, &#x27;warning&#x27;]&#xA;&#xA;isValidDob() {&#xA;console.log(this.dateOfBirthTarget);&#xA;}&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;This is the error I get.&#xA;[1]: &lt;a href=&quot;https://i.stack.imgur.com/6Z7Jz.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;https://i.stack.imgur.com/6Z7Jz.png&lt;/a&gt;&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74070428</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Manage has_and_belongs_to_many with JsonApiResource</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="jsonapi-resources" />
+        <author>
+            <name>Axel_vdbl</name>
+            <uri>https://stackoverflow.com/users/8512071</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74070428/manage-has-and-belongs-to-many-with-jsonapiresource" />
+        <published>2022-10-14T14:01:01Z</published>
+        <updated>2022-10-14T14:01:01Z</updated>
+        <summary type="html">
+            &lt;p&gt;I have a relation &lt;code&gt;has_and_belongs_to_many&lt;/code&gt; between &lt;code&gt;class Consultant&lt;/code&gt; and &lt;code&gt;class Company&lt;/code&gt; with join_table &lt;code&gt;OtherCompaniesOtherConsultants&lt;/code&gt;.&#xA;I would like to give the possibility to modify the &lt;code&gt;OtherCompanies&lt;/code&gt; of a &lt;code&gt;Consultant&lt;/code&gt; from the &lt;code&gt;RecruiterResource&lt;/code&gt; (I have a model_name in my RecruiterResource to Consultant and another in my EntitiesResource to Company).&lt;/p&gt;&#xA;&lt;p&gt;I have this lines :&lt;/p&gt;&#xA;&lt;p&gt;In RecruiterResource : &lt;code&gt;relationship :other_companies, to: :many, relation_name: &amp;quot;consultants_companies&amp;quot;&lt;/code&gt;&#xA;In EntityResource : &lt;code&gt;relationship :other_consultants, to: :many, relation_name: &amp;quot;consultants_companies&amp;quot;&lt;/code&gt;&#xA;In routes.rb : &lt;code&gt;jsonapi_resources :entities&lt;/code&gt; and &lt;code&gt;jsonapi_resources :recruiters do jsonapi_relationships end&lt;/code&gt;&lt;/p&gt;&#xA;&lt;p&gt;I have this error :&#xA;NameError: JSONAPI: Could not find resource &#x27;api/v3/company&#x27;. (Class API::V3::CompanyResource not found)&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74070311</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Active Storage with Exoscale S3 compatible object storage</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="rails-activestorage" />
+        <author>
+            <name>Sig</name>
+            <uri>https://stackoverflow.com/users/284257</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74070311/active-storage-with-exoscale-s3-compatible-object-storage" />
+        <published>2022-10-14T13:52:50Z</published>
+        <updated>2022-10-14T13:52:50Z</updated>
+        <summary type="html">
+            &lt;p&gt;On a Rails 6 app, I need to use Active Storage with the &lt;a href=&quot;https://www.exoscale.com/object-storage/&quot; rel=&quot;nofollow noreferrer&quot;&gt;S3 compatible object storage provided by Exoscale&lt;/a&gt;.&lt;/p&gt;&#xA;&lt;p&gt;The first attempt has been with the following &lt;code&gt;storage.yml&lt;/code&gt;&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;exo:&#xA;  service: S3&#xA;  endpoint: https://sos-bg-sof-1.exo.io/&#xA;  access_key_id: ENV[&#x27;KEY&#x27;]&#xA;  secret_access_key: ENV[&#x27;SECRET&#x27;]&#xA;  region: bg-sof-1&#xA;  bucket: testbucket&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Which tries to store files at &lt;code&gt;https://testbucket.sos-bg-sof-1.exo.io/...&lt;/code&gt;. However, on Exoscale SOS, the files are stored at &lt;code&gt;https://sos-bg-sof-1.exo.io/testbucket/...&lt;/code&gt;.&lt;/p&gt;&#xA;&lt;p&gt;So, I tried to update the configuration as follows&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;exo:&#xA;  service: S3&#xA;  endpoint: https://sos-bg-sof-1.exo.io/testbucket&#xA;  access_key_id: ENV[&#x27;KEY&#x27;]&#xA;  secret_access_key: ENV[&#x27;SECRET&#x27;]&#xA;  region: bg-sof-1&#xA;  bucket: &amp;quot;&amp;quot;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Which generates an error since bucket cannot be empty.&lt;/p&gt;&#xA;&lt;p&gt;Is there a way to use Active Storage with URLs in the form or ``https://ENDPOINT/BUCKET/...`?&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74069317</id>
+        <re:rank scheme="https://stackoverflow.com">-2</re:rank>
+        <title type="text">ActiveSupport::MessageVerifier::InvalidSignature (ActiveSupport::MessageVerifier::InvalidSignature): [closed]</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-7" />
+        <author>
+            <name>Irtaza Naveed</name>
+            <uri>https://stackoverflow.com/users/20240840</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74069317/activesupportmessageverifierinvalidsignature-activesupportmessageverifier" />
+        <published>2022-10-14T12:35:16Z</published>
+        <updated>2022-10-14T12:35:16Z</updated>
+        <summary type="html">
+            &lt;p&gt;Im creating an api for create action and having trouble with this error using active storage for video upload&lt;a href=&quot;https://i.stack.imgur.com/QXQ6o.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;enter image description here&lt;/a&gt;&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74068803</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rubu on rails - get calculated database field</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+        <author>
+            <name>plewas</name>
+            <uri>https://stackoverflow.com/users/1537135</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74068803/rubu-on-rails-get-calculated-database-field" />
+        <published>2022-10-14T11:52:54Z</published>
+        <updated>2022-10-14T11:52:54Z</updated>
+        <summary type="html">
+            &lt;p&gt;I need to get calculcated field from database. In pgsql i do it, this way:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;SELECT extra_function(field_name) AS calculated_field_name FROM table;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;This moment in ROR i have done it this way:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;  default_scope do&#xA;    select &amp;lt;&amp;lt;-SQL.squish&#xA;      table_name.*,&#xA;      extra_function(field_name) AS calculated_field_name&#xA;    SQL&#xA;  end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Ho to do it better way?&lt;/p&gt;&#xA;&lt;p&gt;Ruby 3&#xA;Rails 7&#xA;PgSQL 14&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74068728</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Top level ::CompositeIO is deprecated, require &#x27;multipart/post&#x27; and use `Multipart::Post::CompositeReadIO` instead</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails-3.1" />
+        <author>
+            <name>Muhammad Ans</name>
+            <uri>https://stackoverflow.com/users/19786763</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74068728/top-level-compositeio-is-deprecated-require-multipart-post-and-use-multipa" />
+        <published>2022-10-14T11:46:28Z</published>
+        <updated>2022-10-14T11:46:28Z</updated>
+        <summary type="html">
+            &lt;p&gt;I am running an old project which is built in rails 3.1 and ruby-1.9.3. When I am trying to migrate my models, it is causing the following problem.&lt;/p&gt;&#xA;&lt;p&gt;rake db:migrate -&amp;gt;&#xA;Top level ::CompositeIO is deprecated, require &#x27;multipart/post&#x27; and use &lt;code&gt;Multipart::Post::CompositeReadIO&lt;/code&gt; instead!&#xA;rake aborted!&#xA;NoMethodError: undefined method `deprecate_constant&#x27; for Object:Class&lt;/p&gt;&#xA;&lt;p&gt;I have searched a lot but unfortunately could not find a solution. My environment is as follows.&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;Rails 3.1 ruby 1.9.3 postgres 9.6 bundler 1.17.3&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74068620</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails 7 dry-struct add attribute from method</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="dry-struct" />
+        <author>
+            <name>mr_muscle</name>
+            <uri>https://stackoverflow.com/users/10443890</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74068620/rails-7-dry-struct-add-attribute-from-method" />
+        <published>2022-10-14T11:36:28Z</published>
+        <updated>2022-10-14T11:36:28Z</updated>
+        <summary type="html">
+            &lt;p&gt;I&#x27;m using dry-struct for non-model class &lt;code&gt;Payout&lt;/code&gt; - it&#x27;s basically structured hash response from API call.&lt;/p&gt;&#xA;&lt;p&gt;module Customer&#xA;class Payout &amp;lt; Dry::Struct&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;attribute :amount, Types::Integer&#xA;attribute :reference, Types::String&#xA;attribute :settlements, Types::Array&#xA;&#xA;def fetch_settlements&#xA;  CustomerApi.fetch_settlements_by_reference(platform_merchant_id, reference)&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;end&#xA;end&lt;/p&gt;&#xA;&lt;p&gt;Is it possible to set &lt;code&gt;attribute :settlements&lt;/code&gt; by the &lt;code&gt;fetch_settlements&lt;/code&gt; method ? I was trying something like:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;attribute :settlements, Types::Array.optional.default(feth_settlements)&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;but I&#x27;m getting an error of&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;undefined local variable or method `fetch_settlements&lt;/p&gt;&#xA;&lt;/blockquote&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74068514</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Using method within rake file tasks</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="rake-task" />
+        <author>
+            <name>Jerome</name>
+            <uri>https://stackoverflow.com/users/2291357</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74068514/using-method-within-rake-file-tasks" />
+        <published>2022-10-14T11:27:16Z</published>
+        <updated>2022-10-14T12:26:24Z</updated>
+        <summary type="html">
+            &lt;p&gt;A set of rake tasks of a &lt;code&gt;.rake&lt;/code&gt; file are structured as follows&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;task :process_data  =&amp;gt; :environment do&#xA;  CSV.foreach(&amp;quot;scores.tsv&amp;quot;, :col_sep =&amp;gt; &amp;quot;\t&amp;quot;, headers: true) do |row|&#xA;    begin&#xA;      [...]&#xA;       repeated_method_a&#xA;       ad-hoc_method&#xA;       repeated_method_b&#xA;    rescue StandardError =&amp;gt; e&#xA;    end&#xA;  end&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;How should this rake file be structured to process sub-methods, such as:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;def repeated_method_a&#xA;  do_its_thing&#xA;end&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74067712</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Missing libgd when building gem native extension</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="rubygems" />
+            <category scheme="https://stackoverflow.com/tags" term="homebrew" />
+            <category scheme="https://stackoverflow.com/tags" term="gd" />
+        <author>
+            <name>josemigallas</name>
+            <uri>https://stackoverflow.com/users/5466997</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74067712/missing-libgd-when-building-gem-native-extension" />
+        <published>2022-10-14T10:10:37Z</published>
+        <updated>2022-10-14T10:10:37Z</updated>
+        <summary type="html">
+            &lt;p&gt;In our Rails project we want to use the gem &lt;a href=&quot;https://github.com/planio-gmbh/local-fastimage_resize&quot; rel=&quot;nofollow noreferrer&quot;&gt;local-fastimage_resize&lt;/a&gt; which requires &lt;code&gt;libgd&lt;/code&gt;. According to the doc (and the Internet) it should be possible to install it by means of &lt;code&gt;homebrew&lt;/code&gt; but when we try to install the gem it can&#x27;t find the library.&lt;/p&gt;&#xA;&lt;p&gt;Here are some logs from my M1 mac:&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;$ brew info libgd&#xA;==&amp;gt; gd: stable 2.3.3 (bottled), HEAD&#xA;Graphics library to dynamically manipulate images&#xA;https://libgd.github.io/&#xA;/opt/homebrew/Cellar/gd/2.3.3_3 (33 files, 1.5MB) *&#xA;  Poured from bottle on 2022-10-10 at 12:18:49&#xA;From: https://github.com/Homebrew/homebrew-core/blob/HEAD/Formula/gd.rb&#xA;License: Cannot Represent&#xA;==&amp;gt; Dependencies&#xA;Required: fontconfig &#x2714;, freetype &#x2714;, jpeg-turbo &#x2714;, libavif &#x2714;, libpng &#x2714;, libtiff &#x2714;, webp &#x2714;&#xA;==&amp;gt; Options&#xA;--HEAD&#xA;    Install HEAD version&#xA;==&amp;gt; Analytics&#xA;install: 147,026 (30 days), 503,823 (90 days), 1,624,252 (365 days)&#xA;install-on-request: 17,867 (30 days), 55,417 (90 days), 144,616 (365 days)&#xA;build-error: 0 (30 days)&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;pre&gt;&lt;code&gt;$ gem install local-fastimage_resize -- --with-gdlib=/opt/homebrew/Cellar/gd/2.3.3_3&#xA;Building native extensions with: &#x27;--with-gdlib=/opt/homebrew/Cellar/gd/2.3.3_3&#x27;&#xA;This could take a while...&#xA;ERROR:  Error installing local-fastimage_resize:&#xA;    ERROR: Failed to build gem native extension.&#xA;&#xA;    current directory: /Users/jgallaso/.asdf/installs/ruby/2.6.8/lib/ruby/gems/2.6.0/gems/local-fastimage_resize-3.4.0/ext/fastimage_native_resize&#xA;/Users/jgallaso/.asdf/installs/ruby/2.6.8/bin/ruby -I /Users/jgallaso/.asdf/installs/ruby/2.6.8/lib/ruby/2.6.0 -r ./siteconf20221010-18826-otaeca.rb extconf.rb --with-gdlib\=/opt/homebrew/Cellar/gd/2.3.3_3&#xA;checking for -l/opt/homebrew/Cellar/gd/2.3.3_3... no&#xA;missing libgd&#xA;*** extconf.rb failed ***&#xA;Could not create Makefile due to some reason, probably lack of necessary&#xA;libraries and/or headers.  Check the mkmf.log file for more details.  You may&#xA;need configuration options.&#xA;&#xA;Provided configuration options:&#xA;    --with-opt-dir&#xA;    --without-opt-dir&#xA;    --with-opt-include&#xA;    --without-opt-include=${opt-dir}/include&#xA;    --with-opt-lib&#xA;    --without-opt-lib=${opt-dir}/lib&#xA;    --with-make-prog&#xA;    --without-make-prog&#xA;    --srcdir=.&#xA;    --curdir&#xA;    --ruby=/Users/jgallaso/.asdf/installs/ruby/2.6.8/bin/$(RUBY_BASE_NAME)&#xA;    --with-gdlib&#xA;&#xA;To see why this extension failed to compile, please check the mkmf.log which can be found here:&#xA;&#xA;  /Users/jgallaso/.asdf/installs/ruby/2.6.8/lib/ruby/gems/2.6.0/extensions/arm64-darwin-21/2.6.0/local-fastimage_resize-3.4.0/mkmf.log&#xA;&#xA;extconf failed, exit code 1&#xA;&#xA;Gem files will remain installed in /Users/jgallaso/.asdf/installs/ruby/2.6.8/lib/ruby/gems/2.6.0/gems/local-fastimage_resize-3.4.0 for inspection.&#xA;Results logged to /Users/jgallaso/.asdf/installs/ruby/2.6.8/lib/ruby/gems/2.6.0/extensions/arm64-darwin-21/2.6.0/local-fastimage_resize-3.4.0/gem_make.out&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I&#x27;ve also tried installing libgd manually following instructions in &lt;a href=&quot;https://github.com/libgd/libgd/blob/master/docs/INSTALL&quot; rel=&quot;nofollow noreferrer&quot;&gt;INSTALL&lt;/a&gt; but no matter the path &lt;code&gt;--with-gdlib&lt;/code&gt; it will return the same error.&lt;/p&gt;&#xA;&lt;p&gt;Any ideas? &#x1F616;&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74067296</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">real time broadcasting in not working in rails 7</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="broadcast" />
+        <author>
+            <name>Rahul Gupta</name>
+            <uri>https://stackoverflow.com/users/18445017</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74067296/real-time-broadcasting-in-not-working-in-rails-7" />
+        <published>2022-10-14T09:38:40Z</published>
+        <updated>2022-10-14T09:38:40Z</updated>
+        <summary type="html">
+            &lt;p&gt;I have added broadcasting in the rails model, please have a look into below files&#xA;.&lt;/p&gt;&#xA;&lt;p&gt;comment model&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;class Comment &amp;lt; ApplicationRecord&#xA;&#xA;  validates :body, presence: true&#xA;  belongs_to :post&#xA;  after_create_commit { broadcast_append_to &amp;quot;comments_#{self.post_id}&amp;quot;, partial: &amp;quot;posts/comment&amp;quot; }&#xA;&#xA;end&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;post model&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;class Post &amp;lt; ApplicationRecord&#xA;&#xA;  has_many :comments, dependent: :destroy&#xA;&#xA;end&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;app/views/posts/index.html.erb&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;lt;h1 class=&amp;quot;text-center m-4 text-success&amp;quot;&amp;gt;Posts&amp;lt;/h1&amp;gt;&#xA;&amp;lt;div id=&amp;quot;posts&amp;quot;&amp;gt;&#xA;    &amp;lt;div class=&amp;quot;row&amp;quot;&amp;gt;&#xA;        &amp;lt;% @posts.each do |post| %&amp;gt;&#xA;            &amp;lt;%= render post %&amp;gt;&#xA;        &amp;lt;% end %&amp;gt;&#xA;    &amp;lt;/div&amp;gt;&#xA;&amp;lt;/div&amp;gt;&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;app/views/posts/_post.html.erb&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;col-lg-4 mb-2&amp;quot;&amp;gt;&#xA;    &amp;lt;div class=&amp;quot;card border-0&amp;quot; style=&amp;quot;width: 18rem;&amp;quot;&amp;gt;&#xA;        &amp;lt;div class=&amp;quot;card-body&amp;quot;&amp;gt;&#xA;            &amp;lt;p&amp;gt;&#xA;                &amp;lt;span class=&amp;quot;comment&amp;quot;&amp;gt;&#xA;                    &amp;lt;%= link_to fa_icon(&amp;quot;comment&amp;quot;),&amp;quot;#&amp;quot;, data: { action: &amp;quot;click-&amp;gt;like#comment&amp;quot;,comment_url: new_post_comment_path(post.id) } %&amp;gt;&#xA;                &amp;lt;/span&amp;gt;&#xA;            &amp;lt;/p&amp;gt;&#xA;            &amp;lt;div id=&amp;quot;add_comment_&amp;lt;%= post.id %&amp;gt;&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;&#xA;            &amp;lt;h5 class=&amp;quot;card-title&amp;quot;&amp;gt;&amp;lt;%= post.title %&amp;gt;&amp;lt;/h5&amp;gt;&#xA;            &amp;lt;p class=&amp;quot;card-text&amp;quot;&amp;gt;&amp;lt;%= post.description %&amp;gt;&amp;lt;/p&amp;gt;&#xA;            &amp;lt;strong&amp;gt;Comments&amp;lt;/strong&amp;gt;&#xA;            &amp;lt;%= turbo_stream_from &amp;quot;comments_#{post.id}&amp;quot; %&amp;gt;&#xA;            &amp;lt;%= turbo_frame_tag &amp;quot;comments_#{post.id}&amp;quot; do %&amp;gt;&#xA;                &amp;lt;div id=&amp;quot;add_comments_&amp;lt;%= post.id %&amp;gt;&amp;quot;&amp;gt;&#xA;                    &amp;lt;% post.comments.each do |comment_post| %&amp;gt;&#xA;                        &amp;lt;%= render partial: &amp;quot;posts/comment&amp;quot;, locals: { comment: comment_post } %&amp;gt;&#xA;                    &amp;lt;% end %&amp;gt;&#xA;                &amp;lt;/div&amp;gt;&#xA;            &amp;lt;% end %&amp;gt;&#xA;        &amp;lt;/div&amp;gt;&#xA;    &amp;lt;/div&amp;gt;&#xA;&amp;lt;/div&amp;gt;&#xA;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;app/views/posts/_comment.html.erb&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;lt;p id=&amp;quot;comment_&amp;lt;%= comment.id %&amp;gt;&amp;quot; data-controller=&amp;quot;comment&amp;quot;&amp;gt;&amp;lt;%= comment.body %&amp;gt;&#xA;    &amp;amp;nbsp;&#xA;    &amp;lt;span&amp;gt;&#xA;        &amp;lt;%= link_to &amp;quot;edit&amp;quot;,post_comment_edit_path(comment.post,comment), data: { turbo_method: :post }  %&amp;gt;&#xA;    &amp;lt;/span&amp;gt;&#xA;    &amp;amp;nbsp;&#xA;    &amp;lt;span&amp;gt;&amp;lt;%= link_to &amp;quot;delete&amp;quot;, post_comment_path(comment.post,comment), data: { turbo_method: :delete } %&amp;gt;&amp;lt;/span&amp;gt;&#xA;    &amp;amp;nbsp;&#xA;    &amp;lt;span&amp;gt;&amp;lt;%= commentUpdatedAt(comment) %&amp;gt; ago&amp;lt;/span&amp;gt;&#xA;&amp;lt;/p&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;I have checked with binding.pry, in the comment model does not get post_id when creating a comment, so the targets are different.&lt;/p&gt;&#xA;&lt;p&gt;please help me. thanks!&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74066665</id>
+        <re:rank scheme="https://stackoverflow.com">0</re:rank>
+        <title type="text">Rails - Get filename in a hidden input with simple forms</title>
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby" />
+            <category scheme="https://stackoverflow.com/tags" term="forms" />
+            <category scheme="https://stackoverflow.com/tags" term="input" />
+            <category scheme="https://stackoverflow.com/tags" term="simple-form" />
+        <author>
+            <name>Steph</name>
+            <uri>https://stackoverflow.com/users/14332884</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74066665/rails-get-filename-in-a-hidden-input-with-simple-forms" />
+        <published>2022-10-14T08:47:08Z</published>
+        <updated>2022-10-14T08:47:08Z</updated>
+        <summary type="html">
+            &lt;p&gt;Everytime I upload a file, I would like to get the filename of this file in a hidden input instead of playing with params in the controller... is it possible ?&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;&amp;lt;%= f.input :file, label:false, input_html: {class: &amp;quot;mdl-textfield__input&amp;quot;} %&amp;gt;&#xA;&amp;lt;% f.input :filename, input_html: {value: #{file.filename (?)}} %&amp;gt;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;
+        </summary>
+    </entry>
+    <entry>
+        <id>https://stackoverflow.com/q/74065404</id>
+        <re:rank scheme="https://stackoverflow.com">1</re:rank>
+        <title type="text">Handling the 401 Unauthorized error from rails api when using a partial frontend (react)</title>
+            <category scheme="https://stackoverflow.com/tags" term="reactjs" />
+            <category scheme="https://stackoverflow.com/tags" term="ruby-on-rails" />
+        <author>
+            <name>VulcanBin</name>
+            <uri>https://stackoverflow.com/users/11770989</uri>
+        </author>
+        <link rel="alternate" href="https://stackoverflow.com/questions/74065404/handling-the-401-unauthorized-error-from-rails-api-when-using-a-partial-frontend" />
+        <published>2022-10-14T06:54:02Z</published>
+        <updated>2022-10-14T07:16:39Z</updated>
+        <summary type="html">
+            &lt;p&gt;I&#x27;m using rails 5.2 and Ruby 2.7. My front-end is react and the I&#x27;m trying to access my projects route. Login/logout is handled by the rails app/semi-api (it has views for other stuff except for the projects page, which is ). &lt;strong&gt;I do understand that I need a token to pass the authentication check but I can&#x27;t seem to find any help on how to acquire it from rails. Any documentation/blog/post would be great.&lt;/strong&gt;&#xA;My rails app uses Devise for authentication and Pundit for authorization.&lt;/p&gt;&#xA;&lt;p&gt;Sending a GET request from the react app (using axios) immediately redirects the rails application to render the the signin page (as it should in the case of an unauthorized login).&#xA;&lt;a href=&quot;https://i.stack.imgur.com/ToHu8.png&quot; rel=&quot;nofollow noreferrer&quot;&gt;Snippet of the error in question&lt;/a&gt;&lt;/p&gt;&#xA;&lt;pre&gt;&lt;code&gt;const API_URL = &#x27;http://localhost:3000/projects&#x27;&#xA;&#xA;function getAPIData(){&#xA;  return axios.get(API_URL).then((response) =&amp;gt; response.data)&#xA;  &#xA;}&#xA;&#xA;function App() {&#xA;  const [bugs, setBugs] = useState([]);&#xA;&#xA;  useEffect(() =&amp;gt; {&#xA;    let mounted = true;&#xA;    getAPIData().then((items) =&amp;gt; {&#xA;      if (mounted) {&#xA;        setBugs(items);&#xA;      }&#xA;    });&#xA;    return () =&amp;gt; (mounted= false);&#xA;  }, [])&#xA;&#xA;  return (&amp;lt;Router&amp;gt;&#xA;    &amp;lt;Header title=&#x27;Backend&#x27;/&amp;gt;&#xA;    &amp;lt;BugList bugs={bugs}/&amp;gt;&#xA;    &amp;lt;Footer/&amp;gt;&#xA;    &amp;lt;/Router&amp;gt;&#xA;  );&#xA;}&#xA;&#xA;export default App;&#xA;&lt;/code&gt;&lt;/pre&gt;&#xA;&lt;p&gt;Above posted is my axios routine for getting data. React runs on port 4000 and my rails app (using rack-cors with a wildcard(*) expression to accept all requests of all types) on port 3000.&lt;/p&gt;&#xA;
+        </summary>
+    </entry>
+</feed>
