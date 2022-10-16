@@ -21,7 +21,12 @@ module Api
     end
 
     def create
-      render_json User.create(user_params.merge(default_settings)), status: :created
+      user = User.create(user_params.merge(default_settings))
+      if user.errors.empty?
+        render_json user, status: :created
+      else
+        render json: { 'errors': { 'user': [user.errors] } }, status: :forbidden
+      end
     end
 
     def update
