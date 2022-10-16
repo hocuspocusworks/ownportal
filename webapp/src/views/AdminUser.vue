@@ -7,12 +7,20 @@
     </div>
 
     <div>
-      <ul class="list-group">
-        <li class="list-group-item" v-for="(user, i) in users" :key="i">
-          <input class="form-check-input me-1" type="checkbox" @click="makeUserAdmin(user)" aria-label="admin">
-          {{ user.email }}
-        </li>
-      </ul>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Email</th>
+            <th scope="col">Sysadmin</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-for="(user, i) in users" :key="i">
+            <td>{{ user.email }}</td>
+            <td><input class="form-check-input me-1" type="checkbox" @click="toggleSysadmin(user)" aria-label="admin" v-model="user.sysadmin"></td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </template>
@@ -43,6 +51,16 @@ export default {
     makeUserAdmin(user) {
       let url = config.gateway + config.getPath('users') + '/' + user.id
       let payload = { 'user': { 'sysadmin': 'true' } }
+      axios.patch(url, payload, { headers: config.authorisationHeader() })
+        .then(response => {
+          console.log(response)
+        })
+    },
+    toggleSysadmin(user) {
+      let url = config.gateway + config.getPath('users') + '/' + user.id
+      let permission = !(user.sysadmin)
+      let payload = { 'user': { 'sysadmin': permission.toString() } }
+      console.log(payload)
       axios.patch(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
           console.log(response)
