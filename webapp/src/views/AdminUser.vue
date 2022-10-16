@@ -12,12 +12,14 @@
           <tr>
             <th scope="col">Email</th>
             <th scope="col">Sysadmin</th>
+            <th scope="col">Deactivated</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(user, i) in users" :key="i">
             <td>{{ user.email }}</td>
             <td><input class="form-check-input me-1" type="checkbox" @click="toggleSysadmin(user)" aria-label="admin" v-model="user.sysadmin"></td>
+            <td><input class="form-check-input me-1" type="checkbox" @click="toggleDeactivated(user)" aria-label="admin" v-model="user.deactivated"></td>
           </tr>
         </tbody>
       </table>
@@ -44,23 +46,28 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.users = response.data
+            this.users.forEach(user => {
+              if (user.deactivated_at !== null) {
+                user.deactivated = true
+              }
+            })
             console.log(this.users)
           }
-        })
-    },
-    makeUserAdmin(user) {
-      let url = config.gateway + config.getPath('users') + '/' + user.id
-      let payload = { 'user': { 'sysadmin': 'true' } }
-      axios.patch(url, payload, { headers: config.authorisationHeader() })
-        .then(response => {
-          console.log(response)
         })
     },
     toggleSysadmin(user) {
       let url = config.gateway + config.getPath('users') + '/' + user.id
       let permission = !(user.sysadmin)
       let payload = { 'user': { 'sysadmin': permission.toString() } }
-      console.log(payload)
+      axios.patch(url, payload, { headers: config.authorisationHeader() })
+        .then(response => {
+          console.log(response)
+        })
+    },
+    toggleDeactivated(user) {
+      let url = config.gateway + config.getPath('users') + '/' + user.id
+      let deactivated = !(user.deactivated)
+      let payload = { 'user': { 'deactivated': deactivated.toString() } }
       axios.patch(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
           console.log(response)
