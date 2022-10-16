@@ -11,12 +11,13 @@
         <div class="d-flex min-h-screen" :class="themeText">
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @highlight="highlight" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
+                <a id="pageTop"></a>
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
         <nav id="bottomNav" class="navbar fixed-bottom d-md-none" :class="themeMenu">
             <div class="container-fluid justify-content-center">
-                <a class="navbar-brand" href="#"><i class="bi bi-house text-white" @click="toTop"></i></a>
+                <a class="navbar-brand" href="pageTop"><i class="bi bi-house text-white"></i></a>
             </div>
         </nav>
     </div>
@@ -116,9 +117,6 @@ export default {
         },
         toggleSidebar() {
             sidebar.toggleSidebar();
-        },
-        toTop() {
-            scroll(0,0)
         }
     },
     mounted() {
