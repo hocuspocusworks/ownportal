@@ -229,8 +229,7 @@ export default {
         needRefresh: {
             handler: function() {
                 this.fetchFeed();
-            },
-            immediate: true
+            }
         }
     }
 };
