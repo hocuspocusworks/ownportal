@@ -14,6 +14,11 @@
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
+        <nav id="bottomNav" class="navbar fixed-bottom d-md-none" :class="themeMenu">
+            <div class="container-fluid justify-content-center">
+                <a class="navbar-brand" href="#"><i class="bi bi-house text-white" @click="toTop"></i></a>
+            </div>
+        </nav>
     </div>
 </template>
 
@@ -57,6 +62,12 @@ export default {
             return {
                 'text-light': this.dark(),
                 'text-light-black': !this.dark()
+            }
+        },
+        themeMenu() {
+            return {
+                'bg-dark-strong': this.dark(),
+                'bg-bluegray-600': !this.dark()
             }
         }
     },
@@ -105,6 +116,9 @@ export default {
         },
         toggleSidebar() {
             sidebar.toggleSidebar();
+        },
+        toTop() {
+            scroll(0,0)
         }
     },
     mounted() {

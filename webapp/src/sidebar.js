@@ -22,6 +22,8 @@ const sidebar = {
             document.getElementById("myContent").classList.add('w-100')
             document.getElementById("mySidebar").classList.remove('w-100')
             document.getElementById("myContent").classList.remove('d-none')
+            document.getElementById("bottomNav").classList.add('d-md-none')
+            document.getElementById("bottomNav").classList.remove('d-none')
         } else {
             document.getElementById("mySidebar").style.minWidth = "0"
             document.getElementById("mySidebar").style.maxWidth = "0"
@@ -33,6 +35,8 @@ const sidebar = {
             document.getElementById("myContent").classList.remove('w-100')
             document.getElementById("mySidebar").classList.add('w-100')
             document.getElementById("myContent").classList.add('d-none')
+            document.getElementById("bottomNav").classList.add('d-none')
+            document.getElementById("bottomNav").classList.remove('d-md-none')
         } else {
             document.getElementById("mySidebar").style.minWidth = "320px"
             document.getElementById("mySidebar").style.maxWidth = "320px"
