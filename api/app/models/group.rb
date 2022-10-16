@@ -18,14 +18,4 @@ class Group < ApplicationRecord
   validates :name, presence: true
 
   scope :with_name, ->(name, user) { where('name = ? AND user_id = ?', name, user.id) }
-
-  # TODO: N+1 problem!
-  def source_list
-    Source.with_group(id, user)
-  end
-
-  # TODO: N+1 problem!
-  def stream_list
-    Stream.with_streams(id, user)
-  end
 end

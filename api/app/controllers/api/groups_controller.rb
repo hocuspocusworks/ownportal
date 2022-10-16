@@ -3,7 +3,7 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      render_json @groups, include: [:user, :stream_list, :source_list]
+      render_json @groups, include: [:user, :streams, :sources]
     end
 
     def create
@@ -26,11 +26,21 @@ module Api
     end
 
     def load_collection
-      @groups ||= Group.where(user_id: current_user.id)
+      @groups ||= Group
+                  .includes(:streams)
+                  .includes(:sources)
+                  .where(groups: { user: current_user })
+                  .where(sources: { visibility: visibility })
     end
 
     def user_params
       params.require(:group).permit(policy(Group).permitted_attributes)
+    end
+
+    def visibility
+      return [2, nil] if current_user.safe_search?
+
+      [1, 2, nil]
     end
   end
 end

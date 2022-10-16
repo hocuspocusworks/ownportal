@@ -43,15 +43,4 @@ class Source < ApplicationRecord
   end)
   scope :with_url, ->(url) { where(url: url) }
   scope :with_keyword, ->(keyword) { where('LOWER(name) like ?', "%#{keyword.downcase}%") }
-  scope :with_group, (lambda do |id, user|
-    joins(:streams).where(streams: { group_id: id }).where(visibility: visibility(user))
-  end)
-
-  class << self
-    def visibility(user)
-      return [2] if user.safe_search?
-
-      [1, 2]
-    end
-  end
 end
