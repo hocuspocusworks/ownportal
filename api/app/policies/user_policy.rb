@@ -39,7 +39,7 @@ class UserPolicy < ApplicationPolicy
 
     return basic if user.nil?
 
-    basic += [:sysadmin] if admin?
+    basic += [:sysadmin, :deactivated] if admin?
     basic - [:email] unless user.nil?
   end
 

@@ -11,7 +11,7 @@ module Api
     def create
       user = User.find_by(email: params[:session][:email])
 
-      if user.present? && user.authenticate(params[:session][:password])
+      if user_valid?(user)
         user_token = { 'session': { 'token': encode_jwt(user), 'sysadmin': user.sysadmin, 'id': user.id } }
         render_json user_token, status: 201
       else
@@ -27,11 +27,15 @@ module Api
     private
 
     def load_resource
-      @session ||= User.where(token: authorisation_token).first
+      @session ||= current_user
     end
 
     def policy_class
       SessionPolicy
+    end
+
+    def user_valid?(user)
+      user.present? && user.deactivated_at.nil? && user.authenticate(params[:session][:password])
     end
   end
 end

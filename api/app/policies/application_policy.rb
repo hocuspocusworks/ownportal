@@ -33,6 +33,8 @@ class ApplicationPolicy
   end
 
   def current_user?
+    return record.id == user.id if record.is_a? User
+
     record.user_id == user.id
   end
 end
