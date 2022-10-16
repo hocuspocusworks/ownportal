@@ -101,7 +101,6 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.highlights = response.data
-                        console.log(this.highlights)
                     }
                 })
         },
