@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 6, allow_nil: true }
 
-  after_commit :default_group
+  after_create :default_group
 
   def safe_search?
     return true if settings.include? 'safe'
