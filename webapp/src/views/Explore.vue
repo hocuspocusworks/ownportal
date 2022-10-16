@@ -66,7 +66,7 @@
                                     <div class="input-group justify-content-end">
                                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to a Group</button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp.name, item.name, item.url)">{{ grp.name }}</a></li>
+                                            <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp, item.name, item.url)">{{ grp }}</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -113,11 +113,7 @@ export default {
                 });
         },
         loadGroups() {
-            let url = config.gateway + config.getPath('my_feed')
-            axios.get(url, { headers: config.authorisationHeader() })
-                .then(response => {
-                    this.groups = response.data;
-                });
+            this.groups = config.fetchGroups()
         },
         addToGroup(grpName, name, uri) {
             let url = config.gateway + config.getPath('streams');

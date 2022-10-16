@@ -155,6 +155,7 @@ export default {
         updateView(data) {
             this.data = data
             this.loading = false
+            config.fetchGroups(data)
         },
         updateError() {
             this.err = true;

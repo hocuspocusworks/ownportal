@@ -58,6 +58,14 @@ const config = {
     setScreenSize() {
         localStorage.setItem('screenWidth', window.innerWidth)
         localStorage.setItem('screenHeigth', window.innerHeight)
+    },
+    fetchGroups(groups = undefined) {
+        if (groups === undefined) {
+            return localStorage.getItem('userGroups').split(',')
+        } else {
+            let elements = groups.map(group => group.name)
+            localStorage.setItem('userGroups', elements)
+        }
     }
 };
 
