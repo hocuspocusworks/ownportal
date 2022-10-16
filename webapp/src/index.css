@@ -7,10 +7,7 @@
 }
 
 #mySidebar {transition: 0.5s}
-.sidebarWidth {
-  min-width: 320px;
-  max-width: 320px;
-}
+.sidebarWidth {min-width: 320px}
 
 .bg-header {background-color: #2c3e50 !important;}
 .bg-bluegray-50 {background-color: #f7f9f9 !important;}
