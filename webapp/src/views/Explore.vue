@@ -185,10 +185,6 @@ export default {
                 this.loading = false;
             }
         }
-    },
-    mounted() {
-        // this.loadCategories() // first fix
-        this.loadGroups()
     }
 }
 </script>
