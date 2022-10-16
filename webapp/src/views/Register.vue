@@ -18,6 +18,12 @@
                 Could not register {{username}} at the moment. Please try again later.
             </div>
         </div>
+
+        <div v-if="userError">
+            <div class="alert alert-danger" role="alert">
+                {{ userErrors }}
+            </div>
+        </div>
     </div>
 
     <div class="form-signin">
@@ -62,7 +68,9 @@ export default {
             loading: false,
             username: "",
             password: "",
-            password_repeated: ""
+            password_repeated: "",
+            userError: false,
+            userErrors: []
         }
     },
     methods: {
@@ -81,13 +89,22 @@ export default {
                         }
                     })
                     .catch(ex => {
-                        this.reportError();
+                        this.reportError(ex.response);
                     });
             }
         },
-        reportError() {
+        reportError(response) {
             this.err = true;
             this.loading = false;
+            this.processError(response);
+        },
+        processError(response) {
+            let data = response.data
+            if (data.errors !== undefined) {
+                this.err = false
+                this.userError = true
+                this.userErrors = data.errors.user
+            }
         },
         passwordValid() {
             return this.password === this.password_repeated ? true : false;
