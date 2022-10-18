@@ -6,4 +6,8 @@ class ExplorePolicy < ApplicationPolicy
   def rss?
     true
   end
+
+  def top?
+    true
+  end
 end

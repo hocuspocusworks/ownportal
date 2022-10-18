@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do
     get 'explores/search'
     get 'explores/rss'
+    get 'explores/top'
     resources :users do
       collection do
         get :all_users

@@ -17,12 +17,24 @@ module Api
       render_json Api::Services::RssFinder.new(params[:url], current_user).call
     end
 
+    def top
+      render_json top_category_results
+    end
+
     private
+
+    def top_category_results
+      Source.where("categories ?| ARRAY[:query]", query: categories).limit(100)
+    end
 
     def search_by_keyword
       return Source.with_keyword(keyword).with_safe if true?(safe)
 
       Source.with_keyword(keyword).with_allowed
+    end
+
+    def categories
+      user_params[:categories].split(',')
     end
 
     def safe
@@ -38,7 +50,7 @@ module Api
     end
 
     def user_params
-      params.permit([:keyword, :safe])
+      params.permit([:keyword, :safe, :categories])
     end
 
     def true?(value)
