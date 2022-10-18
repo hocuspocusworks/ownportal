@@ -97,7 +97,7 @@ export default {
             sources: [],
             groups: [],
             suggestions: {},
-            categories: ["News", "Science", "Cooking", "Podcast"],
+            categories: ["News", "Podcast", "Economy", "Science", "Cooking"],
             items: [
                 {label: 'Home', icon: 'pi pi-fw pi-home'},
                 {label: 'Calendar', icon: 'pi pi-fw pi-calendar'},
@@ -131,7 +131,7 @@ export default {
             return config.isSafeSearchOn() ? '&safe=true' : '&safe=false'
         },
         loadSuggestions() {
-            let url = config.gateway + config.getPath('top') + '?categories=News,Science,Cooking,Podcast'
+            let url = config.gateway + config.getPath('top') + '?categories=News,Science,Cooking,Podcast,Economy'
             axios.get(url, { headers: config.authorisationHeader() })
                 .then(response => {
                     if (response.status === 200) {
