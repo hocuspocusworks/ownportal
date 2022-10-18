@@ -144,7 +144,7 @@ export default {
         pushSuggestion(item) {
             if (item.categories[0] !== undefined &&
                 item.categories[0] in this.suggestions &&
-                this.suggestions[item.categories[0]].length < 8) {
+                this.suggestions[item.categories[0]].length < 4) {
                 this.suggestions[item.categories[0]].push(item)
             } else if (item.categories[0] !== undefined) {
                 this.suggestions[item.categories[0]] = [item]
