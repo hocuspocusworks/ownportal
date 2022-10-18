@@ -25,7 +25,8 @@ const config = {
             'admin_sources': '/portal/api/admin/sources',
             'admin_categories': '/portal/api/admin/categories',
             'admin_stats': '/portal/api/admin/stats',
-            'users': '/portal/api/users'
+            'users': '/portal/api/users',
+            'top': '/portal/api/explores/top'
         }
     },
     getPath(endpoint) {

@@ -29,30 +29,6 @@
                         </div>
                     </div>
 
-                    <!--
-                    <div v-if="featured" class="row p-0 m-0">
-                        <div class="d-flex mt-3 ps-4">
-                            <div><small class="fw-bold">TRENDING</small></div>
-                        </div>
-    
-                        <div class="row ms-1 mt-2">
-                            <div class="col-3 p-2" v-for="(item, i) in trending" :key="i">
-                                <div class="card bg-gray-200" style="height: 14rem;">{{ item.name }}</div>
-                            </div>
-                        </div>
-    
-                        <div class="d-flex mt-3 ps-4">
-                            <div><small class="fw-bold">CATEGORIES</small></div>
-                        </div>
-    
-                        <div class="row ms-1 mt-2">
-                            <div class="col-3 p-2" v-for="(item, i) in categories" :key="i">
-                                <div class="card bg-gray-200" style="height: 6rem;">{{ item.name }}</div>
-                            </div>
-                        </div>
-                    </div>
-                    -->
-
                     <div v-if="!featured" class="p-0 m-0">
                         <div class="mb-3" v-for="(item, i) in sources" :key="i">
                             <div class="row border rounded gx-0">
@@ -68,6 +44,31 @@
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp, item.name, item.url)">{{ grp }}</a></li>
                                         </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row p-0 m-0">
+                        <div v-for="(category, i) in categories" :key="i">
+                            <div class="d-flex mt-3 ps-4">
+                                <div><small class="fw-bold" style="text-transform: uppercase">{{ category }}</small></div>
+                            </div>
+
+                            <div class="row ms-1 mt-2">
+                                <div class="col-3 p-2" v-for="(item, j) in suggestions[category]" :key="j">
+                                    <div class="card bg-gray-200" style="height: 14rem;">
+                                        <div class="card-body">
+                                            <h5 class="card-title">{{ shortenText(item.name, 36) }}</h5>
+                                            <p class="card-text">{{ shortenText(item.description, 36 * 2) }}</p>
+                                            <div class="input-group justify-content-center">
+                                                <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Add to a Group</button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item" href="#" v-for="(grp, j) in groups" @click="addToGroup(grp, item.name, item.url)">{{ grp }}</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -95,8 +96,8 @@ export default {
             results: true,
             sources: [],
             groups: [],
-            trending: ["t1", "t2", "t3", "t4"],
-            categories: ["a", "b", "c", "d"],
+            suggestions: {},
+            categories: ["News", "Science", "Cooking", "Podcast"],
             items: [
                 {label: 'Home', icon: 'pi pi-fw pi-home'},
                 {label: 'Calendar', icon: 'pi pi-fw pi-calendar'},
@@ -104,14 +105,6 @@ export default {
         }
     },
     methods: {
-        loadCategories() {
-            let url = config.gateway + config.getPath('explore_categories')
-            axios.get(url, { headers: config.authorisationHeader() })
-                .then(response => {
-                    this.trending = response.data.categories.slice(0, 4);
-                    this.categories = response.data.categories.slice(4);
-                });
-        },
         loadGroups() {
             this.groups = config.fetchGroups()
         },
@@ -136,7 +129,36 @@ export default {
         },
         safeSearch() {
             return config.isSafeSearchOn() ? '&safe=true' : '&safe=false'
+        },
+        loadSuggestions() {
+            let url = config.gateway + config.getPath('top') + '?categories=News,Science,Cooking,Podcast'
+            axios.get(url, { headers: config.authorisationHeader() })
+                .then(response => {
+                    if (response.status === 200) {
+                        response.data.forEach(item => {
+                            this.pushSuggestion(item)
+                        })
+                    }
+                })
+        },
+        pushSuggestion(item) {
+            if (item.categories[0] !== undefined &&
+                item.categories[0] in this.suggestions &&
+                this.suggestions[item.categories[0]].length < 8) {
+                this.suggestions[item.categories[0]].push(item)
+            } else if (item.categories[0] !== undefined) {
+                this.suggestions[item.categories[0]] = [item]
+            }
+        },
+        shortenText(text, length) {
+            return text.length > length ?
+                text.substring(0, length) + "..." :
+                text;
         }
+    },
+    mounted() {
+        this.loadGroups()
+        this.loadSuggestions()
     },
     watch: {
         search: function(newValue, oldValue) {
