@@ -57,7 +57,7 @@
                             </div>
 
                             <div class="row ms-1 mt-2">
-                                <div class="col-3 p-2" v-for="(item, j) in suggestions[category]" :key="j">
+                                <div class="col-sm-12 col-lg-3 p-2" v-for="(item, j) in suggestions[category]" :key="j">
                                     <div class="card bg-gray-200" style="height: 14rem;">
                                         <div class="card-body">
                                             <h5 class="card-title">{{ shortenText(item.name, 36) }}</h5>
