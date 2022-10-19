@@ -38,13 +38,25 @@ export default {
   },
   methods: {
     quillText() {
-      console.log(this.quill.getContents())
+      console.log(this.quill.root.innerHTML)
+      // console.log(this.quill.getContents())
     }
   },
   mounted() {
-    this.quill = new Quill('#editor', {
+    var toolbarOptions = [
+      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+
+      ['bold', 'italic', 'underline'],
+
+      ['clean']
+    ]
+    let options = {
+      modules: {
+        toolbar: toolbarOptions
+      },
       theme: 'snow'
-    })
+    }
+    this.quill = new Quill('#editor', options)
   }
 }
 </script>
