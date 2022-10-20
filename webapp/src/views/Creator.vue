@@ -28,6 +28,8 @@
 <script>
 import Quill from 'quill'
 import "quill/dist/quill.snow.css"
+import axios from 'axios'
+import config from '../config'
 
 export default {
   name: 'Creator',
@@ -38,8 +40,21 @@ export default {
   },
   methods: {
     quillText() {
-      console.log(this.quill.root.innerHTML)
-      // console.log(this.quill.getContents())
+      let url = config.gateway + config.getPath('blogs')
+      let payload = { 'blog':
+        {
+        'title': 'test',
+        'heading': 'title',
+        'content': this.quill.root.innerHTML,
+        'language': 'en',
+        'active': 'true',
+        'space_id': '2'
+        }
+      }
+      axios.post(url, payload, { headers: config.authorisationHeader() })
+        .then(response => {
+          console.log('sent')
+        })
     }
   },
   mounted() {
