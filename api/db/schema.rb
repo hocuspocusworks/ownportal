@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_181811) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_192631) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,7 +25,9 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_181811) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "space_id", null: false
+    t.string "html_file_name"
     t.index ["space_id"], name: "index_blogs_on_space_id"
+    t.index ["user_id", "html_file_name"], name: "index_blogs_on_user_id_and_html_file_name", unique: true
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
