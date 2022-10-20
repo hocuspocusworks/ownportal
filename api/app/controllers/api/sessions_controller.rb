@@ -9,10 +9,11 @@ module Api
     skip_after_action :verify_authorized, only: [:create]
 
     def create
-      user = User.find_by(email: params[:session][:email])
+      @session = User.find_by(email: params[:session][:email])
 
-      if user_valid?(user)
-        user_token = { 'session': { 'token': encode_jwt(user), 'sysadmin': user.sysadmin, 'id': user.id } }
+      if user_valid?
+        user_token = { 'session': { 'token': encode_jwt(@session), 'sysadmin': @session.sysadmin, 'id': @session.id } }
+        set_last_logged_in
         render_json user_token, status: 201
       else
         render json: { errors: { credentials: ['are invalid'] } },
@@ -34,8 +35,13 @@ module Api
       SessionPolicy
     end
 
-    def user_valid?(user)
-      user.present? && user.deactivated_at.nil? && user.authenticate(params[:session][:password])
+    def user_valid?
+      @session.present? && @session.deactivated_at.nil? && @session.authenticate(params[:session][:password])
+    end
+
+    def set_last_logged_in
+      @session.last_logged_in = Time.current
+      @session.save
     end
   end
 end

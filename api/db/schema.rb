@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_19_200603) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_174725) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,11 +21,11 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_200603) do
     t.string "heading"
     t.text "content"
     t.boolean "active"
-    t.string "html_path"
-    t.string "rss_path"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "space_id", null: false
+    t.index ["space_id"], name: "index_blogs_on_space_id"
     t.index ["user_id"], name: "index_blogs_on_user_id"
   end
 
@@ -88,6 +88,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_200603) do
     t.index ["url"], name: "index_sources_on_url", unique: true
   end
 
+  create_table "spaces", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "description"
+    t.string "path", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "streams", force: :cascade do |t|
     t.string "name"
     t.bigint "group_id"
@@ -128,11 +136,13 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_19_200603) do
     t.boolean "sysadmin"
     t.jsonb "settings"
     t.datetime "deactivated_at"
+    t.datetime "last_logged_in"
     t.index ["deactivated_at"], name: "index_users_on_deactivated_at"
     t.index ["email"], name: "unique_emails", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
   end
 
+  add_foreign_key "blogs", "spaces"
   add_foreign_key "favourites", "users"
   add_foreign_key "groups", "users"
   add_foreign_key "streams", "groups"
