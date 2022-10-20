@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     resources :sessions
     resources :favourites
     resources :highlights
+    resources :spaces
 
     namespace :admin do
       resources :sources, :categories

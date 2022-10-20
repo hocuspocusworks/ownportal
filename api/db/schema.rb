@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_10_20_174725) do
+ActiveRecord::Schema[7.0].define(version: 2022_10_20_181811) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -94,6 +94,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_174725) do
     t.string "path", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["name"], name: "index_spaces_on_name", unique: true
+    t.index ["path"], name: "index_spaces_on_path", unique: true
+    t.index ["user_id"], name: "index_spaces_on_user_id"
   end
 
   create_table "streams", force: :cascade do |t|
@@ -145,6 +149,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_10_20_174725) do
   add_foreign_key "blogs", "spaces"
   add_foreign_key "favourites", "users"
   add_foreign_key "groups", "users"
+  add_foreign_key "spaces", "users"
   add_foreign_key "streams", "groups"
   add_foreign_key "streams", "sources"
 

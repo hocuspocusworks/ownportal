@@ -10,6 +10,8 @@
 #  updated_at      :datetime         not null
 #  sysadmin        :boolean
 #  settings        :jsonb
+#  deactivated_at  :datetime
+#  last_logged_in  :datetime
 #
 
 require 'rails_helper'

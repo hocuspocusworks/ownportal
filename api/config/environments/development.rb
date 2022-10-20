@@ -70,4 +70,6 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   config.hosts << /portal/
+
+  config.space_path = '/home/jean/space/'
 end
