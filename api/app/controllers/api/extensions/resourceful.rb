@@ -4,9 +4,9 @@ module Api
       extend ActiveSupport::Concern
 
       included do
-        before_action :authorise_resource
         before_action :load_collection, only: [:index]
         before_action :resource_from_attributes, only: %i[create update]
+        before_action :authorise_resource
       end
 
       private

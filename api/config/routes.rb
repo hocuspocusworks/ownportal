@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :favourites
     resources :highlights
     resources :spaces
+    resources :blogs
 
     namespace :admin do
       resources :sources, :categories
