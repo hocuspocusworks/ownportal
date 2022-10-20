@@ -1,4 +1,6 @@
 class GenerateBlog
+  include ActionView::Helpers
+
   def initialize(blog)
     @blog = blog
   end
