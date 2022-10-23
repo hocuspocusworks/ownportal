@@ -59,6 +59,7 @@ export default {
       axios.post(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 201) {
+            localStorage.setItem('spaceId', response.data.id)
             router.push({ name: 'blogs' })
           }
         })

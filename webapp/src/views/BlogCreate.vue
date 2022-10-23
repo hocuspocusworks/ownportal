@@ -23,6 +23,7 @@ import Quill from 'quill'
 import "quill/dist/quill.snow.css"
 import axios from 'axios'
 import config from '../config'
+import router from '../router'
 
 export default {
   name: 'BlogCreated',
@@ -39,7 +40,7 @@ export default {
         'blog':
         {
           'heading': this.title,
-          'content': this.quill.root.innerHTML,
+          'content': this.parsedContent(),
           'language': 'en',
           'active': 'true',
           'space_id': config.spaceId()
@@ -47,8 +48,14 @@ export default {
       }
       axios.post(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
-          console.log('sent')
+          if (response.status === 201) {
+            router.push({ name: 'published' })
+          }
         })
+    },
+    parsedContent() {
+      var content = this.quill.root.innerHTML
+      return content.replace('<br>', '')
     }
   },
   mounted() {
