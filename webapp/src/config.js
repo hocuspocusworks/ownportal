@@ -27,6 +27,7 @@ const config = {
             'admin_stats': '/portal/api/admin/stats',
             'users': '/portal/api/users',
             'top': '/portal/api/explores/top',
+            'spaces': '/portal/api/spaces',
             'blogs': '/portal/api/blogs'
         }
     },
@@ -38,6 +39,9 @@ const config = {
     },
     userId() {
         return localStorage.getItem('userId')
+    },
+    spaceId() {
+        return localStorage.getItem('spaceId')
     },
     isAdmin() {
         return localStorage.getItem('sysadmin') === 'true' ? true : false

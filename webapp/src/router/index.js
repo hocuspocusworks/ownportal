@@ -14,6 +14,10 @@ import AdminCategory from '../views/AdminCategory.vue';
 import AdminStats from '../views/AdminStats.vue';
 import AdminUser from '../views/AdminUser.vue';
 import Creator from '../views/Creator.vue';
+import Space from '../views/Space.vue';
+import Blog from '../views/Blog.vue';
+import BlogCreate from '../views/BlogCreate.vue';
+import BlogPublished from '../views/BlogPublished.vue';
 
 const routes = [
   {
@@ -40,7 +44,13 @@ const routes = [
     ]
   },
   {
-    name: 'creator', path: '/creator', component: Creator
+    name: 'creator', path: '/creator', component: Creator, redirect: { name: 'spaces' }, children: [
+      { name: 'spaces', path: 'spaces', component: Space },
+      { name: 'blogs', path: 'blogs', component: Blog, children: [
+        { name: 'post', path: 'post', component: BlogCreate },
+        { name: 'published', path: 'published', component: BlogPublished }
+      ] }
+    ]
   },
   { name: "login", path: "/login", component: Login },
   { name: "register", path: "/register", component: Register },
