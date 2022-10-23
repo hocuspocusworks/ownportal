@@ -6,10 +6,14 @@ class GenerateBlog
     @space = space
   end
 
-  def call
+  def add
     template = File.read(blog_template)
     result = ERB.new(template).result(binding)
     save_to_file(result)
+  end
+
+  def remove
+    File.delete(full_html_path) if File.exist?(full_html_path)
   end
 
   private

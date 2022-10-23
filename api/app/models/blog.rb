@@ -20,14 +20,19 @@ class Blog < ApplicationRecord
 
   before_save :generate_html_file_name
   after_commit :generate_blog, on: :create
+  after_commit :remove_blog, on: :destroy
   after_commit :generate_feed
 
   def generate_html_file_name
     self.html_file_name = heading.parameterize
   end
 
+  def remove_blog
+    GenerateBlog.new(self, space).remove
+  end
+
   def generate_blog
-    GenerateBlog.new(self, space).call
+    GenerateBlog.new(self, space).add
   end
 
   def generate_feed
