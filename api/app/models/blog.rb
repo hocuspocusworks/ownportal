@@ -19,7 +19,7 @@ class Blog < ApplicationRecord
   belongs_to :user
 
   before_save :generate_html_file_name
-  after_commit :generate_blog
+  after_commit :generate_blog, on: :create
   after_commit :generate_feed
 
   def generate_html_file_name

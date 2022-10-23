@@ -3,6 +3,7 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
+      render_json @blogs
     end
 
     def create
@@ -14,6 +15,8 @@ module Api
     end
 
     def destroy
+      @space.destroy
+      head :no_content
     end
 
     private
@@ -24,6 +27,10 @@ module Api
 
     def load_resource
       @space ||= Blog.find(params[:id])
+    end
+
+    def load_collection
+      @blogs ||= resource_scope
     end
   end
 end
