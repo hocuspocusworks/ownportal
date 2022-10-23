@@ -22,6 +22,7 @@ class GenerateFeed
             xml.title(item.heading)
             xml.link(blog_url(item))
             xml.description(item.content)
+            xml.pubDate(item.published_date)
           end
         end
       end
