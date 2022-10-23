@@ -49,6 +49,7 @@ export default {
         .then(response => {
           if (response.status === 200) {
             localStorage.setItem('spaceId', response.data.id)
+            localStorage.setItem('spacePath', response.data.path)
             router.push({ name: 'blogs' })
           }
         })
@@ -60,6 +61,7 @@ export default {
         .then(response => {
           if (response.status === 201) {
             localStorage.setItem('spaceId', response.data.id)
+            localStorage.setItem('spacePath', response.data.path)
             router.push({ name: 'blogs' })
           }
         })

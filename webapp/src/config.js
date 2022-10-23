@@ -43,6 +43,9 @@ const config = {
     spaceId() {
         return localStorage.getItem('spaceId')
     },
+    spacePath() {
+        return localStorage.getItem('spacePath')
+    },
     isAdmin() {
         return localStorage.getItem('sysadmin') === 'true' ? true : false
     },

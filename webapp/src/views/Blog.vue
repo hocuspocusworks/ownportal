@@ -22,60 +22,17 @@
 </template>
 
 <script>
-import Quill from 'quill'
-import "quill/dist/quill.snow.css"
-import axios from 'axios'
-import config from '../config'
 import router from '../router'
 
 export default {
   name: 'Blog',
-  data() {
-    return {
-      quill: null
-    }
-  },
   methods: {
     published() {
       router.push({ name: 'published' })
     },
     newPost() {
       router.push({ name: 'post' })
-    },
-    quillText() {
-      let url = config.gateway + config.getPath('blogs')
-      let payload = {
-        'blog':
-        {
-          'title': 'test',
-          'heading': 'title',
-          'content': this.quill.root.innerHTML,
-          'language': 'en',
-          'active': 'true',
-          'space_id': '2'
-        }
-      }
-      axios.post(url, payload, { headers: config.authorisationHeader() })
-        .then(response => {
-          console.log('sent')
-        })
     }
-  },
-  mounted() {
-    var toolbarOptions = [
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-      ['bold', 'italic', 'underline'],
-
-      ['clean']
-    ]
-    let options = {
-      modules: {
-        toolbar: toolbarOptions
-      },
-      theme: 'snow'
-    }
-    this.quill = new Quill('#editor', options)
   }
 }
 </script>
