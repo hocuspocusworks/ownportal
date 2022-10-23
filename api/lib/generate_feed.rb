@@ -12,15 +12,17 @@ class GenerateFeed
     xml = Builder::XmlMarkup.new
 
     xml.instruct!
-    xml.channel do
-      xml.title(@space.name)
-      xml.link(space_url)
-      xml.description(@space.description)
-      items.each do |item|
-        xml.item do
-          xml.title(item.heading)
-          xml.link(blog_url(item))
-          xml.description(item.content)
+    xml.rss(version: '2.0') do
+      xml.channel do
+        xml.title(@space.name)
+        xml.link(space_url)
+        xml.description(@space.description)
+        items.each do |item|
+          xml.item do
+            xml.title(item.heading)
+            xml.link(blog_url(item))
+            xml.description(item.content)
+          end
         end
       end
     end
