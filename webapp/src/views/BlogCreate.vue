@@ -55,7 +55,7 @@ export default {
     },
     parsedContent() {
       var content = this.quill.root.innerHTML
-      return content.replace('<br>', '')
+      return content.replaceAll('<br>', '')
     }
   },
   mounted() {
