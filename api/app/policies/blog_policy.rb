@@ -16,7 +16,7 @@ class BlogPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:title, :language, :published_date, :heading, :content, :active, :space_id]
+    [:language, :published_date, :heading, :content, :active, :space_id]
   end
 
   class Scope < ApplicationScope

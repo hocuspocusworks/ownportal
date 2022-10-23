@@ -1,7 +1,6 @@
 class BlogDeserialiser
   def self.deserialise(resource, params, user)
     blog = resource || Blog.new
-    blog.title = params[:title] || resource&.title
     blog.heading = params[:heading] || resource&.heading
     blog.content = params[:content] || resource&.content
     blog.language = params[:language] || resource&.language

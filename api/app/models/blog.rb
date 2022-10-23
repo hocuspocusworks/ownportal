@@ -3,7 +3,6 @@
 # Table name: blogs
 #
 #  id             :bigint           not null, primary key
-#  title          :string
 #  language       :string
 #  published_date :datetime
 #  heading        :string
@@ -21,23 +20,17 @@ class Blog < ApplicationRecord
 
   before_save :generate_html_file_name
   after_commit :generate_blog
+  after_commit :generate_feed
 
   def generate_html_file_name
-    self.html_file_name = title.parameterize
+    self.html_file_name = heading.parameterize
   end
 
   def generate_blog
-    result = GenerateBlog.new(self).call
-    File.open(full_path, 'w+') do |file|
-      file.write(result)
-    end
+    GenerateBlog.new(self, space).call
   end
 
-  def full_path
-    "#{blog_path}/#{html_file_name}.html"
-  end
-
-  def blog_path
-    Rails.configuration.space_path + space.path
+  def generate_feed
+    GenerateFeed.new(self, space).call
   end
 end

@@ -3,6 +3,10 @@ class SpacePolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    admin? || current_user?
+  end
+
   def create?
     true
   end
