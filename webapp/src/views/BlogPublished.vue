@@ -40,7 +40,6 @@ export default {
       axios.get(url, { headers: config.authorisationHeader() })
         .then(response => {
           this.blogs = response.data
-          console.log(this.blogs)
         })
     },
     open(path) {
