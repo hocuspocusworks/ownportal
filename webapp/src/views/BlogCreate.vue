@@ -23,7 +23,6 @@ import Quill from 'quill'
 import "quill/dist/quill.snow.css"
 import axios from 'axios'
 import config from '../config'
-import router from '../router'
 
 export default {
   name: 'BlogCreated',

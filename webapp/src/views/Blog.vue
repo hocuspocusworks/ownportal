@@ -9,6 +9,9 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item active">
+            <a class="nav-link" href="https://ownportal.net/">Ownportal</a>
+          </li>
+          <li class="nav-item active">
             <a class="nav-link" href="#" @click="published">Published</a>
           </li>
           <li class="nav-item">
