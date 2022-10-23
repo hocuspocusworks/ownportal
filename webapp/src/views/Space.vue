@@ -1,26 +1,34 @@
 <template>
   <div class="container">
-    <h3>New space</h3>
-  
-    <div class="alert alert-info" role="alert">
-      Use a space to create a personal blog-alike website. Spaces are automatically converted into RSS feeds which you can
-      share with others. There is one space per account limit.
+    <div v-if="loading">
+      <div class="spinner-border m-4" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
     </div>
-  
-    <form class="row g-3">
-      <div class="col-12">
-        <label for="inputEmail4" class="form-label">Space name</label>
-        <input type="text" class="form-control" id="name" v-model="name">
-        <span>URL: https://space.ownportal.net/<span v-text="parameterisedPath"></span></span>
+
+    <div v-if="!loading">
+      <h3>New space</h3>
+    
+      <div class="alert alert-info" role="alert">
+        Use a space to create a personal blog-alike website. Spaces are automatically converted into RSS feeds which you can
+        share with others. There is one space per account limit.
       </div>
-      <div class="col-12">
-        <label for="inputPassword4" class="form-label">Description</label>
-        <textarea class="form-control" aria-label="With textarea" v-model="description"></textarea>
-      </div>
-      <div class="col-12">
-        <button type="button" @click="createSpace" class="btn btn-primary">Create</button>
-      </div>
-    </form>
+    
+      <form class="row g-3">
+        <div class="col-12">
+          <label for="inputEmail4" class="form-label">Space name</label>
+          <input type="text" class="form-control" id="name" v-model="name">
+          <span>URL: https://space.ownportal.net/<span v-text="parameterisedPath"></span></span>
+        </div>
+        <div class="col-12">
+          <label for="inputPassword4" class="form-label">Description</label>
+          <textarea class="form-control" aria-label="With textarea" v-model="description"></textarea>
+        </div>
+        <div class="col-12">
+          <button type="button" @click="createSpace" class="btn btn-primary">Create</button>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 
@@ -33,6 +41,7 @@ export default {
   name: 'Space',
   data() {
     return {
+      loading: true,
       name: '',
       description: ''
     }
@@ -50,7 +59,9 @@ export default {
           if (response.status === 200) {
             localStorage.setItem('spaceId', response.data.id)
             localStorage.setItem('spacePath', response.data.path)
-            router.push({ name: 'blogs' })
+            router.push({ name: 'published' })
+          } else {
+            this.loading = false
           }
         })
     },
@@ -62,7 +73,7 @@ export default {
           if (response.status === 201) {
             localStorage.setItem('spaceId', response.data.id)
             localStorage.setItem('spacePath', response.data.path)
-            router.push({ name: 'blogs' })
+            router.push({ name: 'published' })
           }
         })
     },
