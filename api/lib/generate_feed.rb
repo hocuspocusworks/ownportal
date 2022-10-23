@@ -26,7 +26,7 @@ class GenerateFeed
     end
 
     File.open(full_feed_path, 'w+') do |file|
-      file.write(xml)
+      file.write(xml.target!)
     end
   end
 
