@@ -49,7 +49,7 @@ export default {
       axios.post(url, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 201) {
-            router.push({ name: 'published' })
+            location.reload()
           }
         })
     },
