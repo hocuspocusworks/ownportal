@@ -24,7 +24,12 @@ module Api
     private
 
     def top_category_results
-      Source.where("categories ?| ARRAY[:query]", query: categories).limit(100)
+      Source
+        .where("categories ?| ARRAY[:query]", query: categories)
+        .where(published: true)
+        .where(restricted: false)
+        .order(updated_at: :desc)
+        .limit(100)
     end
 
     def search_by_keyword
