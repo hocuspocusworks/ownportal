@@ -18,7 +18,7 @@ class ApplicationController < ActionController::API
   end
 
   def throttle
-    raise Exceptions::TooManyRequests if requests_count > requests_limit
+    raise Exceptions::TooManyRequests if requests_count > requests_limit || ip_lock?
 
     next_request_count
   end
@@ -36,11 +36,26 @@ class ApplicationController < ActionController::API
   end
 
   def too_many_requests_error
-    record_throttle
+    record_throttle unless ip_lock?
+    set_ip_lock
     render json: { 'errors': { 'throttle': 'request limit reached' } }, status: :too_many_requests
   end
 
   def record_throttle
     Throttle.create(count: requests_count, remote_ip: request.remote_ip)
+  end
+
+  def set_ip_lock
+    Rails.cache.write(ip_key, ip_key, expires_in: 1.minute)
+  end
+
+  def ip_lock?
+    return false unless Rails.cache.fetch(ip_key)
+
+    true
+  end
+
+  def ip_key
+    "#{request.remote_ip}_lock"
   end
 end
