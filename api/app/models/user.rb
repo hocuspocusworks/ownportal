@@ -35,6 +35,17 @@ class User < ApplicationRecord
   end
 
   def default_group
-    Group.create(name: 'Home', user: self)
+    group = Group.create(name: 'Home', user: self)
+    default_source(group)
+  end
+
+  def default_source(group)
+    return unless source_exists?
+
+    Stream.create(name: "Ownportal's blog", group_id: group.id, source_id: 259, user_id: id)
+  end
+
+  def source_exists?
+    Source.exists?(259)
   end
 end
