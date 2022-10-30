@@ -36,6 +36,11 @@ class ApplicationController < ActionController::API
   end
 
   def too_many_requests_error
+    record_throttle
     render json: { 'errors': { 'throttle': 'request limit reached' } }, status: :too_many_requests
+  end
+
+  def record_throttle
+    Throttle.create(count: requests_count, remote_ip: request.remote_ip)
   end
 end
