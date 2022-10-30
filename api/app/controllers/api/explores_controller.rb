@@ -27,7 +27,7 @@ module Api
       Source
         .where("categories ?| ARRAY[:query]", query: categories)
         .where(published: true)
-        .where(restricted: false)
+        .where(visibility: Source.visibilities[:safe])
         .order(updated_at: :desc)
         .limit(100)
     end
