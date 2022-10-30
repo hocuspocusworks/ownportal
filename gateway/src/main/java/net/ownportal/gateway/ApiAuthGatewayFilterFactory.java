@@ -24,10 +24,10 @@ public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Ap
 
     private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.debug("hitting API auth filter");
-        log.info("Request on gateway from " + remoteIp(exchange));
+        final var exchangeWithIp = exchange(exchange);
         return AuthToken
-            .validate(extractApiToken(exchange(exchange)))
-            .flatMap(result -> chain.filter(exchange(exchange)));
+            .validate(extractApiToken(exchangeWithIp))
+            .flatMap(result -> chain.filter(exchangeWithIp));
     }
 
     private ServerWebExchange exchange(ServerWebExchange exchange) {
@@ -43,9 +43,10 @@ public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Ap
     }
 
     private String remoteIp(ServerWebExchange exchange) {
-        var remoteAddress = exchange.getRequest().getRemoteAddress();
-        if (remoteAddress != null) {
-            remoteAddress.getHostName();
+        var forwardedFor = exchange.getRequest().getHeaders().get("X-Forwarded-For");
+        if (forwardedFor != null) {
+            log.info("Nginx X-Forwarded-For: ", forwardedFor.get(0));
+            forwardedFor.get(0);
         }
         return "";
     }
