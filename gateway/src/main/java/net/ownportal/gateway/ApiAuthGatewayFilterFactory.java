@@ -24,26 +24,9 @@ public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Ap
 
     private Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         log.debug("hitting API auth filter");
-        final var exchangeWithIp = exchange(exchange);
         return AuthToken
-            .validate(extractApiToken(exchangeWithIp))
-            .flatMap(result -> chain.filter(exchangeWithIp));
-    }
-
-    private ServerWebExchange exchange(ServerWebExchange exchange) {
-        return exchangeWithForwardedIp(exchange);
-    }
-
-    private ServerWebExchange exchangeWithForwardedIp(ServerWebExchange exchange) {
-        var mutatedRequest = exchange.getRequest()
-            .mutate()
-            .header("X-Forwarded-For", remoteIp(exchange))
-            .build();
-        return exchange.mutate().request(mutatedRequest).build();
-    }
-
-    private String remoteIp(ServerWebExchange exchange) {
-        return exchange.getRequest().getHeaders().getFirst("X-Forwarded-For");
+            .validate(extractApiToken(exchange))
+            .flatMap(result -> chain.filter(exchange));
     }
 
     private static String extractApiToken(ServerWebExchange exchange) {
