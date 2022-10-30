@@ -50,6 +50,7 @@
                 </div>
             </div>
 
+            <p>By pressing register you agree to the <a target="_blank" href="https://space.ownportal.net/ownportal-s-blog/privacy-policy-terms-of-use.html">Privacy Policy and Terms of Use</a>.</p>
             <p class="mt-5 mb-3 text-muted">&copy; 2022</p>
         </form>
     </div>
