@@ -18,7 +18,6 @@ class ApplicationController < ActionController::API
   end
 
   def throttle
-    Rails.logger.info("Request on api from: #{request.remote_ip}")
     raise Exceptions::TooManyRequests if requests_count > requests_limit
 
     next_request_count
