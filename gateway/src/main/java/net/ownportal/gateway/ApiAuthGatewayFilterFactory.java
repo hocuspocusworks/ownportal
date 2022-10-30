@@ -43,12 +43,7 @@ public class ApiAuthGatewayFilterFactory extends AbstractGatewayFilterFactory<Ap
     }
 
     private String remoteIp(ServerWebExchange exchange) {
-        var forwardedFor = exchange.getRequest().getHeaders().get("X-Forwarded-For");
-        if (forwardedFor != null) {
-            log.info("Nginx X-Forwarded-For: ", forwardedFor.get(0));
-            forwardedFor.get(0);
-        }
-        return "";
+        return exchange.getRequest().getHeaders().getFirst("X-Forwarded-For");
     }
 
     private static String extractApiToken(ServerWebExchange exchange) {
