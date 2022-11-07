@@ -80,6 +80,10 @@ export default {
       localStorage.setItem('settings', this.my_settings);
     },
     remove() {
+      if (!confirm('Are you sure?')) {
+        return
+      }
+
       let request = config.gateway + config.getPath('users') + '/' + this.user_id
       axios.delete(request, { headers: config.authorisationHeader() })
         .then(response => {
