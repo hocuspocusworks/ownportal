@@ -30,7 +30,7 @@ class UserPolicy < ApplicationPolicy
     admin_and_user_permissions
   end
 
-  def delete?
+  def destroy?
     admin_and_user_permissions
   end
 

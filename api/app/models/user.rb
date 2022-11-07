@@ -17,8 +17,12 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token
 
-  has_many :streams, through: :groups
-  has_many :highlights
+  has_many :spaces, dependent: :destroy
+  has_many :groups, dependent: :destroy
+  has_many :streams, through: :groups, dependent: :destroy
+  has_many :highlights, dependent: :destroy
+  has_many :favourites, dependent: :destroy
+  has_many :sources, foreign_key: 'creator_id', dependent: :nullify
 
   validates :email, presence: true,
                     uniqueness: { case_sensitive: false },
