@@ -146,11 +146,18 @@ export default {
                 }).then(response => {
                     this.updateView(response.data)
                 }).catch(error => {
+                    this.checkLogout(error)
                     this.updateError();
                 });
         },
         source(number) {
             this.selectedGroup = number;
+        },
+        checkLogout(error) {
+            if (error.response.status === 403) {
+                config.clearAll()
+                this.$emit('logout')
+            }
         },
         updateView(data) {
             this.data = data

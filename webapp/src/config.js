@@ -64,6 +64,14 @@ const config = {
     reload() {
         location.reload()
     },
+    clearAll() {
+        localStorage.setItem('userId', null)
+        localStorage.setItem('spaceId', null)
+        localStorage.setItem('spacePath', null)
+        localStorage.setItem('sysadmin', null)
+        localStorage.setItem('settings', null)
+        localStorage.setItem('token', null)
+    },
     setScreenSize() {
         localStorage.setItem('screenWidth', window.innerWidth)
         localStorage.setItem('screenHeigth', window.innerHeight)

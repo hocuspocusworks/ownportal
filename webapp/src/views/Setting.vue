@@ -24,6 +24,14 @@
         <input type="checkbox" v-model="dark" @click="save('dark')" />
       </div>
     </div>
+    <div class="row">
+      <div class="col-4">
+        <p>Delete account</p>
+      </div>
+      <div class="col-4">
+        <button type="button" class="btn btn-danger" @click="remove()">Delete account</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -70,6 +78,16 @@ export default {
     },
     saveLocal() {
       localStorage.setItem('settings', this.my_settings);
+    },
+    remove() {
+      let request = config.gateway + config.getPath('users') + '/' + this.user_id
+      axios.delete(request, { headers: config.authorisationHeader() })
+        .then(response => {
+          if (response.status === 204) {
+            config.clearAll()
+            config.reload()
+          }
+        })
     }
   },
   mounted() {
