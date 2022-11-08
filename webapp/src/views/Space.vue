@@ -63,7 +63,9 @@ export default {
           } else {
             this.loading = false
           }
-        })
+        }).catch(_error => {
+          this.loading = false
+        }) 
     },
     createSpace() {
       let url = config.gateway + config.getPath('spaces')
