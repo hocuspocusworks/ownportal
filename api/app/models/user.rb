@@ -17,12 +17,12 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token
 
-  has_many :blogs, dependent: :delete
-  has_many :spaces, dependent: :delete
-  has_many :groups, dependent: :delete
-  has_many :streams, through: :groups, dependent: :delete
-  has_many :highlights, dependent: :delete
-  has_many :favourites, dependent: :delete
+  has_many :blogs, dependent: :delete_all
+  has_many :spaces, dependent: :destroy
+  has_many :groups, dependent: :destroy
+  has_many :streams, through: :groups, dependent: :destroy
+  has_many :highlights, dependent: :destroy
+  has_many :favourites, dependent: :destroy
   has_many :sources, foreign_key: 'creator_id', dependent: :nullify
 
   validates :email, presence: true,
