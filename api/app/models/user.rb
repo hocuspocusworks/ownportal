@@ -17,6 +17,7 @@ class User < ApplicationRecord
   has_secure_password
   has_secure_token
 
+  has_many :blogs, dependent: :destroy
   has_many :spaces, dependent: :destroy
   has_many :groups, dependent: :destroy
   has_many :streams, through: :groups, dependent: :destroy
