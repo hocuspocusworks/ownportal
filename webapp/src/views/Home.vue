@@ -9,7 +9,8 @@
             </div>
         </div>
         <div class="d-flex min-h-screen" :class="themeText">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @favourite="favourite" @highlight="highlight" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore"
+                @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
@@ -97,6 +98,10 @@ export default {
         },
         highlight() {
             router.push({name: 'highlight'})
+            this.toggleSidebar()
+        },
+        space() {
+            router.push({name: 'creator'})
             this.toggleSidebar()
         },
         setting() {

@@ -14,6 +14,10 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toHighlights">Highlights</button>
             </div>
             <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-book me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSpaces">Spaces</button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-gear me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSettings">Settings</button>
             </div>
@@ -199,6 +203,9 @@ export default {
         },
         toHighlights() {
             this.$emit('highlight')
+        },
+        toSpaces() {
+            this.$emit('space')
         },
         toExplore() {
             this.$emit('explore')
