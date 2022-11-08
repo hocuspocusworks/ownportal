@@ -29,7 +29,7 @@
         <p>Delete account</p>
       </div>
       <div class="col-4">
-        <button type="button" class="btn btn-danger" @click="remove()">Delete account</button>
+        <button type="button" class="btn btn-danger" @click="remove()">Destroy account</button>
       </div>
     </div>
   </div>
