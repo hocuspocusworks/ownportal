@@ -27,3 +27,8 @@ spring:
           - Path=/login/**
           filters:
           - StripPrefix=1
+        - id: sidekiq
+          uri: http://localhost:3000/sidekiq
+          predicates:
+          - Path=/sidekiq/**
+
