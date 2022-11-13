@@ -3,6 +3,10 @@ class BlogPolicy < ApplicationPolicy
     true
   end
 
+  def show?
+    true
+  end
+
   def create?
     Space.find(record.space_id).user_id == user.id
   end

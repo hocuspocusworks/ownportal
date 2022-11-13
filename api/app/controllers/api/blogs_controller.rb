@@ -6,6 +6,10 @@ module Api
       render_json @blogs
     end
 
+    def show
+      render_json @blog
+    end
+
     def create
       save_form
     end
@@ -15,7 +19,7 @@ module Api
     end
 
     def destroy
-      @space.destroy
+      @blog.destroy
       head :no_content
     end
 
@@ -26,7 +30,7 @@ module Api
     end
 
     def load_resource
-      @space ||= Blog.find(params[:id])
+      @blog ||= Blog.find(params[:id])
     end
 
     def load_collection
