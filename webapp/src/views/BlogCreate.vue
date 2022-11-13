@@ -11,7 +11,7 @@
 
     <div class="col-12 m-2">
       <label for="inputEmail4" class="form-label">Content</label>
-      <div id="editor" style="height: 300px"></div>
+      <div id="editor" style="height: 350px"></div>
     </div>
 
     <button type="button" class="btn btn-secondary" @click="quillText">Save</button>
@@ -55,6 +55,11 @@ export default {
     parsedContent() {
       var content = this.quill.root.innerHTML
       return content.replaceAll('<br>', '')
+    },
+    imageHandler() {
+      var range = this.quill.getSelection();
+      var value = prompt('What is the image URL');
+      this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
     }
   },
   mounted() {
@@ -63,11 +68,26 @@ export default {
 
       ['bold', 'italic', 'underline'],
 
+      [{ 'align': [] }],
+
+      [{ 'color': [] }, { 'background': [] }],
+
+      ['blockquote', 'code-block'],
+
+      [{ 'script': 'sub'}, { 'script': 'super' }],
+
+      ['link', 'image'],
+
       ['clean']
     ]
     let options = {
       modules: {
-        toolbar: toolbarOptions
+        toolbar: {
+          container: toolbarOptions,
+          handlers: {
+            image: this.imageHandler
+          }
+        }
       },
       theme: 'snow'
     }
