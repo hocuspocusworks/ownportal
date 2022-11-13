@@ -26,5 +26,7 @@ module Api
 
     config.x.jwt_secret = 'c8aP9xnmwXTWF1BMeBsHx02AnLe1eLDbZ50V9MQJPw'
     config.x.fetcher_url = 'http://localhost:8070'
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
