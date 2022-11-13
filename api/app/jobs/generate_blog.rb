@@ -1,19 +1,17 @@
-class GenerateBlog
+class GenerateBlog < ApplicationJob
   include ActionView::Helpers
 
-  def initialize(blog, space)
-    @blog = blog
-    @space = space
+  def perform(blog_id, space_id)
+    @blog = Blog.find(blog_id)
+    @space = Space.find(space_id)
+
+    call
   end
 
-  def add
+  def call
     template = File.read(blog_template)
     result = ERB.new(template).result(binding)
     save_to_file(result)
-  end
-
-  def remove
-    File.delete(full_html_path) if File.exist?(full_html_path)
   end
 
   private

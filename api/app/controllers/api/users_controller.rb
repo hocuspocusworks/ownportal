@@ -36,7 +36,7 @@ module Api
     end
 
     def destroy
-      @user.destroy
+      DestroyUser.perform_later(@user.id)
       render json: {}, status: :no_content
     end
 

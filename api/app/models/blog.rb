@@ -28,14 +28,14 @@ class Blog < ApplicationRecord
   end
 
   def remove_blog
-    GenerateBlog.new(self, space).remove
+    RemoveBlog.perform_later(id, space.id)
   end
 
   def generate_blog
-    GenerateBlog.new(self, space).add
+    GenerateBlog.perform_later(id, space.id)
   end
 
   def generate_feed
-    GenerateFeed.new(self, space).call
+    GenerateFeed.perform_later(id, space.id)
   end
 end

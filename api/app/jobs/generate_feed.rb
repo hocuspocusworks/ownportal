@@ -1,11 +1,13 @@
 require 'builder'
 
-class GenerateFeed
+class GenerateFeed < ApplicationJob
   include ActionView::Helpers
 
-  def initialize(blog, space)
-    @blog = blog
-    @space = space
+  def perform(blog_id, space_id)
+    @blog = Blog.find(blog_id)
+    @space = Space.find(space_id)
+
+    call
   end
 
   def call

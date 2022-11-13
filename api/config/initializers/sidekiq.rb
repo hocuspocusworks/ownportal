@@ -10,6 +10,6 @@ Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
   # - See https://thisdata.com/blog/timing-attacks-against-string-comparison/
   # - Use & (do not use &&) so that it doesn't short circuit.
   # - Use digests to stop length information leaking
-  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(user), ::Digest::SHA256.hexdigest('user')) &
-  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest('password'))
+  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(user), ::Digest::SHA256.hexdigest('ownportal')) &
+  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest('i0_D76Fe_3R'))
 end
