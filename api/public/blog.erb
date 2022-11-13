@@ -19,7 +19,7 @@
     <div class="text-center fs-6"><%= @blog.published_date %></div>
     <div class="text-center fs-2 mb-4"><%= sanitize @blog.heading %></div>
     <div class="text-left fs-5">
-      <%= sanitize @blog.content %>
+      <%= sanitize @blog.content, tags: %w(p strong em u a span blockquote pre sub sup), attributes: %w(href rel class style spellcheck target title) %>
     </div>
   </div>
 </body>
