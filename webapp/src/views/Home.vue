@@ -1,22 +1,25 @@
 <template>
     <div>
-        <nav class="navbar navbar-default fixed-top py-0" :class="themeHeader">
-            <div class="container-fluid">
-                <div class="flex-grow-1 text-start">
-                    <a href="javascript:;"><i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i></a>
-                </div>
-                <div class="align-self-center">
-                    <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
-                </div>
+        <div class="d-flex" :class="themeHeader" style="height: 3.5rem;">
+            <div class="flex-grow-1 text-start">
+                <a href="javascript:;"><i class="bi bi-list text-white" @click="toggleSidebar" style="font-size: 2.5rem;"></i></a>
             </div>
-        </nav>
-        <div class="d-flex min-h-screen content-padding" :class="themeText">
+            <div class="align-self-center">
+                <button class="btn text-white fs-4 rounded-circle me-3" @click="logout"><i class="bi bi-power"></i></button>
+            </div>
+        </div>
+        <div class="d-flex min-h-screen" :class="themeText">
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore"
                 @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
             </div>
         </div>
+        <nav id="bottomNav" class="navbar fixed-bottom d-md-none" :class="themeMenu">
+            <div class="container-fluid justify-content-center">
+                <a class="navbar-brand" @click="toTop"><i class="bi bi-house text-white"></i></a>
+            </div>
+        </nav>
     </div>
 </template>
 
