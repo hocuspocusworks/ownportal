@@ -10,6 +10,7 @@ export default {
   name: 'App',
   mounted() {
     config.setScreenSize()
+    config.pullSettings()
     if (window.location.pathname.startsWith('/sidekiq')) {
       window.location.href = config.gateway + "/sidekiq";
     } else if (window.location.pathname.startsWith('/admin')) {

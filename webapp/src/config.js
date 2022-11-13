@@ -1,3 +1,4 @@
+import axios from 'axios';
 import server from './.server';
 
 const config = {
@@ -83,6 +84,15 @@ const config = {
             let elements = groups.map(group => group.name)
             localStorage.setItem('userGroups', elements)
         }
+    },
+    pullSettings() {
+        let url = this.gateway + this.getPath('users') + '/' + config.userId()
+        axios.get(url, { headers: this.authorisationHeader() })
+            .then(response => {
+                if (response.status === 200) {
+                    localStorage.setItem('settings', response.data.settings)
+                }
+            })
     }
 };
 
