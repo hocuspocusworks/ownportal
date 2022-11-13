@@ -47,7 +47,7 @@ const routes = [
     name: 'creator', path: '/creator', component: Creator, redirect: { name: 'spaces' }, children: [
       { name: 'spaces', path: 'spaces', component: Space },
       { name: 'blogs', path: 'blogs', component: Blog, children: [
-        { name: 'post', path: 'post', component: BlogCreate },
+        { name: 'post', path: 'post', component: BlogCreate, props: true },
         { name: 'published', path: 'published', component: BlogPublished }
       ] }
     ]

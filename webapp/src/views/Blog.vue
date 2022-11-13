@@ -34,7 +34,7 @@ export default {
       router.push({ name: 'published' })
     },
     newPost() {
-      router.push({ name: 'post' })
+      router.push({ name: 'post', params: {blog_id: '0'} })
     }
   }
 }

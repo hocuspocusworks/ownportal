@@ -26,10 +26,18 @@ import config from '../config'
 
 export default {
   name: 'BlogCreated',
+  props: {
+    blog_id: {
+      type: String,
+      default: ""
+    }
+  },
   data() {
     return {
       title: '',
-      quill: null
+      quill: null,
+      patch: false,
+      id: '0'
     }
   },
   methods: {
@@ -45,21 +53,55 @@ export default {
           'space_id': config.spaceId()
         }
       }
-      axios.post(url, payload, { headers: config.authorisationHeader() })
-        .then(response => {
-          if (response.status === 201) {
-            location.reload()
-          }
-        })
+      if (this.patch) {
+        this.patch = false
+        url = url + '/' + this.id
+        axios.patch(url, payload, { headers: config.authorisationHeader() })
+          .then(response => {
+            if (response.status === 200) {
+              this.id = 0
+              location.reload()
+            }
+          })
+      } else {
+        axios.post(url, payload, { headers: config.authorisationHeader() })
+          .then(response => {
+            if (response.status === 201) {
+              location.reload()
+            }
+          })
+      }
     },
     parsedContent() {
       var content = this.quill.root.innerHTML
       return content.replaceAll('<br>', '')
     },
+    loadBlog(id) {
+      if (!id || id === '0') return
+
+      this.id = id
+      let url = config.gateway + config.getPath('blogs') + '/' + id
+      axios.get(url, { headers: config.authorisationHeader() })
+        .then(response => {
+          if (response.status === 200) {
+            this.patch = true
+            this.title = response.data.heading
+            this.quill.root.innerHTML = response.data.content
+          }
+        })
+    },
     imageHandler() {
       var range = this.quill.getSelection();
       var value = prompt('What is the image URL');
       this.quill.insertEmbed(range.index, 'image', value, Quill.sources.USER);
+    }
+  },
+  watch: {
+    blog_id: {
+      handler: function(id) {
+        this.loadBlog(id)
+      },
+      immediate: true
     }
   },
   mounted() {
