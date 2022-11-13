@@ -28,5 +28,8 @@ module Api
     config.x.fetcher_url = 'http://localhost:8070'
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.action_view.sanitized_allowed_tags = ['p', 'strong', 'em', 'u', 'a', 'span', 'blockquote', 'pre', 'sub', 'sup']
+    config.action_view.sanitized_allowed_attributes = ['href', 'rel', 'class', 'style', 'spellcheck', 'target', 'title']
   end
 end
