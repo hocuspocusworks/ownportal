@@ -22,7 +22,8 @@ gem 'redis-rb'
 gem 'rest-client'
 gem 'rspec-rails'
 gem 'scenic'
-gem 'sidekiq'
+gem 'sidekiq', '~> 6.5.0'
+gem 'sidekiq-cron'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"

@@ -1,0 +1,3 @@
+notify_new_publications:
+   cron: "* * * * *"
+   class: "NotifyNewPublications"
