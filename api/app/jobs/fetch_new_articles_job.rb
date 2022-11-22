@@ -46,7 +46,6 @@ class FetchNewArticlesJob < ApplicationJob
   def newest_article?(item)
     return true if item[:published_date] > latest_entry_date(item[:source_id])
   rescue ArgumentError
-    puts "ArgumentError: not a date #{item[:published_date]} for source #{item[:source_id]}"
     false
   end
 
