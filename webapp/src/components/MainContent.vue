@@ -18,7 +18,7 @@
                     <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ item.source }} | {{ item.publishedDate }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}</h6>
                             <p><span v-html="processText(item.description)"></span></p>
                         </div>
                         <div class="pb-3">
@@ -39,7 +39,7 @@ import config from '../config';
 export default {
     name: 'MainContent',
     props: {
-        contentUrl: {
+        contentSources: {
             type: Array,
             default: []
         }
@@ -68,9 +68,9 @@ export default {
         }
     },
     watch: {
-        contentUrl: {
-            handler: function(newUrl) {
-                this.updateView(newUrl);
+        contentSources: {
+            handler: function(newSoruces) {
+                this.updateView(newSoruces);
             },
             immediate: true
         }
@@ -79,15 +79,15 @@ export default {
         dark() {
             return config.isDarkModeOn()
         },
-        updateView(url) {
+        updateView(sources) {
             this.content = null;
             this.loading = true;
             this.err = false;
             let request = config.gateway + config.getPath('rss_sources');
-            let payload = { "urls": url, "sort": "asc" }
-            axios.post(request, payload, { headers: config.authorisationHeader() })
+            let payload = { "sources": sources, "sort": "asc" }
+            axios.get(request, { headers: config.authorisationHeader(), params: payload })
                 .then(response => {
-                    this.content = response.data.data.nodes;
+                    this.content = response.data;
                 })
                 .then(load => {
                     this.loading = false;

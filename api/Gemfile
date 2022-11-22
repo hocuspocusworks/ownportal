@@ -13,6 +13,7 @@ gem "sprockets-rails"
 gem 'annotate'
 gem 'bcrypt'
 gem 'blueprinter'
+gem 'httparty'
 gem 'jwt'
 gem 'pg'
 gem 'pry'

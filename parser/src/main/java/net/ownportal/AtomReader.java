@@ -19,10 +19,16 @@ import net.ownportal.atomjax.TextType;
 
 public class AtomReader {
     private JAXBElement<FeedType> feed;
+    private String url;
     private int feedEntries = 0;
 
     public AtomReader(final byte[] rss) {
         feed = load(rss).orElse(null);
+    }
+
+    public AtomReader(final byte[] rss, final String url) {
+        feed = load(rss).orElse(null);
+        this.url = url;
     }
 
     public boolean isValid() {
@@ -34,6 +40,7 @@ public class AtomReader {
             return new RssPage();
         }
         final var rssPage = new RssPage();
+        rssPage.setRssUrl(url);
         for (var item : feed.getValue().getAuthorOrCategoryOrContributor()) {
             if (item instanceof JAXBElement) {
                 JAXBElement element = (JAXBElement) item;

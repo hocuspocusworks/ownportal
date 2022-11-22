@@ -19,7 +19,7 @@ const config = {
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
             'register': '/login/api/users',
-            'rss_sources': '/rss/rss/fetchAll',
+            'rss_sources': '/portal/api/articles',
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',
             'highlights': '/portal/api/highlights',

@@ -13,9 +13,15 @@ import net.ownportal.rssjax.RssChannel;
 
 public class RssReader {
     private Rss feed;
+    private String url;
 
     public RssReader(final byte[] rss) {
         feed = load(rss).orElse(null);
+    }
+
+    public RssReader(final byte[] rss, final String url) {
+        feed = load(rss).orElse(null);
+        this.url = url;
     }
 
     public boolean isValid() {
@@ -35,6 +41,7 @@ public class RssReader {
         rssPage.setDescription(getChannelItemValue(channel, "description"));
         rssPage.setLanguage(getChannelItemValue(channel, "language"));
         rssPage.setLastBuildDate(getChannelItemValue(channel, "lastBuildDate"));
+        rssPage.setRssUrl(url);
         int i = 0;
         for (final var item : items) {
             final var rssNode = new RssPage.RssNode();

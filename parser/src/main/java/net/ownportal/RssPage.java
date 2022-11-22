@@ -17,6 +17,7 @@ public class RssPage {
     private String description;
     private String language;
     private String lastBuildDate;
+    private String rssUrl;
     private List<RssNode> nodes = new ArrayList<>();
 
     public void addNode(RssNode node) {

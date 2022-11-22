@@ -10,9 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_14_203955) do
+ActiveRecord::Schema[7.0].define(version: 2022_11_15_210610) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "articles", force: :cascade do |t|
+    t.string "description"
+    t.string "link"
+    t.datetime "published_date"
+    t.string "publisher"
+    t.string "title"
+    t.boolean "stale"
+    t.bigint "source_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["source_id"], name: "index_articles_on_source_id"
+    t.index ["stale"], name: "index_articles_on_stale"
+    t.index ["user_id"], name: "index_articles_on_user_id"
+  end
 
   create_table "blogs", force: :cascade do |t|
     t.string "language"
@@ -150,7 +166,8 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_14_203955) do
     t.jsonb "settings"
     t.datetime "deactivated_at"
     t.datetime "last_logged_in"
-    t.boolean "paid", default: false, null: false
+    t.date "subscription_date"
+    t.date "subscription_end_date"
     t.index ["deactivated_at"], name: "index_users_on_deactivated_at"
     t.index ["email"], name: "unique_emails", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
