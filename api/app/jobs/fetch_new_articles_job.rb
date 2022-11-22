@@ -1,5 +1,5 @@
 class FetchNewArticlesJob < ApplicationJob
-  PER_PAGE = 10
+  PER_PAGE = 8
 
   def perform
     user = User.first
@@ -64,7 +64,7 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def urls_for_page(page)
-    Source.limit(PER_PAGE).offset(page * PER_PAGE).map(&:url)
+    Source.limit(PER_PAGE).offset(page * PER_PAGE).order(:id).map(&:url)
   end
 
   def fetch_content(payload, user)
