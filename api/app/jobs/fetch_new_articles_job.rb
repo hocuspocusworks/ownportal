@@ -75,7 +75,7 @@ class FetchNewArticlesJob < ApplicationJob
     if Rails.env.development?
       'http://localhost:8089/rss/rss/fetchAll'
     else
-      'https://gateway.ownportal.net/api/rss/fetchAll'
+      'https://gateway.ownportal.net/rss/rss/fetchAll'
     end
   end
 
