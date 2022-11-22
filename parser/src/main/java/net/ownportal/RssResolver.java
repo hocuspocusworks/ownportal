@@ -18,4 +18,18 @@ public class RssResolver {
 
         return new RssPage();
     }
+
+    public static RssPage rssToJson(final byte[] rssBytes, String url) {
+        var rssReader = new RssReader(rssBytes, url);
+        if (rssReader.isValid()) {
+            return rssReader.rssToJson();
+        }
+
+        var atomReader = new AtomReader(rssBytes, url);
+        if (atomReader.isValid()) {
+            return atomReader.rssToJson();
+        }
+
+        return new RssPage();
+    }
 }

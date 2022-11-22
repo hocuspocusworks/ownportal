@@ -4,6 +4,7 @@ import Explore from '../views/Explore.vue';
 import Setting from '../views/Setting.vue';
 import MainContent from '../components/MainContent.vue';
 import Favourite from '../components/Favourite.vue';
+import Peek from '../views/Peek.vue';
 import Highlight from '../components/Highlight.vue';
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
@@ -31,6 +32,7 @@ const routes = [
       { name: "explore", path: "explore", component: Explore },
       { name: "content", path: "content", component: MainContent, props: true },
       { name: "favourite", path: "favourite", component: Favourite },
+      { name: "peek", path: "peek", component: Peek },
       { name: "highlight", path: "highlight", component: Highlight },
       { name: 'setting', path: 'setting', component: Setting }
     ]

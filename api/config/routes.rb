@@ -17,6 +17,7 @@ Rails.application.routes.draw do
         get :all_users
       end
     end
+    resources :articles
     resources :sources
     resources :groups
     resources :streams

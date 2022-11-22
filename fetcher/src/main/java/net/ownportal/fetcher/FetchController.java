@@ -65,24 +65,41 @@ class FetchController {
         final var sort = request.getSort().equals("asc") ? "asc" : "random";
         return Flux.fromIterable(urls)
             .flatMap(this::get)
-            .onErrorResume(e -> Flux.just(new byte[]{0}))
+            .onErrorResume(e -> Flux.just(new RssBodyWithUrl()))
             .publishOn(Schedulers.boundedElastic())
-            .map(RssResolver::rssToJson)
+            .map(bodyWithUrl -> RssResolver.rssToJson(bodyWithUrl.body, bodyWithUrl.url))
             .collectList()
             .map(f -> new Feed(f, sort))
             .map(Response::ok);
     }
 
-    private Mono<byte[]> get(final String url) {
+    private Mono<RssBodyWithUrl> get(final String url) {
         try {
             URL page = new URL(url);
             return webClient.get()
                 .uri(page.toURI())
                 .retrieve()
                 .bodyToMono(byte[].class)
+                .flatMap(body -> bodyWithUrl(body, url))
                 .timeout(Duration.ofSeconds(REQUEST_TIMEOUT));
         } catch (Exception ex) {
             throw Exceptions.propagate(ex);
+        }
+    }
+
+    private Mono<RssBodyWithUrl> bodyWithUrl(byte[] body, String url) {
+        return Mono.just(new RssBodyWithUrl(body, url));
+    }
+
+    private class RssBodyWithUrl {
+        public byte[] body;
+        public String url;
+
+        public RssBodyWithUrl() {}
+
+        public RssBodyWithUrl(byte[] body, String url) {
+            this.body = body;
+            this.url = url;
         }
     }
 }

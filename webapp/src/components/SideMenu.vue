@@ -10,6 +10,10 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
             <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-body-text me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toPeek">Peek</button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-pen me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toHighlights">Highlights</button>
             </div>
@@ -180,14 +184,14 @@ export default {
             if (item.streams !== undefined) {
                 item.streams.forEach(el => {
                     let src = item.sources.find(obj => obj.id === el.source_id)
-                    url.push(src.url)
+                    url.push(src.id)
                 });
             } else {
                 this.data.forEach(group => {
                     if (group.id === item.group_id) {
                         group.sources.forEach(src => {
                             if (src.id === item.source_id) {
-                                url.push(src.url)
+                                url.push(src.id)
                             }
                         })
                     }
@@ -200,6 +204,9 @@ export default {
         },
         toFavourites() {
             this.$emit('favourite')
+        },
+        toPeek() {
+            this.$emit('peek')
         },
         toHighlights() {
             this.$emit('highlight')

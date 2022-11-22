@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex min-h-screen" :class="themeText">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore"
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @peek="peek"
                 @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
@@ -76,9 +76,8 @@ export default {
         dark() {
             return config.isDarkModeOn()
         },
-        feedCallback(url) {
-            this.url = url;
-            router.push({name: "content", params: {contentUrl: url}});
+        feedCallback(sources) {
+            router.push({name: "content", params: {contentSources: sources}});
             this.toggleSidebar();
         },
         informMenu() {
@@ -94,6 +93,10 @@ export default {
         },
         favourite() {
             router.push({name: "favourite"});
+            this.toggleSidebar()
+        },
+        peek() {
+            router.push({name: 'peek'})
             this.toggleSidebar()
         },
         highlight() {
