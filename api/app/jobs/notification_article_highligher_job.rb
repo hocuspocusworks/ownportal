@@ -3,7 +3,10 @@ class NotificationArticleHighligherJob < ApplicationJob
     User.where(deactivated_at: nil).each do |user|
       highlights = Highlight.where(user: user)
 
-      articles = Article.where(created_at: 1.hour.ago..Time.now)
+      articles = Article.joins(:source)
+                        .joins(source: [:streams])
+                        .where(created_at: 1.hour.ago..Time.now)
+                        .where(streams: { user: user })
 
       [].tap do |items|
         articles.each do |article|
@@ -13,7 +16,7 @@ class NotificationArticleHighligherJob < ApplicationJob
 
           items << {
             article_id: article.id,
-            highlight_id: nil,
+            highlight_id: highlights.find { |item| item.keyword == match_highlights.first }&.id,
             user_id: user.id
           }
         end
