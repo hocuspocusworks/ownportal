@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="d-flex min-h-screen" :class="themeText">
-            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @peek="peek"
+            <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore"
                 @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
                 <router-view @explore-changed="informMenu"></router-view>
@@ -93,10 +93,6 @@ export default {
         },
         favourite() {
             router.push({name: "favourite"});
-            this.toggleSidebar()
-        },
-        peek() {
-            router.push({name: 'peek'})
             this.toggleSidebar()
         },
         highlight() {
