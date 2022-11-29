@@ -14,7 +14,9 @@ module Api
     end
 
     def rss
-      render_json Api::Services::RssFinder.new(params[:url], current_user).call
+      rss = Api::Services::RssFinder.new(params[:url], current_user).call
+      FetchFeedJob.perform_later(rss.id)
+      render_json rss
     end
 
     def top
