@@ -15,4 +15,5 @@
 #  updated_at     :datetime         not null
 #
 class Article < ApplicationRecord
+  belongs_to :source
 end

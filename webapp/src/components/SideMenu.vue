@@ -10,10 +10,6 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toFavourites">Favourites</button>
             </div>
             <div class="d-flex p-2 align-items-center">
-                <i class="bi bi-body-text me-2"></i>
-                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toPeek">Peek</button>
-            </div>
-            <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-pen me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toHighlights">Highlights</button>
             </div>
@@ -204,9 +200,6 @@ export default {
         },
         toFavourites() {
             this.$emit('favourite')
-        },
-        toPeek() {
-            this.$emit('peek')
         },
         toHighlights() {
             this.$emit('highlight')

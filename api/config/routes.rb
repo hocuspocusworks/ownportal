@@ -26,6 +26,7 @@ Rails.application.routes.draw do
     resources :highlights
     resources :spaces
     resources :blogs
+    resources :notifications
 
     namespace :admin do
       resources :sources, :categories
