@@ -35,6 +35,8 @@ class User < ApplicationRecord
 
   after_create :default_group
 
+  scope :active, -> { where(deactivated_at: nil) }
+
   def safe_search?
     return true if settings&.include? 'safe'
 
