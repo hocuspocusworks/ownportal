@@ -31,9 +31,5 @@ module Api
     def policy_class
       FavouritePolicy
     end
-
-    def user_params
-      params.require(:favourite).permit(policy(Favourite).permitted_attributes)
-    end
   end
 end

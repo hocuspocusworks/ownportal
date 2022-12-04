@@ -3,6 +3,14 @@ class NotificationPolicy < ApplicationPolicy
     true
   end
 
+  def count?
+    true
+  end
+
+  def read?
+    true
+  end
+
   def show?
     true
   end
@@ -20,7 +28,7 @@ class NotificationPolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    []
+    [read_ids: []]
   end
 
   class Scope < ApplicationScope

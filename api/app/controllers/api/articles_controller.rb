@@ -12,9 +12,5 @@ module Api
                .order(published_date: :desc)
                .limit(50)
     end
-
-    def user_params
-      params.permit(policy(resource_class).permitted_attributes)
-    end
   end
 end

@@ -14,7 +14,7 @@ module Api
     end
 
     def rss
-      rss = Api::Services::RssFinder.new(params[:url], current_user).call
+      rss = Api::Services::RssFinder.new(user_params[:url], current_user).call
       FetchFeedJob.perform_later(rss.id)
       render_json rss
     end
@@ -54,10 +54,6 @@ module Api
 
     def valid_url?
       keyword =~ URI::DEFAULT_PARSER.make_regexp ? keyword : false
-    end
-
-    def user_params
-      params.permit([:keyword, :safe, :categories])
     end
 
     def true?(value)

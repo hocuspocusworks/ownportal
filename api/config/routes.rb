@@ -27,6 +27,8 @@ Rails.application.routes.draw do
     resources :spaces
     resources :blogs
     resources :notifications
+    match 'notification/count' => 'notifications#count', via: :get
+    match 'notification/read' => 'notifications#read', via: :post
 
     namespace :admin do
       resources :sources, :categories

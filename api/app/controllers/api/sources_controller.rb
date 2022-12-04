@@ -24,9 +24,5 @@ module Api
     def load_collection
       @sources ||= resource_scope
     end
-
-    def user_params
-      params.require(:source).permit(policy(Source).permitted_attributes)
-    end
   end
 end

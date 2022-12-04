@@ -31,11 +31,7 @@ module Api
     end
 
     def load_resource
-      @space ||= Space.find_by(user_id: user_params[:id])
-    end
-
-    def user_params
-      params.permit([:id])
+      @space ||= Space.find_by(user_id: params[:id])
     end
   end
 end

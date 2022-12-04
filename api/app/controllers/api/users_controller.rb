@@ -50,10 +50,6 @@ module Api
       UserPolicy
     end
 
-    def user_params
-      params.require(:user).permit([:email, :password])
-    end
-
     def default_settings
       { settings: [:safe], sysadmin: false }
     end

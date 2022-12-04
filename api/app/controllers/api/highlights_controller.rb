@@ -29,9 +29,5 @@ module Api
     def load_collection
       @highlights ||= policy_scope(Highlight)
     end
-
-    def user_params
-      params.require(:highlight).permit(policy(Highlight).permitted_attributes)
-    end
   end
 end

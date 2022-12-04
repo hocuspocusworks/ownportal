@@ -10,4 +10,8 @@ class ExplorePolicy < ApplicationPolicy
   def top?
     true
   end
+
+  def permitted_attributes
+    [:categories, :keyword, :safe, :url]
+  end
 end

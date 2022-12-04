@@ -32,10 +32,6 @@ module Api
       def policy_class
         CategoryPolicy
       end
-
-      def user_params
-        params.require(:category).permit(policy(Category).permitted_attributes)
-      end
     end
   end
 end

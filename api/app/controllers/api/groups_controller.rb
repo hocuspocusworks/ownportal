@@ -33,10 +33,6 @@ module Api
                   .where(sources: { visibility: visibility })
     end
 
-    def user_params
-      params.require(:group).permit(policy(Group).permitted_attributes)
-    end
-
     def visibility
       return [2, nil] if current_user.safe_search?
 

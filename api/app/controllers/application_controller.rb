@@ -17,6 +17,10 @@ class ApplicationController < ActionController::API
     render json: { 'errors': { 'token': ['is invalid'] } }, status: :forbidden
   end
 
+  def user_params
+    params.permit(policy(resource_class).permitted_attributes)
+  end
+
   def throttle
     raise Exceptions::TooManyRequests if requests_count > requests_limit || ip_lock?
 

@@ -26,6 +26,10 @@ class ApplicationPolicy
     false
   end
 
+  def permitted_attributes
+    []
+  end
+
   private
 
   def admin?

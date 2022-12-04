@@ -32,10 +32,6 @@ module Api
       def policy_class
         ::Admin::SourcePolicy
       end
-
-      def user_params
-        params.require(:source).permit(policy(Source).permitted_attributes)
-      end
     end
   end
 end
