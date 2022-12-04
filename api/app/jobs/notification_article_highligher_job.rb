@@ -7,12 +7,13 @@ class NotificationArticleHighligherJob < ApplicationJob
                         .joins(source: [:streams])
                         .where(created_at: 1.hour.ago..Time.now)
                         .where(streams: { user: user })
+      existing_articles = Notification.where(user_id: user.id).pluck(:article_id)
 
       [].tap do |items|
         articles.each do |article|
           match_highlights = title_with_description(article) & (highlights.pluck(:keyword))
 
-          next unless match_highlights.present?
+          next if match_highlights.empty? || existing_articles.include?(article.id)
 
           items << {
             article_id: article.id,
