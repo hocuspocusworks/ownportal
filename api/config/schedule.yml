@@ -1,3 +1,11 @@
 fetch_new_articles:
    cron: "*/5 * * * *"
    class: "FetchNewArticlesJob"
+
+notification_article_highligher:
+   cron: "*/13 * * * *"
+   class: "NotificationArticleHighligherJob"
+
+notification_delete_stale:
+   cron: ""
+   class: "NotificationDeleteStaleJob"
