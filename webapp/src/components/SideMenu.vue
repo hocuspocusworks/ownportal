@@ -14,6 +14,12 @@
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toHighlights">Highlights</button>
             </div>
             <div class="d-flex p-2 align-items-center">
+                <i class="bi bi-bell me-2"></i>
+                <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toNotifications">
+                    Notifications <span class="badge bg-secondary ps-2">{{ notificationNumber }}</span>
+                </button>
+            </div>
+            <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-book me-2"></i>
                 <button class="btn shadow-none flex-grow-1 text-start text-white" @click="toSpaces">Spaces</button>
             </div>
@@ -91,6 +97,9 @@ export default {
                 'bg-dark-strong': this.dark(),
                 'bg-bluegray-600': !this.dark()
             }
+        },
+        notificationNumber() {
+            return this.notificationCount > 99 ? "99+" : this.notificationCount
         }
     },
     data() {
@@ -101,7 +110,8 @@ export default {
             data: [],
             icon: [],
             selectedKey: "",
-            newGroupName: ""
+            newGroupName: "",
+            notificationCount: 0
         }
     },
     methods: {
@@ -154,6 +164,15 @@ export default {
                     this.updateError();
                 });
         },
+        fetchNotificationCount() {
+            let notificationCount = config.gateway + config.getPath('notification_count')
+            axios.get(notificationCount, { headers: config.authorisationHeader() })
+                .then(response => {
+                    if (response.status === 200) {
+                        this.notificationCount = response.data
+                    }
+                })
+        },
         source(number) {
             this.selectedGroup = number;
         },
@@ -204,6 +223,9 @@ export default {
         toHighlights() {
             this.$emit('highlight')
         },
+        toNotifications() {
+            this.$emit('notification')
+        },
         toSpaces() {
             this.$emit('space')
         },
@@ -239,6 +261,7 @@ export default {
     },
     mounted() {
         this.fetchFeed()
+        this.fetchNotificationCount()
     },
     watch: {
         needRefresh: {

@@ -5,6 +5,7 @@ import Setting from '../views/Setting.vue';
 import MainContent from '../components/MainContent.vue';
 import Favourite from '../components/Favourite.vue';
 import Highlight from '../components/Highlight.vue';
+import Notification from '../components/Notification.vue'
 import Login from '../views/Login.vue';
 import Register from '../views/Register.vue';
 import About from '../views/About.vue';
@@ -32,6 +33,7 @@ const routes = [
       { name: "content", path: "content", component: MainContent, props: true },
       { name: "favourite", path: "favourite", component: Favourite },
       { name: "highlight", path: "highlight", component: Highlight },
+      { name: "notification", path: "notification", component: Notification },
       { name: 'setting', path: 'setting', component: Setting }
     ]
   },
