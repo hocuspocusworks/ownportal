@@ -111,7 +111,8 @@ export default {
             icon: [],
             selectedKey: "",
             newGroupName: "",
-            notificationCount: 0
+            notificationCount: 0,
+            timer: ''
         }
     },
     methods: {
@@ -262,6 +263,12 @@ export default {
     mounted() {
         this.fetchFeed()
         this.fetchNotificationCount()
+    },
+    created() {
+        this.timer = setInterval(this.fetchNotificationCount, 30000)
+    },
+    beforeUnmount() {
+        clearInterval(this.timer)
     },
     watch: {
         needRefresh: {
