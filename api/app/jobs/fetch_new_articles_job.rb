@@ -37,10 +37,22 @@ class FetchNewArticlesJob < ApplicationJob
     [].tap do |result|
       items.each do |item|
         next unless newest_article?(item)
+        next if existing_article?(item)
 
         result << item
       end
     end
+  end
+
+  def existing_article?(item)
+    recent_articles.select do |article|
+      article.link == item[:link]
+    end.first.present?
+  end
+
+  def recent_articles
+    @recent_articles ||=
+      Article.select(:link).where('published_date > ?', Time.now - 6.hours)
   end
 
   def newest_article?(item)
@@ -50,11 +62,14 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def latest_entry_date(source_id)
-    latest_articles.select { |item| item.source_id == source_id }.first&.date || Time.now - 1.year
+    latest_published_articles.select do |item|
+      item.source_id == source_id
+    end.first&.date || Time.now - 1.year
   end
 
-  def latest_articles
-    @latest_articles ||= Article.select('source_id, MAX(published_date) AS date').group(:source_id)
+  def latest_published_articles
+    @latest_articles ||=
+      Article.select('source_id, MAX(published_date) AS date').group(:source_id)
   end
 
   def source_id(url)
