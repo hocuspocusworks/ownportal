@@ -21,6 +21,9 @@
                             <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}</h6>
                             <p>{{ processText(item.description) }}</p>
                         </div>
+                        <div class="pb-3">
+                            <button class="btn shadow-none" :class="themeText" @click="destroy(item)"><i class="bi bi-trash"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -79,6 +82,15 @@ export default {
         },
         openFeed(url) {
             window.open(url, '_blank').focus();
+        },
+        destroy(item) {
+            let url = config.gateway + config.getPath('favourites') + `/${item.id}`
+            axios.delete(url, { headers: config.authorisationHeader() })
+                .then(response => {
+                    if (response.status === 204) {
+                        this.loadFavourites()
+                    }
+                })
         }
     },
     mounted() {
