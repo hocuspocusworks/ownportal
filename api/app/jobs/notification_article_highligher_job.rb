@@ -11,7 +11,7 @@ class NotificationArticleHighligherJob < ApplicationJob
 
       [].tap do |items|
         articles.each do |article|
-          match_highlights = title_with_description(article) & (highlights.pluck(:keyword))
+          match_highlights = title_with_description(article) & (highlights.pluck(:keyword).map(&:downcase))
 
           next if match_highlights.empty? || existing_articles.include?(article.id)
 
