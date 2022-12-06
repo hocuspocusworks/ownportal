@@ -1,8 +1,8 @@
 <template>
   <div class="container">
-    <div class="row p-4">
-      <div class="col-2"></div>
-      <div class="col-8">
+    <div class="row pt-2 p-lg-4">
+      <div class="col-lg-2"></div>
+      <div class="col-12 col-lg-8">
         <div class="card">
           <div class="card-body text-black">
             <h5 class="card-title">Settings</h5>
@@ -38,10 +38,14 @@
           </ul>
         </div>
       </div>
-      <div class="col-2"></div>
+      <div class="col-lg-2"></div>
     </div>
-    
-    <button type="button" class="btn btn-outline-danger" @click="remove()">Delete account</button>
+
+    <div class="row pt-4">
+      <div class="col">
+        <button type="button" class="btn btn-outline-danger" @click="remove()">Delete account</button>
+      </div>
+    </div>
 
   </div>
 </template>
