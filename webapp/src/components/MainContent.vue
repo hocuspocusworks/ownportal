@@ -13,6 +13,12 @@
                 </div>
             </div>
 
+            <div v-if="contentEmpty">
+                <div class="alert alert-warning" role="alert">
+                    No articles in this feed. Try later.
+                </div>
+            </div>
+
             <div class="row">
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
                     <div class="card full-height my-link" :class="themeCard">
@@ -48,7 +54,7 @@ export default {
         return {
             loading: false,
             err: false,
-            content: null,
+            content: [],
             highlights: [],
             regexCache: {}
         }
@@ -65,6 +71,9 @@ export default {
                 'text-light': this.dark(),
                 'text-light-black': !this.dark()
             }
+        },
+        contentEmpty() {
+            return this.content == null || this.content.length == 0 ? true : false
         }
     },
     watch: {

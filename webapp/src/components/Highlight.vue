@@ -10,6 +10,12 @@
     </div>
 
     <ul class="list-group">
+      <div v-if="contentEmpty">
+          <div class="alert alert-warning" role="alert">
+              No highlights yet. Start by adding a case insensitive keyword.
+          </div>
+      </div>
+
       <li class="list-group-item" v-for="(item, i) in highlights" :key="i" :style="{ 'background-color': item.colour }">
         <div class="d-flex">
           <div class="justify-content-start flex-fill">
@@ -36,6 +42,11 @@ export default {
       highlights: [],
       keyword: '',
       colour: '#ffffff'
+    }
+  },
+  computed: {
+    contentEmpty() {
+      return this.highlights == null || this.highlights.length == 0 ? true : false
     }
   },
   methods: {
