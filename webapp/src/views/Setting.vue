@@ -1,37 +1,48 @@
 <template>
   <div class="container">
-    <div class="row">
-      <div class="col-4">
-        <h5>Setting</h5>
+    <div class="row p-4">
+      <div class="col-2"></div>
+      <div class="col-8">
+        <div class="card">
+          <div class="card-body text-black">
+            <h5 class="card-title">Settings</h5>
+            <p class="card-text">Adjust the account to your needs.</p>
+          </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-6">
+                  Safe search
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="safe" @click="save('safe')"
+                      id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-6">
+                  Dark mode
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="dark" @click="save('dark')"
+                      id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
       </div>
-      <div class="col-4">
-        <h5>Value</h5>
-      </div>
+      <div class="col-2"></div>
     </div>
-    <div class="row">
-      <div class="col-4">
-        <p>Safe search</p>
-      </div>
-      <div class="col-4">
-        <input type="checkbox" v-model="safe" @click="save('safe')" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
-        <p>Dark mode</p>
-      </div>
-      <div class="col-4">
-        <input type="checkbox" v-model="dark" @click="save('dark')" />
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-4">
-        <p>Delete account</p>
-      </div>
-      <div class="col-4">
-        <button type="button" class="btn btn-danger" @click="remove()">Destroy account</button>
-      </div>
-    </div>
+    
+    <button type="button" class="btn btn-outline-danger" @click="remove()">Delete account</button>
+
   </div>
 </template>
 
@@ -67,7 +78,7 @@ export default {
         this.my_settings.push(value)
       }
       let request = config.gateway + config.getPath('users') + '/' + this.user_id
-      let payload = { 'user': {'settings': this.my_settings} }
+      let payload = { 'user': { 'settings': this.my_settings } }
       axios.patch(request, payload, { headers: config.authorisationHeader() })
         .then(response => {
           if (response.status === 200) {
