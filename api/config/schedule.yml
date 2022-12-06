@@ -7,5 +7,5 @@ notification_article_highligher:
    class: "NotificationArticleHighligherJob"
 
 notification_delete_stale:
-   cron: ""
+   cron: "0 0 * * *"
    class: "NotificationDeleteStaleJob"
