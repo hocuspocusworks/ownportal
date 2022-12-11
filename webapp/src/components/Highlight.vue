@@ -46,7 +46,7 @@ export default {
   },
   computed: {
     contentEmpty() {
-      return this.highlights == null || this.highlights.length == 0 ? true : false
+      return !this.loading && (this.highlights == null || this.highlights.length == 0) ? true : false
     }
   },
   methods: {

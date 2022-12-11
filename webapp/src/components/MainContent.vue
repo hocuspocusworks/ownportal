@@ -73,7 +73,7 @@ export default {
             }
         },
         contentEmpty() {
-            return this.content == null || this.content.length == 0 ? true : false
+            return !this.loading && (this.content == null || this.content.length == 0) ? true : false
         }
     },
     watch: {
