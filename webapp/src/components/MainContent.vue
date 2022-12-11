@@ -57,6 +57,8 @@
                                     :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
                             <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
                                     class="bi bi-link-45deg"></i></button>
+                            <button class="btn shadow-none" :class="themeText, playable(item)" @click="play(item)"><i
+                                    class="bi bi-play-circle"></i></button>
                         </div>
                     </div>
                 </div>
