@@ -35,6 +35,7 @@ public class Feed {
                     .link(item.getLink())
                     .publishedDate(item.getPublishedDate())
                     .rssUrl(page.getRssUrl())
+                    .mediaUrl(item.getMediaUrl())
                     .build();
                 nodes.add(feedItem);
                 size++;
@@ -72,6 +73,7 @@ public class Feed {
         private String link;
         private String publishedDate;
         private String rssUrl;
+        private String mediaUrl;
 
         public static class Builder {
             private String source;
@@ -80,6 +82,7 @@ public class Feed {
             private String link;
             private String publishedDate;
             private String rssUrl;
+            private String mediaUrl;
 
             public Builder source(String source) {
                 this.source = source;
@@ -111,6 +114,11 @@ public class Feed {
                 return this;
             }
 
+            public Builder mediaUrl(String mediaUrl) {
+                this.mediaUrl = mediaUrl;
+                return this;
+            }
+
             public FeedItem build() {
                 return new FeedItem(this);
             }
@@ -123,6 +131,7 @@ public class Feed {
             link = b.link;
             publishedDate = b.publishedDate;
             rssUrl = b.rssUrl;
+            mediaUrl = b.mediaUrl;
         }
     }
 
