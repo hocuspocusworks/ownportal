@@ -20,24 +20,23 @@
             </div>
 
             <div v-if="summaryView" class="row">
-                <ul class="list-group" v-for="(item, i) in content" :key="i">
-                    <ul class="list-group list-group-horizontal">
-                        <li @click="openFeed(item.link)" class="list-group-item d-flex justify-content-between align-items-center flex-fill" :class="themeText, themeCard">
-                            <span v-html="processText(item.title)"></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
-                            <span>{{ item.publisher }}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
-                            <span>{{ time.since(item.published_date) }}</span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
-                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
-                                    :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
-                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
-                                    class="bi bi-link-45deg"></i></button>
-                        </li>
-                    </ul>
+                <ul class="list-group list-unstyled" v-for="(item, i) in content" :key="i">
+                    <li class="pb-2">
+                        <div class="card" :class="themeCard">
+                            <div class="card-body" @click="openFeed(item.link)">
+                                <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
+                                <h6 class="card-subtitle mb-2 text-muted">
+                                    {{ time.since(item.published_date) }} | {{ item.publisher }}
+                                </h6>
+                            </div>
+                            <div>
+                                <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
+                                        :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
+                                <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
+                                        class="bi bi-link-45deg"></i></button>
+                            </div>
+                        </div>
+                    </li>
                 </ul>
             </div>
 
@@ -46,7 +45,8 @@
                     <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                {{ item.publisher }} | {{ time.since(item.published_date) }}
                             </h6>
                             <p><span v-html="processText(item.description)"></span></p>
                         </div>
