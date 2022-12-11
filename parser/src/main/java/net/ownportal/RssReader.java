@@ -8,6 +8,7 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBElement;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.UnmarshalException;
+import net.ownportal.rssjax.Enclosure;
 import net.ownportal.rssjax.Rss;
 import net.ownportal.rssjax.RssChannel;
 
@@ -67,6 +68,12 @@ public class RssReader {
                         var optCategory = Category.keywordToCategory(cat);
                         if (optCategory.isPresent()) {
                             rssNode.getCategories().add(optCategory.get());
+                        }
+                    }
+                    if (type.equals("enclosure")) {
+                        var enclosure = ((Enclosure) el.getValue());
+                        if (enclosure != null) {
+                            rssNode.setMediaUrl(enclosure.getUrl());
                         }
                     }
                 }

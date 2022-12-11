@@ -34,6 +34,7 @@
       <media:content width="460" url="https://i.guim.co.uk/img/media/949b8e5e146618fe5900d1255e14f5dc195ece7e/0_314_1422_853/master/1422.jpg?width=460&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=8172efc4efeddd5af6dfa3961158dae7">
         <media:credit scheme="urn:ebu">Photograph: Nye Lyn Tho</media:credit>
       </media:content>
+      <enclosure url="https://op3.dev/e,pg=9b024349-ccf0-5f69-a609-6b82873eab3c/podnews.net/audio/podnews221116.mp3?" type="audio/mpeg" length="1589695" />
       <dc:creator>Alex Clark</dc:creator>
       <dc:date>2022-03-19T09:00:24Z</dc:date>
     </item>
@@ -526,4 +527,3 @@
     </item>
   </channel>
 </rss>
-

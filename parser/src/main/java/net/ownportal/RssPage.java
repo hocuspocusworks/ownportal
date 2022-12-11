@@ -34,5 +34,6 @@ public class RssPage {
         private String publishedDate;
         private List<String> rawCategories = new ArrayList<>();
         private List<String> categories = new ArrayList<>();
+        private String mediaUrl;
     }
 }
