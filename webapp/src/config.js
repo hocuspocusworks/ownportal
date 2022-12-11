@@ -65,6 +65,9 @@ const config = {
     isDarkModeOn() {
         return this.settings().includes('dark')
     },
+    isSummaryViewOn() {
+        return this.settings().includes('summary')
+    },
     reload() {
         location.reload()
     },

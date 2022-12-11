@@ -19,7 +19,21 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div v-if="summaryView" class="row">
+                <div class="col-12 mb-4" v-for="(item,i) in content" :key="i">
+                    <div class="card full-height my-link" :class="themeCard">
+                        <div class="card-body" @click="openFeed(item.link)">
+                            <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
+                        </div>
+                        <span>
+                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i class="bi bi-link-45deg"></i></button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div v-if="!summaryView" class="row">
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
                     <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
@@ -74,6 +88,9 @@ export default {
         },
         contentEmpty() {
             return !this.loading && (this.content == null || this.content.length == 0) ? true : false
+        },
+        summaryView() {
+            return config.isSummaryViewOn()
         }
     },
     watch: {

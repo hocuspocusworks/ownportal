@@ -35,6 +35,19 @@
                 </div>
               </div>
             </li>
+            <li class="list-group-item" :class="themeCard">
+              <div class="row">
+                <div class="col-6" :class="themeText">
+                  Summary view
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="summary" @click="save('summary')"
+                      id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -62,6 +75,7 @@ export default {
       toggle: false,
       safe: false,
       dark: false,
+      summary: false,
       user_id: 0
     }
   },
@@ -88,6 +102,7 @@ export default {
       this.toggle = this.my_settings.includes('toggle') ? true : false
       this.safe = this.my_settings.includes('safe') ? true : false
       this.dark = this.my_settings.includes('dark') ? true : false
+      this.summary = this.my_settings.includes('summary') ? true : false
     },
     save(value) {
       if (this.my_settings.includes(value)) {
