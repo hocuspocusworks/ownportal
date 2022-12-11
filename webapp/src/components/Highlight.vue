@@ -41,7 +41,8 @@ export default {
       url: config.gateway + config.getPath('highlights'),
       highlights: [],
       keyword: '',
-      colour: '#ffffff'
+      colour: '#ffffff',
+      loading: true
     }
   },
   computed: {
@@ -76,7 +77,11 @@ export default {
         .then(response => {
           if (response.status === 200) {
             this.highlights = response.data
+            this.loading = false
           }
+        })
+        .catch(_err => {
+          this.loading = false
         })
     }
   },
