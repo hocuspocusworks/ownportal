@@ -13,6 +13,7 @@
 #  user_id        :bigint
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
+#  media_url      :string
 #
 class Article < ApplicationRecord
   belongs_to :source
