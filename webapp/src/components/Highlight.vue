@@ -9,11 +9,17 @@
       <button class="btn btn-secondary" type="button" id="button-addon2" @click="addHighlight">Add keyword</button>
     </div>
 
+    <div v-if="loading">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+
     <ul class="list-group">
       <div v-if="contentEmpty">
-          <div class="alert alert-warning" role="alert">
-              No highlights yet. Start by adding a case insensitive keyword.
-          </div>
+        <div class="alert alert-warning" role="alert">
+          No highlights yet. Start by adding a case insensitive keyword.
+        </div>
       </div>
 
       <li class="list-group-item" v-for="(item, i) in highlights" :key="i" :style="{ 'background-color': item.colour }">
@@ -22,7 +28,8 @@
             <b class="pe-4">{{ item.keyword }}</b>
           </div>
           <div class="justify-content-end">
-            <button class="btn btn-dark" type="button" aria-label="delete" @click="deleteHighlight(item)"><i class="bi bi-trash me-2"></i></button>
+            <button class="btn btn-dark" type="button" aria-label="delete" @click="deleteHighlight(item)"><i
+                class="bi bi-trash me-2"></i></button>
           </div>
         </div>
       </li>
