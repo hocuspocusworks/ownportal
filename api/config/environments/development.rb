@@ -72,4 +72,5 @@ Rails.application.configure do
   config.hosts << /portal/
 
   config.space_path = '/home/jean/space/'
+  config.throttling = false
 end

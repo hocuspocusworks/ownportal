@@ -22,6 +22,8 @@ class ApplicationController < ActionController::API
   end
 
   def throttle
+    return unless Rails.configuration.throttling
+
     raise Exceptions::TooManyRequests if requests_count > requests_limit || ip_lock?
 
     next_request_count
