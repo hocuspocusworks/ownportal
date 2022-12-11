@@ -20,30 +20,41 @@
             </div>
 
             <div v-if="summaryView" class="row">
-                <div class="col-12 mb-4" v-for="(item,i) in content" :key="i">
-                    <div class="card full-height my-link" :class="themeCard">
-                        <div class="card-body" @click="openFeed(item.link)">
-                            <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
-                        </div>
-                        <span>
-                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
-                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i class="bi bi-link-45deg"></i></button>
-                        </span>
-                    </div>
-                </div>
+                <ul class="list-group" v-for="(item, i) in content" :key="i">
+                    <ul class="list-group list-group-horizontal">
+                        <li @click="openFeed(item.link)" class="list-group-item d-flex justify-content-between align-items-center flex-fill" :class="themeText, themeCard">
+                            <span v-html="processText(item.title)"></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
+                            <span>{{ item.publisher }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
+                            <span>{{ time.since(item.published_date) }}</span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center" :class="themeText, themeCard">
+                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
+                                    :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
+                                    class="bi bi-link-45deg"></i></button>
+                        </li>
+                    </ul>
+                </ul>
             </div>
 
             <div v-if="!summaryView" class="row">
-                <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
+                <div class="col-sm-12 col-lg-4 mb-4" v-for="(item, i) in content" :key="i">
                     <div class="card full-height my-link" :class="themeCard">
                         <div class="card-body" @click="openFeed(item.link)">
                             <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ item.publisher }} | {{ item.published_date }}
+                            </h6>
                             <p><span v-html="processText(item.description)"></span></p>
                         </div>
                         <div class="pb-3">
-                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi" :class="{'bi-heart': !item.heart, 'bi-heart-fill': item.heart}"></i></button>
-                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i class="bi bi-link-45deg"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
+                                    :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
+                                    class="bi bi-link-45deg"></i></button>
                         </div>
                     </div>
                 </div>
@@ -55,6 +66,7 @@
 <script>
 import axios from 'axios';
 import config from '../config';
+import time from '../time'
 
 export default {
     name: 'MainContent',
@@ -70,7 +82,8 @@ export default {
             err: false,
             content: [],
             highlights: [],
-            regexCache: {}
+            regexCache: {},
+            time: time
         }
     },
     computed: {
@@ -95,7 +108,7 @@ export default {
     },
     watch: {
         contentSources: {
-            handler: function(newSoruces) {
+            handler: function (newSoruces) {
                 this.updateView(newSoruces);
             },
             immediate: true
@@ -165,9 +178,12 @@ export default {
         like(item) {
             item.heart = true; // should replace with loading
             let url = config.gateway + config.getPath('favourites')
-            let payload = { 'favourite': {
-                'title': item.title, 'description': item.description, 'link': item.link,
-                'publisher': item.source, 'published_date': item.publishedDate } }
+            let payload = {
+                'favourite': {
+                    'title': item.title, 'description': item.description, 'link': item.link,
+                    'publisher': item.source, 'published_date': item.publishedDate
+                }
+            }
             axios.post(url, payload, { headers: config.authorisationHeader() })
                 .then(response => {
                     if (response.status === 201) {
