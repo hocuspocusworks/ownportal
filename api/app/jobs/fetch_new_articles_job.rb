@@ -19,6 +19,7 @@ class FetchNewArticlesJob < ApplicationJob
             description: item['description'],
             published_date: item['publishedDate'],
             publisher: item['source'],
+            media_url: item['media_url'],
             user_id: user.id,
             source_id: source_id(item['rssUrl'])
           }
