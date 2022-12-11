@@ -12,10 +12,14 @@
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @notification="notification"
                 @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
             <div id="myContent" class="f-equal" :class="themeContent">
-                <router-view @explore-changed="informMenu"></router-view>
+                <router-view @explore-changed="informMenu" @media-changed="mediaChanged"></router-view>
             </div>
         </div>
-        <nav id="bottomNav" class="navbar fixed-bottom d-md-none" :class="themeMenu">
+
+        <nav id="bottomNav" class="navbar fixed-bottom bg-dark-light">
+            <div class="container-fluid justify-content-center" :class="showPlayer">
+                <audio class="player" id="mediaPlayer" controls></audio>
+            </div>
             <div class="container-fluid justify-content-center">
                 <a class="navbar-brand" @click="toTop"><i class="bi bi-house text-white"></i></a>
             </div>
@@ -29,6 +33,7 @@ import axios from 'axios'
 import config from '../config'
 import router from "../router";
 import sidebar from '../sidebar';
+import media from '../media'
 
 export default {
     name: 'Home',
@@ -43,7 +48,9 @@ export default {
 					label: 'Logout',
 					icon: 'pi pi-power-off'
 				}
-            ]
+            ],
+            media: media,
+            mediaVisible: false
         }
     },
     computed: {
@@ -70,6 +77,12 @@ export default {
                 'bg-dark-strong': this.dark(),
                 'bg-bluegray-600': !this.dark()
             }
+        },
+        showPlayer() {
+            if (this.mediaVisible) {
+                return ""
+            }
+            return "d-none"
         }
     },
     methods: {
@@ -82,6 +95,9 @@ export default {
         },
         informMenu() {
             this.refreshMenu = (Math.random() + 1).toString(36).substring(7);
+        },
+        mediaChanged() {
+            this.mediaVisible = true
         },
         admin() {
             router.push({name: 'admin'})

@@ -34,6 +34,8 @@
                                         :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
                                 <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
                                         class="bi bi-link-45deg"></i></button>
+                                <button class="btn shadow-none" :class="themeText, playable(item)" @click="play(item)"><i
+                                        class="bi bi-play-circle"></i></button>
                             </div>
                         </div>
                     </li>
@@ -67,6 +69,7 @@
 import axios from 'axios';
 import config from '../config';
 import time from '../time'
+import media from '../media'
 
 export default {
     name: 'MainContent',
@@ -117,6 +120,12 @@ export default {
     methods: {
         dark() {
             return config.isDarkModeOn()
+        },
+        playable(item) {
+            if (item.media_url) {
+                return ""
+            }
+            return "d-none"
         },
         updateView(sources) {
             this.content = null;
@@ -195,6 +204,10 @@ export default {
         },
         clipboard(item) {
             navigator.clipboard.writeText(item.link)
+        },
+        play(item) {
+            this.$emit("mediaChanged")
+            media.play(item.media_url)
         }
     }
 }
