@@ -1,5 +1,5 @@
 <template>
-    <div id="mySidebar" class="text-white sidebarWidth" :class="themeMenu">
+    <div id="mySidebar" class="text-white sidebarWidth mb-5" :class="themeMenu">
         <div class="p-3">
             <div class="d-flex p-2 align-items-center">
                 <i class="bi bi-globe me-2"></i>
