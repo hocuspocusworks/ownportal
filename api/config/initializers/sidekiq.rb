@@ -10,6 +10,8 @@ Sidekiq::Web.use(Rack::Auth::Basic) do |user, password|
   # - See https://thisdata.com/blog/timing-attacks-against-string-comparison/
   # - Use & (do not use &&) so that it doesn't short circuit.
   # - Use digests to stop length information leaking
-  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(user), ::Digest::SHA256.hexdigest('ownportal')) &
-  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest('i0_D76Fe_3R'))
+  sidekiq_user = Rails.application.credentials[:sidekiq][:username]
+  sidekiq_password = Rails.application.credentials[:sidekiq][:password]
+  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(user), ::Digest::SHA256.hexdigest(sidekiq_user)) &
+  Rack::Utils.secure_compare(::Digest::SHA256.hexdigest(password), ::Digest::SHA256.hexdigest(sidekiq_password))
 end
