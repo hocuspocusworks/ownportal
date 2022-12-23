@@ -33,9 +33,10 @@
                                 <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
                                         :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
                                 <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
-                                        class="bi bi-link-45deg"></i></button>
-                                <button class="btn shadow-none" :class="themeText, playable(item)" @click="play(item)"><i
-                                        class="bi bi-play-circle"></i></button>
+                                        class="bi"
+                                        :class="{ 'bi-files': !item.copied, 'bi-file-check-fill': item.copied }"></i></button>
+                                <button class="btn shadow-none" :class="themeText, playable(item)"
+                                    @click="play(item)"><i class="bi bi-play-circle"></i></button>
                             </div>
                         </div>
                     </li>
@@ -55,8 +56,8 @@
                         <div class="pb-3">
                             <button class="btn shadow-none" :class="themeText" @click="like(item)"><i class="bi"
                                     :class="{ 'bi-heart': !item.heart, 'bi-heart-fill': item.heart }"></i></button>
-                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i
-                                    class="bi bi-link-45deg"></i></button>
+                            <button class="btn shadow-none" :class="themeText" @click="clipboard(item)"><i class="bi"
+                                    :class="{ 'bi-files': !item.copied, 'bi-file-check-fill': item.copied }"></i></button>
                             <button class="btn shadow-none" :class="themeText, playable(item)" @click="play(item)"><i
                                     class="bi bi-play-circle"></i></button>
                         </div>
@@ -206,6 +207,7 @@ export default {
         },
         clipboard(item) {
             navigator.clipboard.writeText(item.link)
+            item.copied = true
         },
         play(item) {
             this.$emit("mediaChanged")
