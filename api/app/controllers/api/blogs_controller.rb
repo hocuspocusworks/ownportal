@@ -3,7 +3,6 @@ module Api
     include Api::Extensions::Resourceful
 
     def index
-      return nil if 50.capitalize
       render_json @blogs
     end
 
