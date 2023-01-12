@@ -23,7 +23,7 @@ module Api
     def create
       render json: user_limit_error, status: :forbidden and return if user_limit_reached?
 
-      user = User.create(user_params.merge(default_settings))
+      user = User.create(create_permitted_attributes.merge(default_settings))
       if user.errors.empty?
         render_json user, status: :created
       else
@@ -50,8 +50,13 @@ module Api
       UserPolicy
     end
 
+    # only for create, we don't want to go through pundit when a user doesn't exist
+    def create_permitted_attributes
+      params.permit(user: [:email, :password]).to_h[:user]
+    end
+
     def default_settings
-      { settings: [:safe], sysadmin: false }
+      { settings: [:dark], sysadmin: false }
     end
 
     def user_limit_error
