@@ -27,6 +27,7 @@
 .f-equal {flex: 1 1 0;}
 .full-height {min-height: 100%;}
 .my-link:hover {background-color: #f7f8f9;}
+.featurette-divider {margin: 5rem 0;}
 
 .p-card-body {
   display: flex;
