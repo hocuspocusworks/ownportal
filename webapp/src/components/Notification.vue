@@ -27,6 +27,13 @@
                           <h6 class="card-subtitle mb-2 text-muted">{{ item.article.publisher }} | {{ item.article.published_date }}</h6>
                           <p>{{ processText(item.article.description) }}</p>
                       </div>
+                      <div>
+                        <button class="btn shadow-none" :class="themeText" @click="like(item.article)"><i class="bi"
+                              :class="{ 'bi-heart': !item.article.heart, 'bi-heart-fill': item.article.heart }"></i></button>
+                        <button class="btn shadow-none" :class="themeText" @click="clipboard(item.article)"><i
+                                class="bi"
+                                :class="{ 'bi-files': !item.article.copied, 'bi-file-check-fill': item.article.copied }"></i></button>
+                      </div>
                   </div>
               </div>
           </div>
@@ -94,6 +101,28 @@ export default {
         let notify = config.gateway + config.getPath('notification_read')
         let payload = { 'read_ids': this.content.flatMap(element => element.id) }
         axios.post(notify, payload, { headers: config.authorisationHeader() })
+      },
+      like(item) {
+        item.heart = true; // should replace with loading
+        let url = config.gateway + config.getPath('favourites')
+        let payload = {
+            'favourite': {
+                'title': item.title, 'description': item.description, 'link': item.link,
+                'publisher': item.source, 'published_date': item.publishedDate
+            }
+        }
+        axios.post(url, payload, { headers: config.authorisationHeader() })
+            .then(response => {
+                if (response.status === 201) {
+                    item.heart = true;
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+      },
+      clipboard(item) {
+        navigator.clipboard.writeText(item.link)
+        item.copied = true
       }
   },
   mounted() {
