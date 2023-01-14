@@ -27,7 +27,7 @@
                 <p class="col-lg-10 fs-4">
                     ownportal is a simple to use RSS reader that allows you to add feeds and organise them as you like. Try it out, it's free!
                 </p>
-                <button type="button" class="btn btn-primary btn-lg px-4 gap-3" @click="register">Register</button>
+                <button type="button" class="btn btn-primary btn-lg px-4 gap-3 my-3" @click="register">Register</button>
             </div>
             <div class="col-md-10 mx-auto col-lg-5">
                 <form class="p-4 p-md-5 border rounded-3 bg-light">
