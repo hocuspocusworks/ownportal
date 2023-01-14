@@ -132,7 +132,7 @@ export default {
             localStorage.setItem('token', '');
             localStorage.setItem('sysadmin', '')
             localStorage.setItem('userId', '')
-            router.push({name: "login"});
+            router.push({name: "about"});
         },
         sendLogoutToServer() {
             let url = config.gateway + config.getPath('login') + '/' + config.userId();

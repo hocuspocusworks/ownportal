@@ -7,19 +7,25 @@
         </a>
 
         <ul class="nav nav-pills">
-            <li class="nav-item"><a href="#" class="nav-link" @click="loginView">Login</a></li>
             <li class="nav-item"><a href="#" class="nav-link" @click="register">Register</a></li>
             <li class="nav-item"><a href="#" class="nav-link active" aria-current="page">About</a></li>
         </ul>
         </header>
     </div>
 
+    <div v-if="err">
+        <div class="alert alert-danger" role="alert">
+            <span v-if="!errInfo">There are some issues logging you in. Please try again later.</span>
+            <span v-if="errInfo">Error: {{ errInfo }}</span>
+        </div>
+    </div>
+
     <div class="container col-xl-10 col-xxl-8 px-4 py-5">
         <div class="row align-items-center g-lg-5 py-5">
         <div class="col-lg-7 text-center text-lg-start">
-            <h1 class="display-4 fw-bold lh-1 mb-3">Create your own Internet experience.</h1>
+            <h1 class="display-4 fw-bold lh-1 mb-3">Curate your own Internet experience.</h1>
             <p class="col-lg-10 fs-4">
-                ownportal is a simple RSS reader allowing you to add feeds and organise them as you like. Try it out, it's free!
+                ownportal is a simple to use RSS reader that allows you to add feeds and organise them as you like. Try it out, it's free!
             </p>
             <button type="button" class="btn btn-primary btn-lg px-4 gap-3" @click="register">Register</button>
         </div>
@@ -36,9 +42,14 @@
                 <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
-            <button class="w-100 btn btn-lg btn-primary" type="button" @click="login">Sign in</button>
+            <button v-if="!loading" class="w-100 btn btn-lg btn-primary" type="button" @click="login">Sign in</button>
+            <div class="m-3" v-if="loading">
+                <div class="spinner-border" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
             <hr class="my-4">
-            <small class="text-muted">By clicking Sign in, you agree to the terms of use.</small>
+            <small class="text-muted">By clicking Sign in, you agree to the Privacy Policy and Terms of Use.</small>
             </form>
         </div>
         </div>
@@ -88,7 +99,10 @@ export default {
     data() {
         return {
             username: "",
-            password: ""
+            password: "",
+            err: false,
+            errInfo: '',
+            loading: false
         }
     },
     methods: {
@@ -99,15 +113,26 @@ export default {
             router.push({name: "login"});
         },
         login() {
-            let url = config.gateway + "/api/sessions";
+            this.err = false;
+            this.loading = true;
+            let url = config.gateway + config.getPath('login')
             let payload = {"session": {"email": this.username, "password": this.password }};
             axios.post(url, payload)
                 .then(resp => {
-                    if (resp.status === 200) {
+                    if (resp.status === 201) {
                         localStorage.setItem('token', resp.data.session.token);
                         router.push({name: "home"});
                     }
-                });
+                }).catch(ex => {
+                    this.reportError(ex.response);
+                })
+        },
+        reportError(response) {
+            this.err = true;
+            this.loading = false;
+            if (response && response.data) {
+                this.errInfo = response.data.errors;
+            }
         },
         isValidToken() {
             return localStorage.getItem('token') ? true : false;

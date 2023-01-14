@@ -18,7 +18,7 @@ export default {
     } else if (window.location.pathname.startsWith('/creator')) {
       router.push({name: 'creator'})
     } else {
-      router.push({name: 'login'})
+      router.push({name: 'about'})
     }
   },
 }
