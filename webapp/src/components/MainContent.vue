@@ -23,7 +23,7 @@
                 <ul class="list-group list-unstyled" v-for="(item, i) in content" :key="i">
                     <li class="pb-2">
                         <div class="card" :class="themeCard">
-                            <div class="card-body" @click="openFeed(item.link)">
+                            <div class="card-body" @click="openFeed(item)">
                                 <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
                                 <h6 class="card-subtitle mb-2 text-muted">
                                     {{ time.since(item.published_date) }} | {{ item.publisher }}
@@ -46,7 +46,7 @@
             <div v-if="!summaryView" class="row">
                 <div class="col-sm-12 col-lg-4 mb-4" v-for="(item, i) in content" :key="i">
                     <div class="card full-height my-link" :class="themeCard">
-                        <div class="card-body" @click="openFeed(item.link)">
+                        <div class="card-body" @click="openFeed(item)">
                             <h5 class="card-title"><span v-html="processText(item.title)"></span></h5>
                             <h6 class="card-subtitle mb-2 text-muted">
                                 {{ item.publisher }} | {{ time.since(item.published_date) }}
@@ -184,8 +184,12 @@ export default {
             }
             return this.regexCache[word]
         },
-        openFeed(url) {
-            window.open(url, '_blank').focus();
+        openFeed(item) {
+            let url = config.gateway + config.getPath('histories')
+            let payload = { 'history': { 'article_id': item.id } }
+            axios.post(url, payload, { headers: config.authorisationHeader() })
+
+            window.open(item.link, '_blank').focus();
         },
         like(item) {
             item.heart = true; // should replace with loading

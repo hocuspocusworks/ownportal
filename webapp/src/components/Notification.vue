@@ -22,7 +22,7 @@
           <div class="row">
               <div class="col-sm-12 col-lg-4 mb-4" v-for="(item,i) in content" :key="i">
                   <div class="card full-height my-link" :class="themeCard">
-                      <div class="card-body" @click="openFeed(item.article.link)">
+                      <div class="card-body" @click="openFeed(item.article)">
                           <h5 class="card-title">{{ item.article.title }}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">{{ item.article.publisher }} | {{ item.article.published_date }}</h6>
                           <p>{{ processText(item.article.description) }}</p>
@@ -94,8 +94,12 @@ export default {
               text.substring(0, 200) + "..." :
               text;
       },
-      openFeed(url) {
-          window.open(url, '_blank').focus();
+      openFeed(item) {
+        let url = config.gateway + config.getPath('histories')
+        let payload = { 'history': { 'article_id': item.id } }
+        axios.post(url, payload, { headers: config.authorisationHeader() })
+
+        window.open(item.link, '_blank').focus();
       },
       notificationRead() {
         let notify = config.gateway + config.getPath('notification_read')
