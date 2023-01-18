@@ -108,7 +108,7 @@ export default {
         let payload = {
             'favourite': {
                 'title': item.title, 'description': item.description, 'link': item.link,
-                'publisher': item.source, 'published_date': item.publishedDate
+                'publisher': item.publisher, 'published_date': item.published_date
             }
         }
         axios.post(url, payload, { headers: config.authorisationHeader() })
