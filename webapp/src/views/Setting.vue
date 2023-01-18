@@ -58,6 +58,19 @@
                 </div>
               </div>
             </li>
+            <li class="list-group-item" :class="themeCard">
+              <div class="row">
+                <div class="col-6" :class="themeText">
+                  Keep history
+                </div>
+                <div class="col-6">
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" v-model="history" @click="save('history')"
+                      id="flexSwitchCheckDefault">
+                  </div>
+                </div>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
@@ -125,6 +138,7 @@ export default {
       safe: false,
       dark: false,
       summary: false,
+      history: false,
       user_id: 0,
       new_password: null,
       repeated_password: null,
@@ -181,6 +195,7 @@ export default {
       this.safe = this.my_settings.includes('safe') ? true : false
       this.dark = this.my_settings.includes('dark') ? true : false
       this.summary = this.my_settings.includes('summary') ? true : false
+      this.history = this.my_settings.includes('history') ? true : false
     },
     save(value) {
       if (this.my_settings.includes(value)) {
