@@ -25,7 +25,7 @@ module Api
     end
 
     def load_collection
-      @favourites ||= resource_scope
+      @favourites ||= resource_scope.order(published_date: :desc)
     end
 
     def policy_class
