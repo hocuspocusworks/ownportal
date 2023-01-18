@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     resources :spaces
     resources :blogs
     resources :notifications
+    resources :histories
     match 'notification/count' => 'notifications#count', via: :get
     match 'notification/read' => 'notifications#read', via: :post
 

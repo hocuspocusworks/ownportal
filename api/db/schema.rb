@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_12_11_132449) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +84,18 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_132449) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_highlights_on_user_id"
+  end
+
+  create_table "histories", force: :cascade do |t|
+    t.bigint "article_id"
+    t.bigint "user_id"
+    t.boolean "stale"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id", "user_id"], name: "index_histories_on_article_id_and_user_id", unique: true
+    t.index ["article_id"], name: "index_histories_on_article_id"
+    t.index ["stale"], name: "index_histories_on_stale"
+    t.index ["user_id"], name: "index_histories_on_user_id"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -202,7 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_12_11_132449) do
             WHERE (users.sysadmin = false)) AS user_count,
       ( SELECT count(*) AS count
              FROM users
-            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-09-27 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
+            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-11-13 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
       ( SELECT count(*) AS count
              FROM sources) AS sources_total,
       ( SELECT count(*) AS count
