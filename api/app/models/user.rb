@@ -43,6 +43,12 @@ class User < ApplicationRecord
     false
   end
 
+  def history?
+    return true if settings&.include? 'history'
+
+    false
+  end
+
   def default_group
     group = Group.create(name: 'Home', user: self)
     default_source(group)
