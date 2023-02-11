@@ -32,7 +32,8 @@ const config = {
             'users': '/portal/api/users',
             'top': '/portal/api/explores/top',
             'spaces': '/portal/api/spaces',
-            'blogs': '/portal/api/blogs'
+            'blogs': '/portal/api/blogs',
+            'histories': '/portal/api/histories'
         }
     },
     getPath(endpoint) {
@@ -101,5 +102,13 @@ const config = {
             })
     }
 };
+
+document.onkeydown = function(e) {
+  if (e.key === '.' && (e.ctrlKey || e.metaKey)) {
+    e.preventDefault()
+
+    alert('open configuration')
+  }
+}
 
 export default config;
