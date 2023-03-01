@@ -34,6 +34,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, allow_nil: true }
 
   after_create :default_group
+  after_commit :send_registration_email
 
   scope :active, -> { where(deactivated_at: nil) }
 
@@ -62,5 +63,9 @@ class User < ApplicationRecord
 
   def source_exists?
     Source.exists?(259)
+  end
+
+  def send_registration_email
+    SendRegistrationEmail.perform_later(id)
   end
 end

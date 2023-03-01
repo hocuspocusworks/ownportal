@@ -214,7 +214,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
             WHERE (users.sysadmin = false)) AS user_count,
       ( SELECT count(*) AS count
              FROM users
-            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-11-13 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
+            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-09-27 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
       ( SELECT count(*) AS count
              FROM sources) AS sources_total,
       ( SELECT count(*) AS count

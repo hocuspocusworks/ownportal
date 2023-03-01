@@ -27,7 +27,7 @@ module Api
       if user.errors.empty?
         render_json user, status: :created
       else
-        render json: { 'errors': { 'user': [user.errors] } }, status: :forbidden
+        render json: { errors: { user: [user.errors] } }, status: :forbidden
       end
     end
 
@@ -60,7 +60,7 @@ module Api
     end
 
     def user_limit_error
-      { 'errors': { 'user': ['registration limit reached'] } }
+      { errors: { user: ['registration limit reached'] } }
     end
 
     def user_limit_reached?
