@@ -28,7 +28,8 @@
                             <p>{{ processText(item.description) }}</p>
                         </div>
                         <div class="pb-3">
-                            <button class="btn shadow-none" :class="themeText" @click="destroy(item)"><i class="bi bi-trash"></i></button>
+                            <button v-if="!trashLoading[i]" class="btn shadow-none" :class="themeText" @click="destroy(item, i)"><i class="bi bi-trash"></i></button>
+                            <div v-if="trashLoading[i]" class="spinner-border" style="width: 1rem !important; height: 1rem !important;" role="status"></div>
                         </div>
                     </div>
                 </div>
@@ -47,7 +48,8 @@ export default {
         return {
             loading: true,
             err: false,
-            content: []
+            content: [],
+            trashLoading: []
         }
     },
     computed: {
@@ -77,6 +79,7 @@ export default {
                 .then(response => {
                     if (response.status === 200) {
                         this.content = response.data;
+                        this.trashLoading = Array.from({length: this.content.length}, () => false)
                     }
                     this.loading = false;
                 }).catch(e => {
@@ -92,7 +95,8 @@ export default {
         openFeed(url) {
             window.open(url, '_blank').focus();
         },
-        destroy(item) {
+        destroy(item, i) {
+            this.trashLoading[i] = true
             let url = config.gateway + config.getPath('favourites') + `/${item.id}`
             axios.delete(url, { headers: config.authorisationHeader() })
                 .then(response => {
