@@ -138,6 +138,8 @@ export default {
                         localStorage.setItem('sysadmin', resp.data.session.sysadmin)
                         localStorage.setItem('token', resp.data.session.token);
                         localStorage.setItem('userId', resp.data.session.id)
+                        localStorage.setItem('settings', resp.data.session.settings)
+                        localStorage.setItem('userGroups', resp.data.session.groups)
                         router.push({name: "home"});
                     }
                 }).catch(ex => {
