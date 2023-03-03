@@ -12,9 +12,8 @@ module Api
       @session = User.find_by(email: params[:session][:email])
 
       if user_valid?
-        user_token = { 'session': { 'token': encode_jwt(@session), 'sysadmin': @session.sysadmin, 'id': @session.id } }
         set_last_logged_in
-        render_json user_token, status: 201
+        render_json user_data, status: 201
       else
         render json: { errors: { credentials: ['are invalid'] } },
                status: :unauthorized
@@ -42,6 +41,18 @@ module Api
     def set_last_logged_in
       @session.last_logged_in = Time.current
       @session.save
+    end
+
+    def user_data
+      {
+        session: {
+          token: encode_jwt(@session),
+          sysadmin: @session.sysadmin,
+          id: @session.id,
+          settings: @session.settings,
+          groups: @session.groups.map(&:name)
+        }
+      }
     end
   end
 end
