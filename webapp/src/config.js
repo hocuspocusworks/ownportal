@@ -85,14 +85,17 @@ const config = {
         localStorage.setItem('screenHeigth', window.innerHeight)
     },
     fetchGroups(groups = undefined) {
-        if (groups === undefined) {
-            return localStorage.getItem('userGroups').split(',')
-        } else {
+        let userGroups = localStorage.getItem('userGroups')
+        if (!groups && userGroups) {
+            return userGroups.split(',')
+        } else if (userGroups) {
             let elements = groups.map(group => group.name)
             localStorage.setItem('userGroups', elements)
         }
     },
     pullSettings() {
+        if (!config.userId()) return;
+
         let url = this.gateway + this.getPath('users') + '/' + config.userId()
         axios.get(url, { headers: this.authorisationHeader() })
             .then(response => {
