@@ -11,7 +11,7 @@
         <div class="d-flex min-h-screen" :class="themeText">
             <SideMenu @feed-changed="feedCallback" @logout="logout" @explore="explore" @notification="notification"
                 @favourite="favourite" @highlight="highlight" @space="space" @setting="setting" @admin="admin" :needRefresh="refreshMenu" />
-            <div id="myContent" class="f-equal" :class="themeContent">
+            <div id="myContent" class="f-equal bottom-padding-large" :class="themeContent">
                 <router-view @explore-changed="informMenu" @media-changed="mediaChanged"></router-view>
             </div>
         </div>
