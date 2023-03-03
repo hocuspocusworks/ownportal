@@ -73,12 +73,12 @@ const config = {
         location.reload()
     },
     clearAll() {
-        localStorage.setItem('userId', null)
-        localStorage.setItem('spaceId', null)
-        localStorage.setItem('spacePath', null)
-        localStorage.setItem('sysadmin', null)
-        localStorage.setItem('settings', null)
-        localStorage.setItem('token', null)
+        localStorage.removeItem('token')
+        localStorage.removeItem('userId')
+        localStorage.removeItem('sysadmin')
+        localStorage.removeItem('spaceId')
+        localStorage.removeItem('spacePath')
+        localStorage.removeItem('settings')
     },
     setScreenSize() {
         localStorage.setItem('screenWidth', window.innerWidth)
