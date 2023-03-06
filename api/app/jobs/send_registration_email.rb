@@ -15,10 +15,12 @@ class SendRegistrationEmail < ApplicationJob
 
   def json_body
     {
-      sender: { name: 'ownportal', email: 'admin@ownportal.net' },
-      to: [{ email: @user.email, name: @user.email }],
-      subject: 'Registration confirmation',
-      htmlContent: '<h1>Welcome to ownportal!</h1>'
+      Sender: 'admin@ownportal.net',
+      Recipient: @user.email,
+      Subject: 'Registration confirmation',
+      HtmlBody: '<h1>Welcome to ownportal!</h1>',
+      TextBody: 'This is your code.',
+      Charset: 'UTF-8'
     }.to_json
   end
 
