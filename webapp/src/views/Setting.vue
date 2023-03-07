@@ -2,79 +2,73 @@
   <div class="container">
     <div v-if="passwordChanged" class="alert alert-success alert-dismissible fade show" role="alert">
       <strong>Password successfully changed.</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hidePasswordChanged"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+        @click="hidePasswordChanged"></button>
     </div>
 
     <div v-if="passwordNotChanged" class="alert alert-danger alert-dismissible fade show" role="alert">
       <strong>Password did not change due to: {{ passwordError }}.</strong>
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" @click="hidePasswordChanged"></button>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"
+        @click="hidePasswordChanged"></button>
     </div>
 
     <div class="row pt-2 p-lg-4">
-      <div class="col-lg-2"></div>
-      <div class="col-12 col-lg-8">
-        <div class="card" :class="themeCard">
-          <div class="card-body text-black">
-            <h5 class="card-title" :class="themeText">Settings</h5>
-            <p class="card-text" :class="themeText">Adjust the account to your needs.</p>
+      <div class="col-12 col-lg-3">
+        <div class="card mx-auto m-2" :class="themeCard" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Safe search</h5>
+            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" v-model="safe" @click="save('safe')"
+                  id="flexSwitchCheckDefault">
+              </div>
+            </h6>
+            <p class="card-text">Show only RSS feeds which are marked safe in search bar.</p>
           </div>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item" :class="themeCard">
-              <div class="row">
-                <div class="col-6" :class="themeText">
-                  Safe search
-                </div>
-                <div class="col-6">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="safe" @click="save('safe')"
-                      id="flexSwitchCheckDefault">
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item" :class="themeCard">
-              <div class="row">
-                <div class="col-6" :class="themeText">
-                  Dark mode
-                </div>
-                <div class="col-6">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="dark" @click="save('dark')"
-                      id="flexSwitchCheckDefault">
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item" :class="themeCard">
-              <div class="row">
-                <div class="col-6" :class="themeText">
-                  Summary view
-                </div>
-                <div class="col-6">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="summary" @click="save('summary')"
-                      id="flexSwitchCheckDefault">
-                  </div>
-                </div>
-              </div>
-            </li>
-            <li class="list-group-item" :class="themeCard">
-              <div class="row">
-                <div class="col-6" :class="themeText">
-                  Keep history
-                </div>
-                <div class="col-6">
-                  <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" v-model="history" @click="save('history')"
-                      id="flexSwitchCheckDefault">
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
         </div>
       </div>
-      <div class="col-lg-2"></div>
+      <div class="col-12 col-lg-3">
+        <div class="card mx-auto m-2" :class="themeCard" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Dark mode</h5>
+            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" v-model="dark" @click="save('dark')"
+                      id="flexSwitchCheckDefault">
+              </div>
+            </h6>
+            <p class="card-text">Switch between light and dark mode.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="card mx-auto m-2" :class="themeCard" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Summary view</h5>
+            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" v-model="summary" @click="save('summary')"
+                      id="flexSwitchCheckDefault">
+              </div>
+            </h6>
+            <p class="card-text">Show feed titles without their description.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-3">
+        <div class="card mx-auto m-2" :class="themeCard" style="width: 18rem;">
+          <div class="card-body">
+            <h5 class="card-title">Keep history</h5>
+            <h6 class="card-subtitle mb-2 text-muted d-flex justify-content-center">
+              <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" v-model="history" @click="save('history')"
+                      id="flexSwitchCheckDefault">
+              </div>
+            </h6>
+            <p class="card-text">Keep history of all RSS items you clicked on.</p>
+          </div>
+        </div>
+      </div>
     </div>
 
     <div class="row pt-4">
