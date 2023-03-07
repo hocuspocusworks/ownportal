@@ -21,6 +21,8 @@ module Api
     end
 
     def create
+      return if form_token_invalid?
+
       render json: user_limit_error, status: :forbidden and return if user_limit_reached?
 
       user = User.create(create_permitted_attributes.merge(default_settings))
@@ -73,6 +75,10 @@ module Api
 
     def registration_limit
       Rails.cache.fetch('registration_limit') { 100 }
+    end
+
+    def form_token_invalid?
+      params.permit(user: [:form_token]).to_h[:user][:form_token].present?
     end
   end
 end
