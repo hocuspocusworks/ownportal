@@ -34,7 +34,7 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 6, allow_nil: true }
 
   after_create :default_group
-  after_commit :send_registration_email
+  # after_commit :send_registration_email
 
   scope :active, -> { where(deactivated_at: nil) }
 
