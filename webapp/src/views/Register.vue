@@ -39,6 +39,12 @@
             <div class="input-group input-group-lg mb-3">
                 <input v-model="password_repeated" type="password" class="form-control" id="floatingPasswordRepeated" placeholder="Repeat password">
             </div>
+            <div class="input-group input-group-lg mb-3">
+                <input v-model="validation" type="text" class="form-control" id="floatingInput2" :placeholder="'Type ' + validation_generated">
+            </div>
+            <div class="input-group input-group-lg mb-3 no-show">
+                <input v-model="token" type="text" class="form-control" id="floatingInput3" placeholder="Insert token">
+            </div>
     
             <div class="checkbox mt-3 mb-3"></div>
             <button class="w-100 btn btn-lg btn-primary" type="button" @click="register">Register</button>
@@ -70,16 +76,19 @@ export default {
             password: "",
             password_repeated: "",
             userError: false,
-            userErrors: []
+            userErrors: [],
+            validation: '',
+            validation_generated: '',
+            token: ''
         }
     },
     methods: {
         register() {
-            if (this.passwordValid()) {
+            if (this.passwordValid() && this.challengeValid()) {
                 this.err = false;
                 this.loading = true;
                 let url = config.gateway + config.getPath('register');
-                let payload = {'user': {'password': this.password, 'email': this.username}}
+                let payload = {'user': {'password': this.password, 'email': this.username, 'form_token': this.token}}
                 axios.post(url, payload)
                     .then(response => {
                         if (response.status === 201) {
@@ -91,6 +100,8 @@ export default {
                     .catch(ex => {
                         this.reportError(ex.response);
                     });
+            } else {
+                this.reportError({ data: 'form is invalid' })
             }
         },
         reportError(response) {
@@ -109,14 +120,21 @@ export default {
         passwordValid() {
             return this.password === this.password_repeated ? true : false;
         },
+        challengeValid() {
+            return this.validation === this.validation_generated
+        },
         login() {
             router.push({name: "login"});
         },
         about() {
             router.push({name: "about"});
+        },
+        validationNumber() {
+            this.validation_generated = Math.floor((Math.random() * 8999 + 1000)).toString()
         }
     },
     mounted() {
+        this.validationNumber()
     },
 };
 
