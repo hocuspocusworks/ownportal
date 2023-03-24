@@ -2,18 +2,20 @@
 #
 # Table name: users
 #
-#  id                    :bigint           not null, primary key
-#  email                 :string           not null
-#  password_digest       :string
-#  token                 :string           not null
-#  created_at            :datetime         not null
-#  updated_at            :datetime         not null
-#  sysadmin              :boolean
-#  settings              :jsonb
-#  deactivated_at        :datetime
-#  last_logged_in        :datetime
-#  subscription_date     :date
-#  subscription_end_date :date
+#  id                            :bigint           not null, primary key
+#  email                         :string           not null
+#  password_digest               :string
+#  token                         :string           not null
+#  created_at                    :datetime         not null
+#  updated_at                    :datetime         not null
+#  sysadmin                      :boolean
+#  settings                      :jsonb
+#  deactivated_at                :datetime
+#  last_logged_in                :datetime
+#  subscription_date             :date
+#  subscription_end_date         :date
+#  registration_key              :string
+#  registration_key_activated_on :date
 #
 class User < ApplicationRecord
   has_secure_password
@@ -33,6 +35,7 @@ class User < ApplicationRecord
 
   validates :password, length: { minimum: 6, allow_nil: true }
 
+  before_save :update_registration_key
   after_create :default_group
   # after_commit :send_registration_email
 
@@ -66,6 +69,10 @@ class User < ApplicationRecord
   end
 
   def send_registration_email
-    SendRegistrationEmail.perform_later(id)
+    SendRegistrationEmail.perform_later(id, registration_key)
+  end
+
+  def update_registration_key
+    self.registration_key = rand(100_000..999_999)
   end
 end

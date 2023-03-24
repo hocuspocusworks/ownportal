@@ -34,6 +34,10 @@ class UserPolicy < ApplicationPolicy
     admin_and_user_permissions
   end
 
+  def activate?
+    true
+  end
+
   def permitted_attributes
     basic = [:email, :password, :password_confirmation, settings: []]
 

@@ -42,6 +42,12 @@ module Api
       render json: {}, status: :no_content
     end
 
+    def activate
+      key = params[:key]
+      User.find_by(registration_key: key)&.update_columns(registration_key_activated_on: Time.zone.now)
+      head :no_content
+    end
+
     private
 
     def load_resource

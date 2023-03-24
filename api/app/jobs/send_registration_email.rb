@@ -1,6 +1,7 @@
 class SendRegistrationEmail < ApplicationJob
-  def perform(user_id)
+  def perform(user_id, registration_key)
     @user = User.find(user_id)
+    @registration_key = registration_key
 
     call
   end
@@ -18,10 +19,22 @@ class SendRegistrationEmail < ApplicationJob
       Sender: 'admin@ownportal.net',
       Recipient: @user.email,
       Subject: 'Registration confirmation',
-      HtmlBody: '<h1>Welcome to ownportal!</h1>',
-      TextBody: 'This is your code.',
+      HtmlBody: body_content,
+      TextBody: '',
       Charset: 'UTF-8'
     }.to_json
+  end
+
+  def body_content
+    <<~TEXT
+      <h2>#{@user.email}, welcome to ownportal!</h2>
+      <p>Your registration key is #{@registration_key}.</p>
+      <p>Please click on the following link: <a href='https://ownportal.net/activate?key=#{@registration_key}'>activation link</a>.</p>
+      <p>Otherwise, copy and paste the following link in your browser: https://ownportal.net/activate?key=#{@registration_key}</p>
+      <p>If you need any help with using ownportal.net, check our help pages.</p>
+      <p>If you have any questions, write to us on admin@ownportal.net</p>
+      <p>We truly hope you enjoy using ownportal.net.</p>
+    TEXT
   end
 
   def json_headers

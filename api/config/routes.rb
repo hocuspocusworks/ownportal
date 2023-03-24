@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     resources :users do
       collection do
         get :all_users
+        get :activate
       end
     end
     resources :articles

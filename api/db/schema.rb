@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_24_225948) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -194,6 +194,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "last_logged_in"
     t.date "subscription_date"
     t.date "subscription_end_date"
+    t.string "registration_key"
+    t.date "registration_key_activated_on"
     t.index ["deactivated_at"], name: "index_users_on_deactivated_at"
     t.index ["email"], name: "unique_emails", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
@@ -214,7 +216,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
             WHERE (users.sysadmin = false)) AS user_count,
       ( SELECT count(*) AS count
              FROM users
-            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-09-27 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
+            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-11-13 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
       ( SELECT count(*) AS count
              FROM sources) AS sources_total,
       ( SELECT count(*) AS count
