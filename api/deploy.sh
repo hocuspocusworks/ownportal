@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd ~/ownportal/api
+
 SIDEKIQ_PID=`ps aux | grep sidekiq`
 
 while read -r pid; do
@@ -14,10 +16,9 @@ while read -r pid; do
 	kill -9 $pid
 done <<< "$WORKER_PIDS"
 
-git pull origin dev --no-edit
+git pull origin prod --no-edit
 
 bundle exec rails db:migrate RAILS_ENV=production
 bundle exec rails s -e production &
 sleep 5
 bundle exec sidekiq -e production &
-

@@ -1,0 +1,15 @@
+stages:
+  - deploy
+
+.deploy-api:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_REF_NAME == "prod"'
+    - when: always
+  script:
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - ssh-add <(echo "$GITLAB_KEY")
+    - mkdir -p ~/.ssh
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - ssh -v -p 229 ownportal@172.245.90.231 "nohup ~/ownportal/api/deploy.sh < /dev/null > std.out 2> std.err &"
