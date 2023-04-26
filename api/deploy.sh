@@ -16,7 +16,7 @@ done <<< "$WORKER_PIDS"
 
 git pull origin prod --no-edit
 
-rails db:migrate RAILS_ENV=production
-rails s -e production &
+~/.rbenv/shims/bundle exec rails db:migrate RAILS_ENV=production
+~/.rbenv/shims/bundle exec rails s -e production &
 sleep 5
-sidekiq -e production &
+~/.rbenv/shims/bundle exec sidekiq -e production &
