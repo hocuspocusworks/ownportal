@@ -1,7 +1,5 @@
 #!/bin/bash
 
-cd ~/ownportal/api
-
 SIDEKIQ_PID=`ps aux | grep sidekiq`
 
 while read -r pid; do
