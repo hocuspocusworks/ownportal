@@ -5,23 +5,21 @@
 #   gem "sqlite3"
 #
 default: &default
-  adapter: postgresql
-  encoding: unicode
-  host: localhost
-  port: 5432
-  database: ownportal
-  username: postgres
-  password: postgres
+  adapter: sqlite3
+  pool: 5
+  timeout: 200
+  journal_mode: wal
+  encoding: utf8
 
 development:
   <<: *default
-  database: ownportal_development
+  database: db/ownportal_development.sqlite3
 
 test:
   <<: *default
-  database: ownportal_test
+  database: db/ownportal_test.sqlite3
 
 production:
   <<: *default
-  port: 6789
-  encoding: utf8
+  database: db/ownportal_production.sqlite3
+

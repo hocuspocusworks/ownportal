@@ -2,16 +2,16 @@
 #
 # Table name: blogs
 #
-#  id             :bigint           not null, primary key
+#  id             :integer          not null, primary key
 #  language       :string
 #  published_date :datetime
 #  heading        :string
 #  content        :text
 #  active         :boolean
-#  user_id        :bigint
+#  user_id        :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  space_id       :bigint           not null
+#  space_id       :integer          not null
 #  html_file_name :string
 #
 class Blog < ApplicationRecord

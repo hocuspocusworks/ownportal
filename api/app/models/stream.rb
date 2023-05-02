@@ -2,13 +2,13 @@
 #
 # Table name: streams
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string
-#  group_id   :bigint
-#  source_id  :bigint
+#  group_id   :integer
+#  source_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :bigint
+#  user_id    :integer
 #
 class Stream < ApplicationRecord
   belongs_to :group

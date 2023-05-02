@@ -2,7 +2,7 @@
 #
 # Table name: tags
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string
 #  colour     :string
 #  user_id    :bigint

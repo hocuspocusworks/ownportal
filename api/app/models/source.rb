@@ -2,7 +2,7 @@
 #
 # Table name: sources
 #
-#  id          :bigint           not null, primary key
+#  id          :integer          not null, primary key
 #  description :string(512)
 #  icon        :string
 #  language    :string
@@ -12,7 +12,7 @@
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  processed   :boolean          default(FALSE)
-#  categories  :jsonb
+#  categories  :text
 #  published   :boolean
 #  restricted  :boolean          default(TRUE), not null
 #  creator_id  :bigint

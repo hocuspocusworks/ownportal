@@ -63,7 +63,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "tags_json"
+    t.text "tags_json"
     t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
@@ -72,7 +72,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.jsonb "tags"
+    t.text "tags"
     t.index ["name", "user_id"], name: "index_groups_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
@@ -121,7 +121,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "processed", default: false
-    t.jsonb "categories"
+    t.text "categories"
     t.boolean "published"
     t.boolean "restricted", default: true, null: false
     t.bigint "creator_id"
@@ -189,7 +189,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "sysadmin"
-    t.jsonb "settings"
+    t.text "settings"
     t.datetime "deactivated_at"
     t.datetime "last_logged_in"
     t.date "subscription_date"
@@ -205,23 +205,4 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   add_foreign_key "spaces", "users"
   add_foreign_key "streams", "groups"
   add_foreign_key "streams", "sources"
-
-  create_view "stats", sql_definition: <<-SQL
-      SELECT ( SELECT count(*) AS count
-             FROM users) AS users_total,
-      ( SELECT count(*) AS count
-             FROM users
-            WHERE (users.sysadmin = false)) AS user_count,
-      ( SELECT count(*) AS count
-             FROM users
-            WHERE ((users.sysadmin = false) AND (users.updated_at > ( SELECT '2022-09-27 00:00:00'::timestamp without time zone AS "timestamp")))) AS user_active,
-      ( SELECT count(*) AS count
-             FROM sources) AS sources_total,
-      ( SELECT count(*) AS count
-             FROM sources
-            WHERE (sources.restricted = true)) AS sources_restricted,
-      ( SELECT count(*) AS count
-             FROM sources
-            WHERE (sources.published = true)) AS sources_published;
-  SQL
 end

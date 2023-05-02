@@ -2,7 +2,7 @@
 #
 # Table name: taggings
 #
-#  id           :bigint           not null, primary key
+#  id           :integer          not null, primary key
 #  tag_id       :bigint
 #  favourite_id :bigint
 #  created_at   :datetime         not null
