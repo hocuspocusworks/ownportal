@@ -2,13 +2,13 @@
 #
 # Table name: spaces
 #
-#  id          :bigint           not null, primary key
+#  id          :integer          not null, primary key
 #  name        :string           not null
 #  description :string
 #  path        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  user_id     :bigint           not null
+#  user_id     :integer          not null
 #
 class Space < ApplicationRecord
   belongs_to :user

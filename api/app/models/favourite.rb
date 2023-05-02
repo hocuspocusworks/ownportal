@@ -2,16 +2,16 @@
 #
 # Table name: favourites
 #
-#  id             :bigint           not null, primary key
+#  id             :integer          not null, primary key
 #  description    :string
 #  link           :string
 #  published_date :datetime
 #  publisher      :string
 #  title          :string
-#  user_id        :bigint
+#  user_id        :integer
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
-#  tags_json      :jsonb
+#  tags_json      :text
 #
 class Favourite < ApplicationRecord
   has_many :taggings, dependent: :destroy

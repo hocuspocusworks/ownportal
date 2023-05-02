@@ -2,7 +2,7 @@
 #
 # Table name: throttles
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  count      :integer
 #  remote_ip  :string
 #  user_id    :integer

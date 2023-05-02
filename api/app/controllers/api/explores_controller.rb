@@ -27,11 +27,18 @@ module Api
 
     def top_category_results
       Source
-        .where("categories ?| ARRAY[:query]", query: categories)
+        .where(categories_sql)
         .where(published: true)
         .where(visibility: Source.visibilities[:safe])
         .order(updated_at: :desc)
         .limit(100)
+        .as_json
+        .map do |record|
+          next if record['categories'].blank?
+
+          record['categories'] = JSON.parse(record['categories'])
+          record
+        end
     end
 
     def search_by_keyword
@@ -42,6 +49,18 @@ module Api
 
     def categories
       user_params[:categories].split(',')
+    end
+
+    def categories_sql
+      categories = user_params[:categories].split(',')
+
+      return if categories.blank? || categories.size > 5
+
+      [].tap do |list|
+        categories.each do |category|
+          list << "(categories LIKE '%#{category}%')"
+        end
+      end.join(' OR ')
     end
 
     def safe

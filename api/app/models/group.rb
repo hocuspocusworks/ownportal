@@ -2,12 +2,12 @@
 #
 # Table name: groups
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  name       :string
-#  user_id    :bigint
+#  user_id    :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  tags       :jsonb
+#  tags       :text
 #
 class Group < ApplicationRecord
   belongs_to :user

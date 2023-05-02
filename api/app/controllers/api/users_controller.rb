@@ -9,7 +9,9 @@ module Api
     skip_before_action :load_collection, only: :index
 
     def index
-      render_json current_user
+      user = current_user.as_json
+      user['settings'] = JSON.parse(current_user['settings'])
+      render_json user
     end
 
     def all_users
@@ -17,7 +19,9 @@ module Api
     end
 
     def show
-      render_json @user
+      user = @user.as_json
+      user['settings'] = JSON.parse(user['settings'])
+      render_json user
     end
 
     def create

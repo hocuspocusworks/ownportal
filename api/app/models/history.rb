@@ -2,7 +2,7 @@
 #
 # Table name: histories
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  article_id :bigint
 #  user_id    :bigint
 #  stale      :boolean

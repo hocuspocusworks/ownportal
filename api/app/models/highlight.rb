@@ -2,7 +2,7 @@
 #
 # Table name: highlights
 #
-#  id         :bigint           not null, primary key
+#  id         :integer          not null, primary key
 #  keyword    :string
 #  colour     :string
 #  user_id    :bigint
