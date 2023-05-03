@@ -57,7 +57,7 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def newest_article?(item)
-    return true if item[:published_date] > latest_entry_date(item[:source_id])
+    return true if Date.parse(item[:published_date]) > latest_entry_date(item[:source_id])
   rescue ArgumentError
     false
   end
