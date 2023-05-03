@@ -57,9 +57,13 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def newest_article?(item)
-    return true if Time.parse(item[:published_date]) > latest_entry_time(item[:source_id])
+    return true if Time.parse(time_without_offset(item[:published_date])) > latest_entry_time(item[:source_id])
   rescue ArgumentError
     false
+  end
+
+  def time_without_offset(time)
+    Time.parse(time).strftime('%Y-%m-%d %H:%M:%S')
   end
 
   def latest_entry_time(source_id)
