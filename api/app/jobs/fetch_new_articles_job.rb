@@ -57,15 +57,17 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def newest_article?(item)
-    return true if Date.parse(item[:published_date]) > latest_entry_date(item[:source_id])
+    return true if Time.parse(item[:published_date]) > latest_entry_time(item[:source_id])
   rescue ArgumentError
     false
   end
 
-  def latest_entry_date(source_id)
-    latest_published_articles.select do |item|
+  def latest_entry_time(source_id)
+    latest = latest_published_articles.select do |item|
       item.source_id == source_id
-    end.first&.date || Time.now - 1.year
+    end.first&.date
+
+    (latest && Time.parse(latest)) || (Time.now - 1.year)
   end
 
   def latest_published_articles
