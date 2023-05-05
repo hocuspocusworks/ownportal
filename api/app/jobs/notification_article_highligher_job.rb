@@ -5,7 +5,7 @@ class NotificationArticleHighligherJob < ApplicationJob
 
       articles = Article.joins(:source)
                         .joins(source: [:streams])
-                        .where(created_at: 1.hour.ago..Time.now)
+                        .where(created_at: 1.hour.ago..Time.zone.now)
                         .where(streams: { user: user })
       existing_articles = Notification.where(user_id: user.id).pluck(:article_id)
 
