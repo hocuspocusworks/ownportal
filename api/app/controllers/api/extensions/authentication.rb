@@ -8,13 +8,25 @@ module Api
       end
 
       def authorisation_token
-        simple_token || decode_jwt[0]['token']
+        registration_key || simple_token || decode_jwt[0]['token']
       end
 
       def authenticate
         return unless current_user.nil?
 
         request_invalid
+      end
+
+      def registration_key
+        return nil unless invalid_registration_key?
+
+        user = User.find_by(registration_key: params[:key])
+        user.update_columns(registration_key_activated_on: Time.zone.now)
+        user.token
+      end
+
+      def invalid_registration_key?
+        params[:key] || User.find_by(registration_key: params[:key])&.registration_key_activated_on&.present?
       end
 
       def simple_token
@@ -43,7 +55,7 @@ module Api
       end
 
       def request_invalid
-        render json: { 'errors': { 'token': ['is invalid'] } }, status: :unauthorized
+        render json: { errors: { token: ['is invalid'] } }, status: :unauthorized
       end
     end
   end

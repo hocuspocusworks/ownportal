@@ -17,7 +17,7 @@ export default {
     } else if (window.location.pathname.startsWith('/activate')) {
       const urlParams = new URLSearchParams(window.location.search);
       const key = urlParams.get('key');
-      axios.get(config.gateway + config.getPath('users') + '/activate?key=' + key)
+      axios.get(config.gateway + config.getPath('register') + '/activate?key=' + key)
         .then(_response => {
           window.location.href = config.gateway + '/login'
         })
