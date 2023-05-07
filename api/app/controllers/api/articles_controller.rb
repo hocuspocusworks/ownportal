@@ -7,10 +7,30 @@ module Api
     end
 
     def load_collection
-      @articles ||=
-        Article.where(source_id: user_params[:sources])
-               .order(published_date: :desc)
-               .limit(50)
+      @articles ||= Article.where(id: article_ids).order(published_date: :desc)
+    end
+
+    private
+
+    def article_ids
+      raise 'No source_ids provided' if source_ids.blank?
+
+      source_ids.size == 1 ? source_article_ids : group_article_ids
+    end
+
+    def source_article_ids
+      Articles::SourceLoader.new(source_ids.first).call
+    end
+
+    def group_article_ids
+      Article.where(source_id: source_ids)
+             .order(published_date: :desc)
+             .limit(50)
+             .pluck(:id)
+    end
+
+    def source_ids
+      @source_ids ||= user_params[:sources]
     end
   end
 end
