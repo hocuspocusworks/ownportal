@@ -27,7 +27,11 @@ class FetchNewArticlesJob < ApplicationJob
 
         deduped_items = dedup(items)
 
-        Article.upsert_all(deduped_items) unless deduped_items.blank?
+        next if deduped_items.blank?
+
+        update_source_timestamps(deduped_items.map { |hash| hash[:source_id] }.uniq)
+
+        Article.upsert_all(deduped_items)
       end
     end
   end
@@ -80,7 +84,7 @@ class FetchNewArticlesJob < ApplicationJob
   end
 
   def source_id(url)
-    sources.find_by(url: url)&.id
+    sources.find_by(url:)&.id
   end
 
   def sources
@@ -116,5 +120,9 @@ class FetchNewArticlesJob < ApplicationJob
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     }
+  end
+
+  def update_source_timestamps(source_ids)
+    Source.where(id: source_ids).update_all(updated_at: Time.zone.now)
   end
 end
