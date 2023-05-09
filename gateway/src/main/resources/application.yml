@@ -31,3 +31,7 @@ spring:
           uri: http://localhost:3000/sidekiq
           predicates:
           - Path=/sidekiq/**
+        - id: performance
+          uri: http://localhost:3000/rails/performance
+          predicates:
+          - Path=/rails/performance/**
