@@ -23,14 +23,15 @@ module Api
     end
 
     def group_article_ids
-      Article.where(source_id: source_ids)
-             .order(published_date: :desc)
-             .limit(50)
-             .pluck(:id)
+      Articles::GroupLoader.new(group_id).call
     end
 
     def source_ids
       @source_ids ||= user_params[:sources]
+    end
+
+    def group_id
+      @group_id ||= user_params[:group]
     end
   end
 end
