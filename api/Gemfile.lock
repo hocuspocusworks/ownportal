@@ -196,6 +196,10 @@ GEM
       nokogiri (>= 1.6)
     rails-html-sanitizer (1.5.0)
       loofah (~> 2.19, >= 2.19.1)
+    rails_performance (1.0.5.2)
+      rails
+      redis
+      redis-namespace
     railties (7.0.4.3)
       actionpack (= 7.0.4.3)
       activesupport (= 7.0.4.3)
@@ -205,6 +209,8 @@ GEM
       zeitwerk (~> 2.5)
     rake (13.0.6)
     redis (4.8.1)
+    redis-namespace (1.10.0)
+      redis (>= 4)
     redis-rb (9001.0)
     regexp_parser (2.8.0)
     reline (0.3.3)
@@ -312,6 +318,7 @@ DEPENDENCIES
   pundit
   rack-cors
   rails (~> 7.0.3, >= 7.0.3.1)
+  rails_performance
   redis (~> 4.0)
   redis-rb
   rest-client
