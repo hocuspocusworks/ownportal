@@ -29,7 +29,9 @@ class FetchNewArticlesJob < ApplicationJob
 
         next if deduped_items.blank?
 
-        update_source_timestamps(deduped_items.map { |hash| hash[:source_id] }.uniq)
+        updated_source_ids = deduped_items.map { |hash| hash[:source_id] }.uniq
+        update_source_timestamps(updated_source_ids)
+        update_group_timestamps(updated_source_ids)
 
         Article.upsert_all(deduped_items)
       end
@@ -124,5 +126,11 @@ class FetchNewArticlesJob < ApplicationJob
 
   def update_source_timestamps(source_ids)
     Source.where(id: source_ids).update_all(updated_at: Time.zone.now)
+  end
+
+  def update_group_timestamps(source_ids)
+    Group.joins(:sources)
+         .where(sources: { id: source_ids })
+         .update_all(updated_at: Time.zone.now)
   end
 end

@@ -196,22 +196,11 @@ export default {
             this.$emit('logout');
         },
         onItemSelect(item) {
-            let url = [];
+            let url = "";
             if (item.streams !== undefined) {
-                item.streams.forEach(el => {
-                    let src = item.sources.find(obj => obj.id === el.source_id)
-                    url.push(src.id)
-                });
+                url = "group:" + item.id
             } else {
-                this.data.forEach(group => {
-                    if (group.id === item.group_id) {
-                        group.sources.forEach(src => {
-                            if (src.id === item.source_id) {
-                                url.push(src.id)
-                            }
-                        })
-                    }
-                })
+                url = "source:" + item.id
             }
             this.$emit('feedChanged', url);
         },
