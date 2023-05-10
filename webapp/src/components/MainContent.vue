@@ -136,7 +136,6 @@ export default {
             this.loading = true;
             this.err = false;
             let request = config.gateway + config.getPath('rss_sources');
-            // let payload = { "sources": itemId, "sort": "asc" }
             let payload = this.resolvePayload(itemId)
             axios.get(request, { headers: config.authorisationHeader(), params: payload })
                 .then(response => {
