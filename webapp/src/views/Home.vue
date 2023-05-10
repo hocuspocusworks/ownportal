@@ -89,8 +89,8 @@ export default {
         dark() {
             return config.isDarkModeOn()
         },
-        feedCallback(sources) {
-            router.push({name: "content", params: {contentSources: sources}});
+        feedCallback(itemId) {
+            router.push({name: "content", params: {contentSources: itemId}});
             this.toggleSidebar();
         },
         informMenu() {

@@ -13,21 +13,21 @@ module Api
     private
 
     def article_ids
-      raise 'No source_ids provided' if source_ids.blank?
+      raise 'No source or group provided' if source_id.blank? && group_id.blank?
 
-      source_ids.size == 1 ? source_article_ids : group_article_ids
+      source_id.present? ? source_article_ids : group_article_ids
     end
 
     def source_article_ids
-      Articles::SourceLoader.new(source_ids.first).call
+      Articles::SourceLoader.new(source_id.first).call
     end
 
     def group_article_ids
       Articles::GroupLoader.new(group_id).call
     end
 
-    def source_ids
-      @source_ids ||= user_params[:sources]
+    def source_id
+      @source_id ||= user_params[:source]
     end
 
     def group_id
