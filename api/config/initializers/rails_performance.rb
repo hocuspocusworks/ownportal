@@ -3,7 +3,7 @@ RailsPerformance.setup do |config|
   config.duration = 24.hours
 
   config.debug    = false # currently not used>
-  config.enabled  = false
+  config.enabled  = true
 
   # default path where to mount gem,
   # alternatively you can mount the RailsPerformance::Engine in your routes.rb
