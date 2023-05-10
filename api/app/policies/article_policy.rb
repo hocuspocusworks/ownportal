@@ -20,7 +20,7 @@ class ArticlePolicy < ApplicationPolicy
   end
 
   def permitted_attributes
-    [:sort, sources: []]
+    [:sort, :source, :group]
   end
 
   class Scope < ApplicationScope

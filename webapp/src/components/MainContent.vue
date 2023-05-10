@@ -78,8 +78,8 @@ export default {
     name: 'MainContent',
     props: {
         contentSources: {
-            type: Array,
-            default: []
+            type: String,
+            default: ""
         }
     },
     data() {
@@ -114,8 +114,8 @@ export default {
     },
     watch: {
         contentSources: {
-            handler: function (newSoruces) {
-                this.updateView(newSoruces);
+            handler: function (itemId) {
+                this.updateView(itemId);
             },
             immediate: true
         }
@@ -130,12 +130,13 @@ export default {
             }
             return "d-none"
         },
-        updateView(sources) {
+        updateView(itemId) {
+            console.log(itemId)
             this.content = null;
             this.loading = true;
             this.err = false;
             let request = config.gateway + config.getPath('rss_sources');
-            let payload = { "sources": sources, "sort": "asc" }
+            let payload = this.resolvePayload(itemId)
             axios.get(request, { headers: config.authorisationHeader(), params: payload })
                 .then(response => {
                     this.content = response.data;
@@ -154,6 +155,12 @@ export default {
                         this.highlights = response.data
                     }
                 })
+        },
+        resolvePayload(itemId) {
+            const item = itemId.split(':')
+            return item[0] === 'source' ?
+                { 'source': item[1], 'sort': 'asc' } :
+                { 'group': item[1], 'sort': 'asc' }
         },
         baseUrl(url) {
             var pathArray = url.split('/');
