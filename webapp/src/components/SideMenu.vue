@@ -200,7 +200,7 @@ export default {
             if (item.streams !== undefined) {
                 url = "group:" + item.id
             } else {
-                url = "source:" + item.id
+                url = "source:" + item.source_id
             }
             this.$emit('feedChanged', url);
         },
