@@ -131,7 +131,6 @@ export default {
             return "d-none"
         },
         updateView(itemId) {
-            console.log(itemId)
             this.content = null;
             this.loading = true;
             this.err = false;
