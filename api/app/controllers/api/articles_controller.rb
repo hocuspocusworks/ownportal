@@ -19,7 +19,7 @@ module Api
     end
 
     def source_article_ids
-      Articles::SourceLoader.new(source_id.first).call
+      Articles::SourceLoader.new(source_id).call
     end
 
     def group_article_ids
