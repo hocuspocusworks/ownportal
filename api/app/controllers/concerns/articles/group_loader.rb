@@ -7,7 +7,7 @@ module Articles
     end
 
     def call
-      Rails.cache.fetch(group.id) do
+      Rails.cache.fetch(group) do
         Article.where(source_id: source_ids)
                .order(published_date: :desc)
                .limit(50)
