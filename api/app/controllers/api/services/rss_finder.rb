@@ -11,31 +11,27 @@ module Api
 
         return count(source.first) unless source.empty?
 
-        begin
-          response = RestClient.get Rails.configuration.x.fetcher_url + "/rss/fetch?url=#{@url}"
+        response = RestClient.get Rails.configuration.x.fetcher_url + "/rss/fetch?url=#{@url}"
 
-          return unless response.code == 200
+        return unless response.code == 200
 
-          @body = JSON.parse(response.body.as_json) unless response.body.empty?
+        @body = JSON.parse(response.body.as_json) unless response.body.empty?
 
-          return if @body.nil? || @body['data']['size'].zero?
+        return if @body.nil? || @body['data']['size'].zero?
 
-          saved_source = Source.create(
-            description: source_description,
-            language: source_language,
-            name: source_name,
-            url: @url,
-            timestamp: source_timestamp,
-            creator: @user,
-            counter: 0
-          )
+        saved_source = Source.create(
+          description: source_description,
+          language: source_language,
+          name: source_name,
+          url: @url,
+          timestamp: source_timestamp,
+          creator: @user,
+          counter: 0
+        )
 
-          return saved_source if saved_source.errors.empty?
+        return saved_source if saved_source.errors.empty?
 
-          raise StandardError.new, saved_source.errors.full_messages[0]
-        rescue RestClient::InternalServerError => e
-          'wrong url'
-        end
+        raise StandardError.new, saved_source.errors.full_messages[0]
       end
 
       private
