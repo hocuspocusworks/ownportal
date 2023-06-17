@@ -34,7 +34,7 @@ module Api
 
           raise StandardError.new, saved_source.errors.full_messages[0]
         rescue RestClient::InternalServerError => e
-          'non existing url'
+          'wrong url'
         end
       end
 
