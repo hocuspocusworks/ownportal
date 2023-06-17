@@ -62,7 +62,7 @@ module Api
     end
 
     def default_settings
-      { settings: [:dark], sysadmin: false }
+      { settings: ['dark'], sysadmin: false }
     end
 
     def user_limit_error
