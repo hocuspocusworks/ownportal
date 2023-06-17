@@ -15,9 +15,6 @@ module Api
 
     def rss
       rss = Api::Services::RssFinder.new(user_params[:url], current_user).call
-
-      head :no_content and return if rss == 'wrong url'
-
       FetchFeedJob.perform_later(rss.id)
       render_json rss
     end
