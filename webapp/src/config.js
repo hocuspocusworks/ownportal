@@ -100,7 +100,9 @@ const config = {
         axios.get(url, { headers: this.authorisationHeader() })
             .then(response => {
                 if (response.status === 200) {
-                    localStorage.setItem('settings', response.data.settings)
+                    const settings = response.data.settings
+                    const parsedSettings = typeof settings == 'string' ? JSON.parse(settings) : settings
+                    localStorage.setItem('settings', parsedSettings)
                 }
             })
     }
