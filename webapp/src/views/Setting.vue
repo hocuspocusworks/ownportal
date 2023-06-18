@@ -234,7 +234,9 @@ export default {
       .then(response => {
         if (response.status === 200) {
           this.user_id = response.data.id
-          this.updateSettings(response.data.settings)
+          const settings = response.data.settings
+          const parsedSettings = typeof settings == 'string' ? JSON.parse(settings) : settings
+          this.updateSettings(parsedSettings)
         }
       })
   }
