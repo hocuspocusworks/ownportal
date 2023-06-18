@@ -11,9 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "articles", force: :cascade do |t|
     t.string "description"
     t.string "link"
@@ -21,8 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.string "publisher"
     t.string "title"
     t.boolean "stale"
-    t.bigint "source_id"
-    t.bigint "user_id"
+    t.integer "source_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "media_url"
@@ -37,10 +34,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.string "heading"
     t.text "content"
     t.boolean "active"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "space_id", null: false
+    t.integer "space_id", null: false
     t.string "html_file_name"
     t.index ["space_id"], name: "index_blogs_on_space_id"
     t.index ["user_id", "html_file_name"], name: "index_blogs_on_user_id_and_html_file_name", unique: true
@@ -60,19 +57,19 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "published_date"
     t.string "publisher"
     t.string "title"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "tags_json"
+    t.json "tags_json"
     t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
   create_table "groups", force: :cascade do |t|
     t.string "name"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "tags"
+    t.json "tags"
     t.index ["name", "user_id"], name: "index_groups_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
@@ -80,15 +77,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   create_table "highlights", force: :cascade do |t|
     t.string "keyword"
     t.string "colour"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_highlights_on_user_id"
   end
 
   create_table "histories", force: :cascade do |t|
-    t.bigint "article_id"
-    t.bigint "user_id"
+    t.integer "article_id"
+    t.integer "user_id"
     t.boolean "stale"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -99,9 +96,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.bigint "article_id"
-    t.bigint "highlight_id"
-    t.bigint "user_id"
+    t.integer "article_id"
+    t.integer "highlight_id"
+    t.integer "user_id"
     t.boolean "stale"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -121,10 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "processed", default: false
-    t.text "categories"
+    t.json "categories"
     t.boolean "published"
     t.boolean "restricted", default: true, null: false
-    t.bigint "creator_id"
+    t.integer "creator_id"
     t.integer "counter"
     t.integer "visibility", default: 1
     t.index ["creator_id"], name: "index_sources_on_creator_id"
@@ -137,7 +134,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.string "path", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.integer "user_id", null: false
     t.index ["name"], name: "index_spaces_on_name", unique: true
     t.index ["path"], name: "index_spaces_on_path", unique: true
     t.index ["user_id"], name: "index_spaces_on_user_id"
@@ -145,11 +142,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
 
   create_table "streams", force: :cascade do |t|
     t.string "name"
-    t.bigint "group_id"
-    t.bigint "source_id"
+    t.integer "group_id"
+    t.integer "source_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "user_id"
+    t.integer "user_id"
     t.index ["group_id"], name: "index_streams_on_group_id"
     t.index ["name", "group_id", "source_id"], name: "index_streams_on_name_and_group_id_and_source_id", unique: true
     t.index ["source_id"], name: "index_streams_on_source_id"
@@ -157,8 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.bigint "tag_id"
-    t.bigint "favourite_id"
+    t.integer "tag_id"
+    t.integer "favourite_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["favourite_id"], name: "index_taggings_on_favourite_id"
@@ -168,7 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.string "colour"
-    t.bigint "user_id"
+    t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tags_on_user_id"
@@ -189,7 +186,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "sysadmin"
-    t.text "settings"
+    t.json "settings"
     t.datetime "deactivated_at"
     t.datetime "last_logged_in"
     t.date "subscription_date"
