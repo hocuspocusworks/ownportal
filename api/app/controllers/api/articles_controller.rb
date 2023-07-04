@@ -1,37 +1,32 @@
 module Api
   class ArticlesController < ApplicationController
     include Api::Extensions::Resourceful
+    include Api::Extensions::Paginable
 
     def index
       render_json @articles
     end
 
     def load_collection
-      @articles ||= Article.where(id: article_ids).order(published_date: :desc)
+      @articles ||= paginate(articles_sql)
     end
 
     private
 
-    def article_ids
-      raise 'No source or group provided' if source_id.blank? && group_id.blank?
+    def articles_sql
+      raise 'No source_ids provided' if source_ids.blank?
 
-      source_id.present? ? source_article_ids : group_article_ids
+      Article.where(source_id: source_ids).order(published_date: :desc)
     end
 
-    def source_article_ids
-      Articles::SourceLoader.new(source_id).call
+    def source_ids
+      return [] unless user_params[:source] || user_params[:group]
+
+      user_params[:source] ? [user_params[:source].to_i] : group_source_ids(user_params[:group])
     end
 
-    def group_article_ids
-      Articles::GroupLoader.new(group_id).call
-    end
-
-    def source_id
-      @source_id ||= user_params[:source]
-    end
-
-    def group_id
-      @group_id ||= user_params[:group]
+    def group_source_ids(group_id)
+      Group.joins(:sources).where(id: group_id).pluck(:source_id)
     end
   end
 end
