@@ -19,9 +19,11 @@ cache:
     - vendor/bundle
 
 before_script:
-  - bundle check || bundle install --jobs $(nproc)
-  - bundle exec rails db:create RAILS_ENV=test
-  - bundle exec rails db:schema:load RAILS_ENV=test
+  - |
+    cd "$CI_PROJECT_DIR/api"
+    bundle check || bundle install --jobs $(nproc)
+    bundle exec rails db:create RAILS_ENV=test
+    bundle exec rails db:schema:load RAILS_ENV=test
 
 stages:
   - test
@@ -32,7 +34,9 @@ test-api:
   rules:
     - if: '$CI_COMMIT_REF_NAME == "prod"'
   script:
-    - bundle exec rails test -d  
+    - |
+      cd "$CI_PROJECT_DIR/api"
+      bundle exec rails test -d  
 
 deploy-api:
   stage: deploy
