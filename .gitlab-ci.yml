@@ -18,6 +18,9 @@ cache:
   paths:
     - vendor/bundle
 
+variables:
+  BUNDLE_PATH: vendor/bundle
+
 before_script:
   - |
     cd "$CI_PROJECT_DIR/api"
