@@ -16,14 +16,12 @@
 #  subscription_end_date :date
 #
 
-require 'rails_helper'
-
-describe User do
-  context 'user' do
-    it 'saving user' do
+describe User, type: :model do
+  context 'when valid attributes' do
+    it 'saves user' do
       expect do
         User.create(email: 'test@gmail.com', password: 'blabla')
-      end.to change(User, :count).from(0).to(1)
+      end.to change(User, :count).by(1)
     end
   end
 end

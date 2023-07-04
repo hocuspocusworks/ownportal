@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
   private
 
   def user_not_authorized
-    render json: { 'errors': { 'token': ['is invalid'] } }, status: :forbidden
+    render json: { errors: { token: ['is invalid'] } }, status: :forbidden
   end
 
   def user_params
@@ -44,7 +44,7 @@ class ApplicationController < ActionController::API
   def too_many_requests_error
     record_throttle unless ip_lock?
     set_ip_lock
-    render json: { 'errors': { 'throttle': 'request limit reached' } }, status: :too_many_requests
+    render json: { errors: { throttle: 'request limit reached' } }, status: :too_many_requests
   end
 
   def record_throttle
