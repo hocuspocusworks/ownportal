@@ -311,6 +311,7 @@ DEPENDENCIES
   importmap-rails
   jbuilder
   jwt
+  mail (~> 2.8.1)
   pry
   puma (~> 6.0)
   pundit

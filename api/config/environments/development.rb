@@ -42,6 +42,17 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    address:              Rails.application.credentials.aws.ses.endpoint,
+    port:                 Rails.application.credentials.aws.ses.port,
+    user_name:            Rails.application.credentials.aws.ses.username,
+    password:             Rails.application.credentials.aws.ses.password,
+    authentication:       :login,
+    enable_starttls_auto: true
+  }
+  config.action_mailer.default_url_options = { host: "ownportal.net" }
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
