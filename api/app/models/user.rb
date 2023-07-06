@@ -71,6 +71,6 @@ class User < ApplicationRecord
   end
 
   def send_registration_email
-    SendRegistrationEmail.perform_later(id)
+    Users::RegistrationEmail.new(self).send
   end
 end
