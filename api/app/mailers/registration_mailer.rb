@@ -6,6 +6,7 @@ class RegistrationMailer < ApplicationMailer
     return unless @user.present?
 
     mail(to: @user.email,
-         subject: 'Verify your email for new ownportal account')
+         subject: 'Verify your email for new ownportal account',
+         template_path: 'mailers/registration_mailer')
   end
 end
