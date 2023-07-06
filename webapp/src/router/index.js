@@ -19,6 +19,7 @@ import Space from '../views/Space.vue';
 import Blog from '../views/Blog.vue';
 import BlogCreate from '../views/BlogCreate.vue';
 import BlogPublished from '../views/BlogPublished.vue';
+import Confirmation from '../views/Confirmation.vue';
 
 const routes = [
   {
@@ -56,7 +57,8 @@ const routes = [
   },
   { name: "login", path: "/login", component: Login },
   { name: "register", path: "/register", component: Register },
-  { name: "about", path: "/about", component: About }
+  { name: "about", path: "/about", component: About },
+  { name: "confirmation", path: "/confirmation", component: Confirmation }
 ];
 
 const router = createRouter({

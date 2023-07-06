@@ -11,7 +11,7 @@ module Users
     private
 
     def link
-      "https://ownportal.net/confirm?user=#{@user.id}&token=#{@user.registration_token}"
+      "https://ownportal.net/confirmation?user=#{@user.id}&token=#{@user.registration_token}"
     end
   end
 end

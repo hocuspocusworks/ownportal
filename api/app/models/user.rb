@@ -71,6 +71,6 @@ class User < ApplicationRecord
   end
 
   def send_registration_email
-    Users::RegistrationEmail.new(self).send
+    Users::RegistrationEmail.new(self).send if registration_confirmed_previously_changed?
   end
 end

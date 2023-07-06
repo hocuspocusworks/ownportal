@@ -19,6 +19,7 @@ const config = {
             'my_feed': '/portal/api/groups',
             'login': '/login/api/sessions',
             'register': '/login/api/users',
+            'confirmation': '/login/registrations',
             'rss_sources': '/portal/api/articles',
             'streams': '/portal/api/streams',
             'favourites': '/portal/api/favourites',
