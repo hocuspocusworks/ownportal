@@ -28,5 +28,7 @@ module Api
     config.x.fetcher_url = 'http://localhost:8070'
 
     config.active_job.queue_adapter = :sidekiq
+
+    config.action_mailer.preview_path = "#{Rails.root}/spec/mailers/previews"
   end
 end

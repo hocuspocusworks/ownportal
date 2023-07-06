@@ -58,7 +58,12 @@ module Api
     end
 
     def default_settings
-      { settings: ['dark'], sysadmin: false }
+      {
+        settings: ['dark'],
+        sysadmin: false,
+        registration_date: Time.now,
+        registration_token: SecureRandom.hex[1..6]
+      }
     end
 
     def user_limit_error

@@ -8,6 +8,8 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => '/sidekiq'
 
+  get :registrations, to: 'registrations#confirm'
+
   namespace :api do
     get 'explores/search'
     get 'explores/rss'

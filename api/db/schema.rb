@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
+ActiveRecord::Schema[7.0].define(version: 2023_07_06_201442) do
   create_table "articles", force: :cascade do |t|
     t.string "description"
     t.string "link"
@@ -18,8 +18,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.string "publisher"
     t.string "title"
     t.boolean "stale"
-    t.integer "source_id"
-    t.integer "user_id"
+    t.bigint "source_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "media_url"
@@ -60,7 +60,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "tags_json"
+    t.text "tags_json"
     t.index ["user_id"], name: "index_favourites_on_user_id"
   end
 
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.json "tags"
+    t.text "tags"
     t.index ["name", "user_id"], name: "index_groups_on_name_and_user_id", unique: true
     t.index ["user_id"], name: "index_groups_on_user_id"
   end
@@ -77,15 +77,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   create_table "highlights", force: :cascade do |t|
     t.string "keyword"
     t.string "colour"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_highlights_on_user_id"
   end
 
   create_table "histories", force: :cascade do |t|
-    t.integer "article_id"
-    t.integer "user_id"
+    t.bigint "article_id"
+    t.bigint "user_id"
     t.boolean "stale"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,9 +96,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.integer "article_id"
-    t.integer "highlight_id"
-    t.integer "user_id"
+    t.bigint "article_id"
+    t.bigint "highlight_id"
+    t.bigint "user_id"
     t.boolean "stale"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -118,10 +118,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "processed", default: false
-    t.json "categories"
+    t.text "categories"
     t.boolean "published"
     t.boolean "restricted", default: true, null: false
-    t.integer "creator_id"
+    t.bigint "creator_id"
     t.integer "counter"
     t.integer "visibility", default: 1
     t.index ["creator_id"], name: "index_sources_on_creator_id"
@@ -154,8 +154,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   end
 
   create_table "taggings", force: :cascade do |t|
-    t.integer "tag_id"
-    t.integer "favourite_id"
+    t.bigint "tag_id"
+    t.bigint "favourite_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["favourite_id"], name: "index_taggings_on_favourite_id"
@@ -165,7 +165,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   create_table "tags", force: :cascade do |t|
     t.string "name"
     t.string "colour"
-    t.integer "user_id"
+    t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_tags_on_user_id"
@@ -186,11 +186,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "sysadmin"
-    t.json "settings"
+    t.text "settings"
     t.datetime "deactivated_at"
     t.datetime "last_logged_in"
     t.date "subscription_date"
     t.date "subscription_end_date"
+    t.string "registration_token"
+    t.datetime "registration_email_last_sent"
+    t.datetime "registration_confirmed", precision: nil
+    t.integer "registration_retries", default: 0, null: false
+    t.datetime "registration_date"
     t.index ["deactivated_at"], name: "index_users_on_deactivated_at"
     t.index ["email"], name: "unique_emails", unique: true
     t.index ["token"], name: "index_users_on_token", unique: true
@@ -202,4 +207,3 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_18_191413) do
   add_foreign_key "spaces", "users"
   add_foreign_key "streams", "groups"
   add_foreign_key "streams", "sources"
-end
