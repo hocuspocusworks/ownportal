@@ -70,7 +70,7 @@ group :development, :test do
 end
 
 group :development, :production do
-  gem 'rails_performance'
+  gem 'rails_performance', '>= 1.2'
 end
 
 group :development do
